@@ -1,11 +1,17 @@
-<!DOCTYPE html>
-<html>
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
 <head>
-  <meta charset="utf-8">
+  <meta charset="UTF-8">
   
-  <title>IO复用技术之select总结 | Cod&#39;s Blog</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="最近玩命学习linux下网络编程，终于对这些奇怪的系统API们有了一点了解。今天研究了下IO复用的技术，发现其实服务器的确都是遵循某种框架（模式）编写而成，因此先将这些模式以及概念总结如下。
+    <title>IO复用技术之select总结 | Cod&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Cod">
+    
+
+    
+    <meta name="description" content="最近玩命学习linux下网络编程，终于对这些奇怪的系统API们有了一点了解。今天研究了下IO复用的技术，发现其实服务器的确都是遵循某种框架（模式）编写而成，因此先将这些模式以及概念总结如下。
 同步和异步以及阻塞和非阻塞简单来说，同步(sync)指的是事情必须一件一件地做，调用者必须等待被调用过程返回。异步则是指调用后结果并不能立刻得到，而是由某种事件或信号触发告知调用者（因此并不是顺序执行的事件，">
 <meta property="og:type" content="article">
 <meta property="og:title" content="IO复用技术之select总结">
@@ -18,88 +24,85 @@
 <meta name="twitter:title" content="IO复用技术之select总结">
 <meta name="twitter:description" content="最近玩命学习linux下网络编程，终于对这些奇怪的系统API们有了一点了解。今天研究了下IO复用的技术，发现其实服务器的确都是遵循某种框架（模式）编写而成，因此先将这些模式以及概念总结如下。
 同步和异步以及阻塞和非阻塞简单来说，同步(sync)指的是事情必须一件一件地做，调用者必须等待被调用过程返回。异步则是指调用后结果并不能立刻得到，而是由某种事件或信号触发告知调用者（因此并不是顺序执行的事件，">
-  
-  
 
-  <link rel="stylesheet" href="/css/style.css" type="text/css">
-  
-  
-  
-
-
-  
-
-  
-    <link href='//fonts.useso.com/css?family=Titillium+Web:300,400,600' rel='stylesheet' type='text/css'>
-    <link href="//fonts.useso.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
-  
-
+    
+    <link rel="alternative" href="/atom.xml" title="Cod&#39;s Blog" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
 </head>
 
-<body>
-  <div id="wrap">
-    <header id="header">
-  <div id="header-outer" class="outer">
-    <div class="container">
-      <div class="container-inner">
-        <div id="header-title">
-          <h1 class="logo-wrap">
-            <a href="/" class="logo"></a>
-          </h1>
-          
-            <h2 class="subtitle-wrap">
-              <p class="subtitle">Consider Yourself Denied</p>
-            </h2>
-          
-        </div>
-        <div id="header-inner" class="nav-container">
-          <a id="main-nav-toggle" class="nav-icon"></a>
-          <div class="nav-container-inner">
-            <ul id="main-nav">
-              
-            </ul>
-            <nav id="sub-nav">
-              <div id="search-form-wrap">
-                <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="搜索"><input type="hidden" name="q" value="site:http://yoursite.com"></form>
-              </div>
-            </nav>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="Cod&#39;s Blog" title="Cod&#39;s Blog"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Cod&#39;s Blog">Cod&#39;s Blog</a></h1>
+				<h2 class="blog-motto">Consider Yourself Denied</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:yoursite.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/01/26/IO复用技术之select总结/" title="IO复用技术之select总结" itemprop="url">IO复用技术之select总结</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://yoursite.com/about" title="Cod" target="_blank" itemprop="author">Cod</a>
+		
+  <p class="article-time">
+    <time datetime="2015-01-26T03:33:51.000Z" itemprop="datePublished"> 发表于 2015-01-26</time>
+    
+  </p>
 </header>
-    <div class="container">
-      <div class="main-body container-inner">
-        <div class="main-body-inner">
-          <section id="main">
-            <div class="main-body-header">
-
-              <h1 class="header"><a class="page-title-link" href="/categories/linux/">linux</a></h1>
-            </div>
-            <div class="main-body-content">
-              
-  <article id="post-IO复用技术之select总结" class="article article-single article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-      <!--  -->
-      
-        <header class="article-header">
-          
-  
-    <h1 class="article-title" itemprop="name">
-      IO复用技术之select总结
-    </h1>
-  
-
-        </header>
-      
-      <p class="article-byline">
-        <a href="/2015/01/26/IO复用技术之select总结/" class="article-date">
-  <time datetime="2015-01-26T03:33:51.000Z" itemprop="datePublished">2015-01-26</time>
-</a>
-      </p>
-      <div class="article-entry" itemprop="articleBody">
-        <p>最近玩命学习linux下网络编程，终于对这些奇怪的系统API们有了一点了解。今天研究了下IO复用的技术，发现其实服务器的确都是遵循某种框架（模式）编写而成，因此先将这些模式以及概念总结如下。</p>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#同步和异步以及阻塞和非阻塞"><span class="toc-number">1.</span> <span class="toc-text">同步和异步以及阻塞和非阻塞</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Linux下五种IO模型"><span class="toc-number">2.</span> <span class="toc-text">Linux下五种IO模型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#IO复用的概念"><span class="toc-number">3.</span> <span class="toc-text">IO复用的概念</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#select函数的使用"><span class="toc-number">4.</span> <span class="toc-text">select函数的使用</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#select原型"><span class="toc-number">4.1.</span> <span class="toc-text">select原型</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#文件描述符就绪条件"><span class="toc-number">4.2.</span> <span class="toc-text">文件描述符就绪条件</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#使用select制作简易回显服务器"><span class="toc-number">4.3.</span> <span class="toc-text">使用select制作简易回显服务器</span></a></li></ol></li></ol>
+		
+		</div>
+		
+		<p>最近玩命学习linux下网络编程，终于对这些奇怪的系统API们有了一点了解。今天研究了下IO复用的技术，发现其实服务器的确都是遵循某种框架（模式）编写而成，因此先将这些模式以及概念总结如下。</p>
 <h4 id="同步和异步以及阻塞和非阻塞">同步和异步以及阻塞和非阻塞</h4><p>简单来说，同步(sync)指的是事情必须一件一件地做，调用者必须等待被调用过程返回。异步则是指调用后结果并不能立刻得到，而是由某种事件或信号触发告知调用者（因此并不是顺序执行的事件，也许内核在后台新开了线程在执行？）。</p>
 <p>阻塞（block）主要指的是进程状态，只在调用结果返回之前进程进入阻塞态，不会被CPU调度。而非阻塞则指某过程调用后立刻返回当时的数据可用性情况，如果数据尚不可用，自然而然可以使用轮询不断调用该过程来检测数据可用性，但这样比较浪费资源，但是进程不会因此而暂停，而是一直处于被激活的状态。</p>
 <h4 id="Linux下五种IO模型">Linux下五种IO模型</h4><p>linux内核提供了五种IO模型，分别如下：</p>
@@ -152,88 +155,372 @@
 <h5 id="使用select制作简易回显服务器">使用select制作简易回显服务器</h5><p>主要思路就是：首先将监听描述符添加进readfd（判断可读即可），在一个大的循环体内调用select，判断监听描述符是否就绪，如果就绪表明有新的连接可以接受，则接受，并将接受后的连接描述符添加进readfd，然后如果其他连接描述符也就绪，则表明可以接受客户端数据，则处理客户端数据（回显），最后重新循环。</p>
 <p>主要代码如下：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//用于使用select处理IO复用</span></span><br><span class="line"><span class="comment">//参数必定是一个已开始监听的listenfd</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">DoSelect</span><span class="params">(<span class="keyword">int</span> listenfd)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	<span class="comment">//客户端连接socket描述符，将存储在vector中</span></span><br><span class="line">	<span class="keyword">int</span> connfd;</span><br><span class="line">	<span class="comment">//记录最大描述符值</span></span><br><span class="line">	<span class="keyword">int</span> maxfd;</span><br><span class="line">	<span class="comment">//记录select返回的可用描述符个数</span></span><br><span class="line">	<span class="keyword">int</span> ready;</span><br><span class="line">	<span class="comment">//客户端地址结构体以及其长度</span></span><br><span class="line">	sockaddr_in caddr;</span><br><span class="line">	socklen_t caddrlen = <span class="keyword">sizeof</span>(caddr);</span><br><span class="line">	<span class="comment">//文件描述符fd_set结构（只用于判断可读性）</span></span><br><span class="line">	fd_set readfd;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//开始循环</span></span><br><span class="line">	<span class="keyword">while</span>(<span class="keyword">true</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="comment">//clear all</span></span><br><span class="line">		FD_ZERO(&amp;readfd);</span><br><span class="line">		<span class="comment">//首先将监听socket描述符添加进fd_set结构体</span></span><br><span class="line">		FD_SET(listenfd,&amp;readfd);</span><br><span class="line">		<span class="comment">//更新最大描述符值</span></span><br><span class="line">		maxfd = listenfd;</span><br><span class="line">		<span class="comment">//重新添加客户端连接描述符</span></span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; <span class="number">10</span>;i++)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">if</span>(ClientConnfd[i] &gt; <span class="number">0</span>)</span><br><span class="line">			&#123;</span><br><span class="line">				maxfd = maxfd &lt; ClientConnfd[i] ? ClientConnfd[i] : maxfd;</span><br><span class="line">				FD_SET(ClientConnfd[i],&amp;readfd);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">//调用select</span></span><br><span class="line">		ready = select(maxfd + <span class="number">1</span>,&amp;readfd,NULL,NULL,NULL);</span><br><span class="line">		<span class="comment">//select出错</span></span><br><span class="line">		<span class="keyword">if</span>(ready == -<span class="number">1</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="built_in">cout</span> &lt;&lt; <span class="string">"select出错"</span> &lt;&lt; endl;</span><br><span class="line">			<span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="function"><span class="keyword">else</span> <span class="title">if</span><span class="params">(ready == 0)</span></span><br><span class="line">			<span class="keyword">continue</span></span>;</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">		&#123;</span><br><span class="line">			<span class="comment">//检查监听描述符是否就绪</span></span><br><span class="line">			<span class="keyword">if</span>(FD_ISSET(listenfd,&amp;readfd))</span><br><span class="line">			&#123;</span><br><span class="line">				<span class="comment">//如果就绪说明有新的连接可以接受</span></span><br><span class="line">				<span class="keyword">if</span>((connfd = accept(listenfd,(<span class="keyword">struct</span> sockaddr*)&amp;caddr,&amp;caddrlen)) == -<span class="number">1</span>)</span><br><span class="line">				&#123;</span><br><span class="line">					<span class="keyword">if</span>(errno == EINTR)</span><br><span class="line">						<span class="keyword">continue</span>;</span><br><span class="line">					<span class="keyword">else</span></span><br><span class="line">					&#123;</span><br><span class="line">						<span class="built_in">cout</span> &lt;&lt; <span class="string">"accept出错"</span> &lt;&lt; endl;</span><br><span class="line">						<span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">					&#125;</span><br><span class="line">				&#125;</span><br><span class="line">				<span class="comment">//输出新连接信息到终端</span></span><br><span class="line">				<span class="built_in">cout</span> &lt;&lt; <span class="string">"客户端："</span> &lt;&lt; inet_ntoa(caddr.sin_addr) &lt;&lt; <span class="string">"已连接"</span> &lt;&lt; endl;</span><br><span class="line">				<span class="comment">//将新连接的客户端连接描述符添加进vector</span></span><br><span class="line">				<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; <span class="number">10</span>;i++)</span><br><span class="line">					<span class="keyword">if</span>(ClientConnfd[i] &lt; <span class="number">0</span>)</span><br><span class="line">					&#123;</span><br><span class="line">						ClientConnfd[i] = connfd;</span><br><span class="line">						<span class="keyword">break</span>;</span><br><span class="line">					&#125;</span><br><span class="line">				<span class="comment">//同时将该描述符添加进select集合中</span></span><br><span class="line">				FD_SET(connfd,&amp;readfd);</span><br><span class="line">				<span class="comment">//更新最大描述符值</span></span><br><span class="line">				maxfd = (maxfd &lt; connfd ? connfd : maxfd);</span><br><span class="line">				<span class="comment">//判断是否只有监听描述符就绪（即没有已连接的客户端发送消息，只有新连接请求）</span></span><br><span class="line">				<span class="keyword">if</span>(ready == <span class="number">1</span>)</span><br><span class="line">					<span class="keyword">continue</span>;</span><br><span class="line">			&#125;</span><br><span class="line">			DoEcho(&amp;readfd);</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>完整代码在我的github上：<a href="https://github.com/MorningCoder/NetworkPrograming" target="_blank" rel="external">MorningCoder</a>。欢迎访问！</p>
-
-      </div>
-      <footer class="article-footer">
-        <a data-url="http://yoursite.com/2015/01/26/IO复用技术之select总结/" data-id="ci7k42vua000034ijgslyn77t" class="article-share-link">分享到</a>
-        
-        
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/">linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/网络编程/">网络编程</a></li></ul>
-
-      </footer>
-    </div>
-  </article>
   
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
 
-            </div>
-          </section>
-          <aside id="sidebar">
-  <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
-  <div class="sidebar-top">
-    <p>关注我 :</p>
-    <ul class="social-links">
-      
-    </ul>
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/linux/">linux</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/linux/">linux</a><a href="/tags/网络编程/">网络编程</a>
   </div>
-  
-    
-<nav id="article-nav">
-  
-    <a href="/2015/02/03/Linux下互斥锁以及条件变量的使用/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">下一篇</strong>
-      <p class="article-nav-title">
-        
-          Linux下互斥锁以及条件变量的使用
-        
-      </p>
-      <i class="icon" id="icon-chevron-right"></i>
-    </a>
-  
-  
-    <a href="/2015/01/23/linux网络编程基础API/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">上一篇</strong>
-      <p class="article-nav-title">linux网络编程基础API</p>
-      <i class="icon" id="icon-chevron-left"></i>
-    </a>
-  
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://yoursite.com/2015/01/26/IO复用技术之select总结/" data-title="IO复用技术之select总结 | Cod&#39;s Blog" data-tsina="null" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2015/02/03/Linux下互斥锁以及条件变量的使用/" title="Linux下互斥锁以及条件变量的使用">
+  <strong>上一篇：</strong><br/>
+  <span>
+  Linux下互斥锁以及条件变量的使用</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2015/01/23/linux网络编程基础API/"  title="linux网络编程基础API">
+ <strong>下一篇：</strong><br/> 
+ <span>linux网络编程基础API
+</span>
+</a>
+</div>
+
 </nav>
 
-  
-  <div class="widgets-container">
-    
+	
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#同步和异步以及阻塞和非阻塞"><span class="toc-number">1.</span> <span class="toc-text">同步和异步以及阻塞和非阻塞</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Linux下五种IO模型"><span class="toc-number">2.</span> <span class="toc-text">Linux下五种IO模型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#IO复用的概念"><span class="toc-number">3.</span> <span class="toc-text">IO复用的概念</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#select函数的使用"><span class="toc-number">4.</span> <span class="toc-text">select函数的使用</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#select原型"><span class="toc-number">4.1.</span> <span class="toc-text">select原型</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#文件描述符就绪条件"><span class="toc-number">4.2.</span> <span class="toc-text">文件描述符就绪条件</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#使用select制作简易回显服务器"><span class="toc-number">4.3.</span> <span class="toc-text">使用select制作简易回显服务器</span></a></li></ol></li></ol>
+ 
   </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/C/" title="C++">C++<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Python/" title="Python">Python<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/linux/" title="linux">linux<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/算法/" title="算法">算法<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/设计模式/" title="设计模式">设计模式<sup>4</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/随笔/" title="随笔">随笔<sup>1</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/设计模式/" title="设计模式">设计模式<sup>4</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/linux/" title="linux">linux<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/C/" title="C++">C++<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Python/" title="Python">Python<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/网络编程/" title="网络编程">网络编程<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/生活/" title="生活">生活<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/算法/" title="算法">算法<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="https://coderq.com" target="_blank" title="一个面向程序员交流分享的新一代社区">码农圈</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://wuchong.me" target="_blank" title="Jark&#39;s Blog">Jark&#39;s Blog</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
 </aside>
-        </div>
-      </div>
+</div>
     </div>
-    <footer id="footer">
-  
-  <div class="container">
-    <div class="container-inner">
-      <a id="back-to-top" href="javascript:;"><i class="icon" id="icon-angle-up"></i></a>
-      <div class="credit">
-        <h1 class="logo-wrap">
-          <a href="/" class="logo"></a>
-        </h1>
-        <p>&copy; 2015 Cod</p>
-        <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
-      </div>
-    </div>
-  </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m Larry Page in Google. <br/>
+			This is my blog,believe it or not.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2015 
+		
+		<a href="http://yoursite.com/about" target="_blank" title="Cod">Cod</a>
+		
+		</p>
+</div>
 </footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
     
+});
+</script>
 
 
-  <script src="http://code.jquery.com/jquery-2.1.3.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#nothing"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
 
 
 
 
 
 
-<script src="/js/html-patch.js" type="text/javascript"></script>
-<script src="/js/script.js" type="text/javascript"></script>
 
-  </div>
-</body>
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
 </html>

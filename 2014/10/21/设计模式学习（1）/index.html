@@ -1,11 +1,17 @@
-<!DOCTYPE html>
-<html>
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
 <head>
-  <meta charset="utf-8">
+  <meta charset="UTF-8">
   
-  <title>设计模式学习（1） | Cod&#39;s Blog</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="去年软考时开始接触到了设计模式，但当时没有很踏实的学习，直到最近才发现设计模式的重要性，于是开始认认真真地研究了一下，发现的确很重要。尤其是在面向对象软件设计中，设计模式这个东西的应用很广泛，熟练使用可以让我们的开发过程更加快捷，同时产品也能有更高的质量。所以也是在这里整理了一些学到的东西。
+    <title>设计模式学习（1） | Cod&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Cod">
+    
+
+    
+    <meta name="description" content="去年软考时开始接触到了设计模式，但当时没有很踏实的学习，直到最近才发现设计模式的重要性，于是开始认认真真地研究了一下，发现的确很重要。尤其是在面向对象软件设计中，设计模式这个东西的应用很广泛，熟练使用可以让我们的开发过程更加快捷，同时产品也能有更高的质量。所以也是在这里整理了一些学到的东西。
 基本概念设计模式，顾名思义就是设计的一种模式，很多经验老道的设计师（不论是什么领域）总能够快速做出良好的设">
 <meta property="og:type" content="article">
 <meta property="og:title" content="设计模式学习（1）">
@@ -17,88 +23,85 @@
 <meta name="twitter:title" content="设计模式学习（1）">
 <meta name="twitter:description" content="去年软考时开始接触到了设计模式，但当时没有很踏实的学习，直到最近才发现设计模式的重要性，于是开始认认真真地研究了一下，发现的确很重要。尤其是在面向对象软件设计中，设计模式这个东西的应用很广泛，熟练使用可以让我们的开发过程更加快捷，同时产品也能有更高的质量。所以也是在这里整理了一些学到的东西。
 基本概念设计模式，顾名思义就是设计的一种模式，很多经验老道的设计师（不论是什么领域）总能够快速做出良好的设">
-  
-  
 
-  <link rel="stylesheet" href="/css/style.css" type="text/css">
-  
-  
-  
-
-
-  
-
-  
-    <link href='//fonts.useso.com/css?family=Titillium+Web:300,400,600' rel='stylesheet' type='text/css'>
-    <link href="//fonts.useso.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
-  
-
+    
+    <link rel="alternative" href="/atom.xml" title="Cod&#39;s Blog" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
 </head>
 
-<body>
-  <div id="wrap">
-    <header id="header">
-  <div id="header-outer" class="outer">
-    <div class="container">
-      <div class="container-inner">
-        <div id="header-title">
-          <h1 class="logo-wrap">
-            <a href="/" class="logo"></a>
-          </h1>
-          
-            <h2 class="subtitle-wrap">
-              <p class="subtitle">Consider Yourself Denied</p>
-            </h2>
-          
-        </div>
-        <div id="header-inner" class="nav-container">
-          <a id="main-nav-toggle" class="nav-icon"></a>
-          <div class="nav-container-inner">
-            <ul id="main-nav">
-              
-            </ul>
-            <nav id="sub-nav">
-              <div id="search-form-wrap">
-                <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="搜索"><input type="hidden" name="q" value="site:http://yoursite.com"></form>
-              </div>
-            </nav>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="Cod&#39;s Blog" title="Cod&#39;s Blog"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Cod&#39;s Blog">Cod&#39;s Blog</a></h1>
+				<h2 class="blog-motto">Consider Yourself Denied</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:yoursite.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2014/10/21/设计模式学习（1）/" title="设计模式学习（1）" itemprop="url">设计模式学习（1）</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://yoursite.com/about" title="Cod" target="_blank" itemprop="author">Cod</a>
+		
+  <p class="article-time">
+    <time datetime="2014-10-21T09:15:32.000Z" itemprop="datePublished"> 发表于 2014-10-21</time>
+    
+  </p>
 </header>
-    <div class="container">
-      <div class="main-body container-inner">
-        <div class="main-body-inner">
-          <section id="main">
-            <div class="main-body-header">
-
-              <h1 class="header"><a class="page-title-link" href="/categories/设计模式/">设计模式</a></h1>
-            </div>
-            <div class="main-body-content">
-              
-  <article id="post-设计模式学习（1）" class="article article-single article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-      <!--  -->
-      
-        <header class="article-header">
-          
-  
-    <h1 class="article-title" itemprop="name">
-      设计模式学习（1）
-    </h1>
-  
-
-        </header>
-      
-      <p class="article-byline">
-        <a href="/2014/10/21/设计模式学习（1）/" class="article-date">
-  <time datetime="2014-10-21T09:15:32.000Z" itemprop="datePublished">2014-10-21</time>
-</a>
-      </p>
-      <div class="article-entry" itemprop="articleBody">
-        <p>去年软考时开始接触到了设计模式，但当时没有很踏实的学习，直到最近才发现设计模式的重要性，于是开始认认真真地研究了一下，发现的确很重要。尤其是在面向对象软件设计中，设计模式这个东西的应用很广泛，熟练使用可以让我们的开发过程更加快捷，同时产品也能有更高的质量。所以也是在这里整理了一些学到的东西。</p>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#基本概念"><span class="toc-number">1.</span> <span class="toc-text">基本概念</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#分类"><span class="toc-number">2.</span> <span class="toc-text">分类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#描述方式"><span class="toc-number">3.</span> <span class="toc-text">描述方式</span></a></li></ol>
+		
+		</div>
+		
+		<p>去年软考时开始接触到了设计模式，但当时没有很踏实的学习，直到最近才发现设计模式的重要性，于是开始认认真真地研究了一下，发现的确很重要。尤其是在面向对象软件设计中，设计模式这个东西的应用很广泛，熟练使用可以让我们的开发过程更加快捷，同时产品也能有更高的质量。所以也是在这里整理了一些学到的东西。</p>
 <h4 id="基本概念">基本概念</h4><p>设计模式，顾名思义就是设计的一种模式，很多经验老道的设计师（不论是什么领域）总能够快速做出良好的设计，而新手却面对众多选择而无从下手。其中的原因就是，很多问题的解决方案往往都是基于以往使用过的方法，老设计师们会熟练复用那些好的解决方案，从而能够良性循环。这些过去使用过的好的设计方法，或者说积累的好的经验，就是设计模式。一旦懂得了设计的模式，对于相同类型的问题，就可以复用过去的方法，从而迅速找到解决方法。</p>
 <p>在软件设计领域中，尤其在面向对象系统设计中，设计模式的重要性被放在了显著地位。一个好的面向对象软件系统或多或少使用了一些前人总结的设计模式，而我们要学习的就是这些前人的总结，从而加快我们的开发过程，也可以保证开发出来的产品可以很方便的修改或添加新功能。</p>
 <h4 id="分类">分类</h4><p>那么具体有哪些设计模式呢？根据 gang of four所著《Design Pattern》一书所说，总共有23种已定义的设计模式，当然你也可以再创造新的模式。同时《Design Pattern》一书把设计模式分成三种：创建型，行为型以及结构型模式。顾名思义，创建型模式与对象的创建有关；结构型模式用于定制对象之间的结构（继承或者组合关系）；行为型用于定制对象的行为，例如针对不同参数对象该如何运行等。这23种模式列举如下：</p>
@@ -170,88 +173,372 @@
 </table>
 <p>在模式分类中，还把这些模式分为主要是用于类还是用于对象，创建型<strong>类</strong>模式将对象的部分创建工作推迟到子类，而创建型<strong>对象</strong>模式则将他延迟到另一个对象中。结构型<strong>类</strong>模式使用继承机制来组合类，而结构型<strong>对象</strong>模式则描述了对象的组合方式。行为型<strong>类</strong>模式使用继承描述算法和控制流，行为型<strong>对象</strong>模式则描述一组对象怎样协作完成单个对象无法完成的任务。</p>
 <h4 id="描述方式">描述方式</h4><p>为了描述一个设计模式，首先我们需要一些元素（或者说术语）：模式名、意图、动机、参与者、协作以及结构等等。这些术语用于描述一个设计模式的各个方面，例如参与者表示设计模式中的类或者对象以及他们各自的职责，协作表示参与者如何相互协作以实现该模式的目的等。这些术语看到名称就能明白其含义，就不必多说了。描述一种面向对象系统最常用的方法就是UML图，UML比较简单，也就不用多说了。</p>
-
-      </div>
-      <footer class="article-footer">
-        <a data-url="http://yoursite.com/2014/10/21/设计模式学习（1）/" data-id="ci7k42vv4000c34ijn0s0ft9f" class="article-share-link">分享到</a>
-        
-        
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/设计模式/">设计模式</a></li></ul>
-
-      </footer>
-    </div>
-  </article>
   
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
 
-            </div>
-          </section>
-          <aside id="sidebar">
-  <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
-  <div class="sidebar-top">
-    <p>关注我 :</p>
-    <ul class="social-links">
-      
-    </ul>
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/设计模式/">设计模式</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/设计模式/">设计模式</a>
   </div>
-  
-    
-<nav id="article-nav">
-  
-    <a href="/2014/10/30/Python学习笔记（3）：函数与模块定义/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">下一篇</strong>
-      <p class="article-nav-title">
-        
-          Python学习笔记（3）：函数与模块定义
-        
-      </p>
-      <i class="icon" id="icon-chevron-right"></i>
-    </a>
-  
-  
-    <a href="/2014/10/12/Python学习笔记（2）：基础概念/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">上一篇</strong>
-      <p class="article-nav-title">Python学习笔记（2）：基础概念</p>
-      <i class="icon" id="icon-chevron-left"></i>
-    </a>
-  
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://yoursite.com/2014/10/21/设计模式学习（1）/" data-title="设计模式学习（1） | Cod&#39;s Blog" data-tsina="null" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2014/10/30/Python学习笔记（3）：函数与模块定义/" title="Python学习笔记（3）：函数与模块定义">
+  <strong>上一篇：</strong><br/>
+  <span>
+  Python学习笔记（3）：函数与模块定义</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2014/10/12/Python学习笔记（2）：基础概念/"  title="Python学习笔记（2）：基础概念">
+ <strong>下一篇：</strong><br/> 
+ <span>Python学习笔记（2）：基础概念
+</span>
+</a>
+</div>
+
 </nav>
 
-  
-  <div class="widgets-container">
-    
+	
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#基本概念"><span class="toc-number">1.</span> <span class="toc-text">基本概念</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#分类"><span class="toc-number">2.</span> <span class="toc-text">分类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#描述方式"><span class="toc-number">3.</span> <span class="toc-text">描述方式</span></a></li></ol>
+ 
   </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/C/" title="C++">C++<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Python/" title="Python">Python<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/linux/" title="linux">linux<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/算法/" title="算法">算法<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/设计模式/" title="设计模式">设计模式<sup>4</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/随笔/" title="随笔">随笔<sup>1</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/设计模式/" title="设计模式">设计模式<sup>4</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/linux/" title="linux">linux<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/C/" title="C++">C++<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Python/" title="Python">Python<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/网络编程/" title="网络编程">网络编程<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/生活/" title="生活">生活<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/算法/" title="算法">算法<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="https://coderq.com" target="_blank" title="一个面向程序员交流分享的新一代社区">码农圈</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://wuchong.me" target="_blank" title="Jark&#39;s Blog">Jark&#39;s Blog</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
 </aside>
-        </div>
-      </div>
+</div>
     </div>
-    <footer id="footer">
-  
-  <div class="container">
-    <div class="container-inner">
-      <a id="back-to-top" href="javascript:;"><i class="icon" id="icon-angle-up"></i></a>
-      <div class="credit">
-        <h1 class="logo-wrap">
-          <a href="/" class="logo"></a>
-        </h1>
-        <p>&copy; 2015 Cod</p>
-        <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
-      </div>
-    </div>
-  </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m Larry Page in Google. <br/>
+			This is my blog,believe it or not.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2015 
+		
+		<a href="http://yoursite.com/about" target="_blank" title="Cod">Cod</a>
+		
+		</p>
+</div>
 </footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
     
+});
+</script>
 
 
-  <script src="http://code.jquery.com/jquery-2.1.3.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#nothing"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
 
 
 
 
 
 
-<script src="/js/html-patch.js" type="text/javascript"></script>
-<script src="/js/script.js" type="text/javascript"></script>
 
-  </div>
-</body>
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
 </html>

@@ -1,11 +1,17 @@
-<!DOCTYPE html>
-<html>
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
 <head>
-  <meta charset="utf-8">
+  <meta charset="UTF-8">
   
-  <title>Cod&#39;s Blog</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description">
+    <title>Cod&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Cod">
+    
+
+    
+    <meta name="description">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Cod's Blog">
 <meta property="og:url" content="http://yoursite.com/index.html">
@@ -14,396 +20,1078 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Cod's Blog">
 <meta name="twitter:description">
-  
-  
 
-  <link rel="stylesheet" href="/css/style.css" type="text/css">
-  
-  
-  
-
-
-  
-
-  
-    <link href='//fonts.useso.com/css?family=Titillium+Web:300,400,600' rel='stylesheet' type='text/css'>
-    <link href="//fonts.useso.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
-  
-
+    
+    <link rel="alternative" href="/atom.xml" title="Cod&#39;s Blog" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
 </head>
 
-<body>
-  <div id="wrap">
-    <header id="header">
-  <div id="header-outer" class="outer">
-    <div class="container">
-      <div class="container-inner">
-        <div id="header-title">
-          <h1 class="logo-wrap">
-            <a href="/" class="logo"></a>
-          </h1>
-          
-            <h2 class="subtitle-wrap">
-              <p class="subtitle">Consider Yourself Denied</p>
-            </h2>
-          
-        </div>
-        <div id="header-inner" class="nav-container">
-          <a id="main-nav-toggle" class="nav-icon"></a>
-          <div class="nav-container-inner">
-            <ul id="main-nav">
-              
-            </ul>
-            <nav id="sub-nav">
-              <div id="search-form-wrap">
-                <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="搜索"><input type="hidden" name="q" value="site:http://yoursite.com"></form>
-              </div>
-            </nav>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="Cod&#39;s Blog" title="Cod&#39;s Blog"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Cod&#39;s Blog">Cod&#39;s Blog</a></h1>
+				<h2 class="blog-motto">Consider Yourself Denied</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:yoursite.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main">
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/03/22/使用C-11实现简单的生产者消费者队列/" title="" itemprop="url"></a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://yoursite.com/about" title="Cod" target="_blank" itemprop="author">Cod</a>
+		
+  <p class="article-time">
+    <time datetime="2015-03-22T06:35:27.977Z" itemprop="datePublished"> 发表于 2015-03-22</time>
+    
+  </p>
 </header>
-    <div class="container">
-      <div class="main-body container-inner">
-        <div class="main-body-inner">
-          <section id="main">
-            <div class="main-body-header">
-
-              <h1 class="header"><em class="page-title-link" data-url="home">主页</em></h1>
-            </div>
-            <div class="main-body-content">
-              
-      <div class="article-row">
-    
+    <div class="article-content">
         
-  <article class="article article-summary">
-    <div class="article-summary-inner">
-      <a href="/2015/03/22/使用C-11实现简单的生产者消费者队列/" class="thumbnail">
-  
-  <span class="thumbnail-image thumbnail-none"></span>
+        <p>title: 使用C++11实现简单的生产者消费者队列<br>date: 2015-03-13 19:13:38<br>tags: C++<br>categories: C++</p>
+<hr>
+<p>c++11的新标准对多线程提供了非常好的支持，我使用互斥量以及条件变量简单实现了一个单生产者单消费者对列，两个线程可以进行并发读写并保持同步。类的定义如下：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="keyword">class</span> Buffer</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	Buffer(std::size_t size)</span><br><span class="line">	:size(size),<span class="built_in">queue</span>(),lock(),cond()</span><br><span class="line">	&#123;</span><br><span class="line">	&#125;</span><br><span class="line">	Buffer(<span class="keyword">const</span> Buffer&amp; other)</span><br><span class="line">	:size(other.size),<span class="built_in">queue</span>(other.<span class="built_in">queue</span>),lock(),cond()</span><br><span class="line">	&#123;</span><br><span class="line">	&#125;</span><br><span class="line">	~Buffer() = <span class="keyword">default</span>;</span><br><span class="line">	Buffer&amp; <span class="keyword">operator</span>=(<span class="keyword">const</span> Buffer&amp;) = <span class="keyword">delete</span>;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">Push</span><span class="params">(<span class="keyword">const</span> T&amp;)</span></span>;</span><br><span class="line">	std::<span class="built_in">shared_ptr</span>&lt;T&gt; Pop();</span><br><span class="line">	<span class="function"><span class="keyword">bool</span> <span class="title">Empty</span><span class="params">()</span> <span class="keyword">const</span></span>;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	std::size_t size;</span><br><span class="line">	std::<span class="stl_container"><span class="built_in">deque</span>&lt;T&gt;</span> <span class="built_in">queue</span>;</span><br><span class="line">	<span class="keyword">mutable</span> std::mutex lock;</span><br><span class="line">	std::condition_variable cond;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>首先这个类没有定义拷贝赋值运算符<code>Buffer&amp; operator=(const Buffer&amp;) = delete;</code>，原因是其中使用到的mutex本身不能被拷贝赋值，如果一个已被初始化的该类对象被重新赋值，它其中包含的mutex可能因失效而导致程序抛出异常。另外没有定义移动赋值的操作（构造函数+运算符），这个暂时用的不多，等需要时再添加即可。</p>
+<p>下面有三个功能函数，注意到其中的队列弹出操作（pop）的返回值是一个智能指针，并且没有将返回头对象和弹出头对象两个操作分开。根据《C++ Concurrency in Action》一书中的建议，如果将上述两个操作分开写，很容易造成数据竞争（data race），很有可能一个线程执行front的同时另一个执行pop，所以最好的方法就是将对象原子性地返回并删除原队列中对象，返回的对象以智能指针管理其声明期。这个Pop操作代码如下：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line">std::<span class="built_in">shared_ptr</span>&lt;T&gt; Buffer&lt;T&gt;::Pop()</span><br><span class="line">&#123;</span><br><span class="line">	std::unique_lock&lt;std::mutex&gt; guard(lock);</span><br><span class="line">	<span class="keyword">while</span>(<span class="built_in">queue</span>.empty())</span><br><span class="line">	&#123;</span><br><span class="line">		std::<span class="built_in">cout</span> &lt;&lt; <span class="string">"pop waiting"</span> &lt;&lt; std::endl;</span><br><span class="line">		cond.wait(guard);</span><br><span class="line">	&#125;</span><br><span class="line">	std::<span class="built_in">shared_ptr</span>&lt;T&gt; ptr = std::make_shared&lt;T&gt;(<span class="built_in">queue</span>.front());</span><br><span class="line">	<span class="built_in">queue</span>.pop_front();</span><br><span class="line">	<span class="comment">//std::this_thread::sleep_for(std::chrono::seconds(1));</span></span><br><span class="line">	cond.notify_one();</span><br><span class="line">	<span class="keyword">return</span> ptr;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>可以看到首先使用unique_lock来保证本成员函数的加锁，接着如果队列为空，使用条件变量等待（等待时互斥量被解锁）。如果可以弹出对象，则新建智能指针并分配空间，通知该条件变量上的其他线程，最后返回该指针。这样既保证了线程间的同步，也保证对共享队列的操作不存在竞争条件。</p>
+<p>Push操作跟这个类似，代码如下：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="keyword">void</span> Buffer&lt;T&gt;::Push(<span class="keyword">const</span> T&amp; production)</span><br><span class="line">&#123;</span><br><span class="line">	std::unique_lock&lt;std::mutex&gt; guard(lock);</span><br><span class="line">	<span class="keyword">while</span>(<span class="built_in">queue</span>.size() == size)</span><br><span class="line">	&#123;</span><br><span class="line">		std::<span class="built_in">cout</span> &lt;&lt; <span class="string">"push waiting "</span> &lt;&lt; std::endl;</span><br><span class="line">		cond.wait(guard);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">queue</span>.push_back(production);</span><br><span class="line">	<span class="comment">//std::this_thread::sleep_for(std::chrono::milliseconds(1));</span></span><br><span class="line">	cond.notify_one();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>同样的道理，先判断队列是否满，然后添加产品并通知其他线程。</p>
+<p>还有一个empty函数，这个函数只能在最后生产消费操作完成后用于判断是否缓冲区为空。不必用于判断后进行队列弹出操作，因为本身的弹出操作已经负责了同步和检测功能。</p>
+<p>我们使用下列代码简单测试一下，这是生产者和消费者函数：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Producer</span><span class="params">(Buffer&lt;T&gt;&amp; buf,<span class="built_in">std</span>::function&lt;T()</span>&gt; fun)</span><br><span class="line"></span>&#123;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; <span class="number">10000</span>;++i)</span><br><span class="line">	&#123;	</span><br><span class="line">		buf.Push(fun());</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Consumer</span><span class="params">(Buffer&lt;T&gt;&amp; buf)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; <span class="number">10000</span>;++i)</span><br><span class="line">	&#123;</span><br><span class="line">		std::<span class="built_in">cout</span> &lt;&lt; *(buf.Pop()) &lt;&lt; std::endl;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这里我为了增加一点灵活性在生产者函数中使用了std::function类，这个参数作为一个产品的生成器被传入生产者线程。使用该可调用对象产生的对象作为产品放入队列中。总共生产者和消费者执行了10000次读写操作。这个数值可以更改来看看线程调度的过程。</p>
+<p>主函数如下：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">getInt</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	<span class="comment">//generate random numbers from 0 to 1000</span></span><br><span class="line">	<span class="keyword">static</span> std::uniform_int_distribution&lt;<span class="keyword">int</span>&gt; range(<span class="number">0</span>,<span class="number">1000</span>);</span><br><span class="line">	<span class="comment">//get default random engine</span></span><br><span class="line">	<span class="keyword">static</span> std::default_random_engine engine;</span><br><span class="line">	<span class="keyword">return</span> range(engine);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	Buffer&lt;<span class="keyword">int</span>&gt; buffer(<span class="number">100</span>);</span><br><span class="line">	std::<span class="function">thread <span class="title">produce</span><span class="params">(Producer&lt;<span class="keyword">int</span>&gt;,<span class="built_in">std</span>::ref(buffer)</span>,getInt)</span>;</span><br><span class="line">	std::<span class="function">thread <span class="title">consume</span><span class="params">(Consumer&lt;<span class="keyword">int</span>&gt;,<span class="built_in">std</span>::ref(buffer)</span>)</span>;</span><br><span class="line">	produce.join();</span><br><span class="line">	consume.join();</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>其中getInt函数用来返回随机int值，这个函数可以自行修改，以产生不同类型的对象，在主函数中指定队列长度（100），然后开启生产者消费者两个线程。我在fedora21下使用下列命令编译：<code>g++ -std=c++11 -pthread -o buffer buffer.cpp</code>，并且将执行后的输出重定向到一个文件中，执行结果如下：</p>
+<p><img src="/img/result1.png" alt="result1"><br>这是文件开头的几行<br><img src="/img/result2.png" alt="result2"><br>这是文件结尾。</p>
+<p>可以看出这其中线程调度的顺序，大体上是平均调度的。并且可以看出生产者生产产品的速率要快（频繁产生push waiting），文件最后则没有出现生产者等待的情况了。</p>
 
-</a>
-      <div class="article-meta">
-        <p class="category"></p>
-        <p class="date"><time datetime="2015-03-22T06:35:27.977Z" itemprop="datePublished">2015-03-22</time></p>
-      </div>
-      <h2 class="article-title">
-        <a href="/2015/03/22/使用C-11实现简单的生产者消费者队列/" class="title"></a>
-      </h2>
-      <p class="article-excerpt">
         
-        title: 使用C++11实现简单的生产者消费者队列date: 2015-03-13 19:13:38tags: C++categories: C++
-
-c++11的新标准对多线程提供了非常好的支持，我使用互斥量以及条件变量简单实现了一个单生产者单消费者对列，两个线程可以进行并发读写并保持同步。类的定义如下：123456789101112131415161718192021222324templ
-      </p>
+        
+        <p class="article-more-link">
+          
+       </p>
     </div>
-  </article>
-
-    
-  
-        
-  <article class="article article-summary">
-    <div class="article-summary-inner">
-      <a href="/2015/03/19/常用排序算法总结/" class="thumbnail">
-  
-  <span class="thumbnail-image thumbnail-none"></span>
-
-</a>
-      <div class="article-meta">
-        <p class="category"><a class="article-category-link" href="/categories/算法/">算法</a></p>
-        <p class="date"><time datetime="2015-03-19T15:10:41.000Z" itemprop="datePublished">2015-03-19</time></p>
-      </div>
-      <h2 class="article-title">
-        <a href="/2015/03/19/常用排序算法总结/" class="title">常用排序算法总结</a>
-      </h2>
-      <p class="article-excerpt">
-        
-        记得当年大一时学习了传说中的冒泡排序，可惜智商不够总是没彻底理解，现在到了找工作的时候都要考排序算法，所以是时候整理一下各种常用算法了，至少可以有个模板吧！
-简单排序算法选择排序原理选择排序应该就是最简单的排序方法了，它的思想就是找（选择）出一个序列中最小（大）的数，放到最开头，然后在剩下的里面接着找最小（大）的那个，再放到开头，最后整个数组即为有序。在实现时，可以简单地遍历整个数组，一般设置一个
-      </p>
-    </div>
-  </article>
-
-    
-      </div>
-    
-  
-      <div class="article-row">
-    
-        
-  <article class="article article-summary">
-    <div class="article-summary-inner">
-      <a href="/2015/03/09/学习C-11新标准多线程支持/" class="thumbnail">
-  
-  <span class="thumbnail-image thumbnail-none"></span>
-
-</a>
-      <div class="article-meta">
-        <p class="category"><a class="article-category-link" href="/categories/C/">C++</a></p>
-        <p class="date"><time datetime="2015-03-09T13:08:46.000Z" itemprop="datePublished">2015-03-09</time></p>
-      </div>
-      <h2 class="article-title">
-        <a href="/2015/03/09/学习C-11新标准多线程支持/" class="title">学习C++11新标准多线程支持</a>
-      </h2>
-      <p class="article-excerpt">
-        
-        最近读了《C++ Concurrency in Action》一书，发现C++11新标准对多线程的支持的确达到了前所未有的高程度，完全可以和JAVA的线程模型相媲美。尤其是提供了std::async这种异步函数调用，免去了使用者调用底层API的痛苦，并且是跨平台的，所以的确值得大家用心学学。
-根据C++ Reference网站提供的文档，主要有如下几个头文件用于多线程支持：
-
-&amp;lt; threa
-      </p>
-    </div>
-  </article>
-
-    
-  
-        
-  <article class="article article-summary">
-    <div class="article-summary-inner">
-      <a href="/2015/02/03/Linux下互斥锁以及条件变量的使用/" class="thumbnail">
-  
-  <span class="thumbnail-image thumbnail-none"></span>
-
-</a>
-      <div class="article-meta">
-        <p class="category"><a class="article-category-link" href="/categories/linux/">linux</a></p>
-        <p class="date"><time datetime="2015-02-03T01:56:13.000Z" itemprop="datePublished">2015-02-03</time></p>
-      </div>
-      <h2 class="article-title">
-        <a href="/2015/02/03/Linux下互斥锁以及条件变量的使用/" class="title">Linux下互斥锁以及条件变量的使用</a>
-      </h2>
-      <p class="article-excerpt">
-        
-        在Linux环境下，POSIX标准为我们提供了很多用于进线程同步的系统调用，其中最常用的当属互斥锁（Mutex）和条件变量（Condition Variable），对这两个东西的掌握会给我们在并发条件下编程带来很多便利。
-POSIX互斥锁主要系统调用如下：123456#include &amp;lt;pthread.h&amp;gt;int pthread_mutex_init(pthread_mutex_t* 
-      </p>
-    </div>
-  </article>
-
-    
-      </div>
-    
-  
-      <div class="article-row">
-    
-        
-  <article class="article article-summary">
-    <div class="article-summary-inner">
-      <a href="/2015/01/26/IO复用技术之select总结/" class="thumbnail">
-  
-  <span class="thumbnail-image thumbnail-none"></span>
-
-</a>
-      <div class="article-meta">
-        <p class="category"><a class="article-category-link" href="/categories/linux/">linux</a></p>
-        <p class="date"><time datetime="2015-01-26T03:33:51.000Z" itemprop="datePublished">2015-01-26</time></p>
-      </div>
-      <h2 class="article-title">
-        <a href="/2015/01/26/IO复用技术之select总结/" class="title">IO复用技术之select总结</a>
-      </h2>
-      <p class="article-excerpt">
-        
-        最近玩命学习linux下网络编程，终于对这些奇怪的系统API们有了一点了解。今天研究了下IO复用的技术，发现其实服务器的确都是遵循某种框架（模式）编写而成，因此先将这些模式以及概念总结如下。
-同步和异步以及阻塞和非阻塞简单来说，同步(sync)指的是事情必须一件一件地做，调用者必须等待被调用过程返回。异步则是指调用后结果并不能立刻得到，而是由某种事件或信号触发告知调用者（因此并不是顺序执行的事件，
-      </p>
-    </div>
-  </article>
-
-    
-  
-        
-  <article class="article article-summary">
-    <div class="article-summary-inner">
-      <a href="/2015/01/23/linux网络编程基础API/" class="thumbnail">
-  
-  <span class="thumbnail-image thumbnail-none"></span>
-
-</a>
-      <div class="article-meta">
-        <p class="category"><a class="article-category-link" href="/categories/linux/">linux</a></p>
-        <p class="date"><time datetime="2015-01-23T02:26:07.000Z" itemprop="datePublished">2015-01-23</time></p>
-      </div>
-      <h2 class="article-title">
-        <a href="/2015/01/23/linux网络编程基础API/" class="title">linux网络编程基础API</a>
-      </h2>
-      <p class="article-excerpt">
-        
-        依稀记得大一时对网络编程强烈的好奇心，非常想知道如何将信息从本机传递到另一台机器。现在上了两年半大学，学了一学期计算机网络，可算是在网络方面有了一点理解。这个假期准备开始好好研究linux下的网络编程，顺便写写学习笔记。
-linux下网络编程的核心也是基础就是他提供的一堆系统调用，说白了就是一堆函数，学习这些基础API的用法对日后真正构建服务器有很大帮助。
-主机字节序与网络字节序的转换函数：123
-      </p>
-    </div>
-  </article>
-
-    
-      </div>
-    
-  
-      <div class="article-row">
-    
-        
-  <article class="article article-summary">
-    <div class="article-summary-inner">
-      <a href="/2014/12/14/设计模式学习之抽象工厂/" class="thumbnail">
-  
-  <span class="thumbnail-image thumbnail-none"></span>
-
-</a>
-      <div class="article-meta">
-        <p class="category"><a class="article-category-link" href="/categories/设计模式/">设计模式</a></p>
-        <p class="date"><time datetime="2014-12-14T03:23:40.000Z" itemprop="datePublished">2014-12-14</time></p>
-      </div>
-      <h2 class="article-title">
-        <a href="/2014/12/14/设计模式学习之抽象工厂/" class="title">设计模式学习之抽象工厂</a>
-      </h2>
-      <p class="article-excerpt">
-        
-        抽象工厂这个名字最初听起来好象很高端，不过在研究了一段时间后，再加上对面向对象理解的加深，对工厂的概念也就了解差不多了。简单来说，工厂就是用于产生产品的地方，在面向对象语言中，产品显而易见就是某种类对象。使用工厂的一个好处就是可以规范化对象的产生过程，并且提供了统一接口，使对象使用起来更加方便。还是先来几个标准定义：
-意图提供一个创建一系列相关或者相互依赖的对象的接口，而无需指定他们的具体的类。
-
-      </p>
-    </div>
-  </article>
-
-    
-  
-        
-  <article class="article article-summary">
-    <div class="article-summary-inner">
-      <a href="/2014/12/01/最简单的设计模式——单例模式/" class="thumbnail">
-  
-  <span class="thumbnail-image thumbnail-none"></span>
-
-</a>
-      <div class="article-meta">
-        <p class="category"><a class="article-category-link" href="/categories/设计模式/">设计模式</a></p>
-        <p class="date"><time datetime="2014-12-01T13:45:11.000Z" itemprop="datePublished">2014-12-01</time></p>
-      </div>
-      <h2 class="article-title">
-        <a href="/2014/12/01/最简单的设计模式——单例模式/" class="title">最简单的设计模式——单例模式</a>
-      </h2>
-      <p class="article-excerpt">
-        
-        单例模式应该算是最简单的设计模式了，它的目的很简单，即保证一个类仅有一个实例，并提供一个访问它的全局访问点。虽然这个模式很简单，但是用处却很广。举例来说，一个信息系统中负责访问数据库的类只能有一个；负责连接打印机的类只能有一个等等，现实中一个国家只能有一个总统，一个城市只能有一个市长也是很形象的例子。单例的另一个好处是它是对全局变量的一种改进，避免了全局变量污染命名空间的问题。单例类也可以有子类，
-      </p>
-    </div>
-  </article>
-
-    
-      </div>
-    
-  
-      <div class="article-row">
-    
-        
-  <article class="article article-summary">
-    <div class="article-summary-inner">
-      <a href="/2014/11/11/生活小记/" class="thumbnail">
-  
-  <span class="thumbnail-image thumbnail-none"></span>
-
-</a>
-      <div class="article-meta">
-        <p class="category"><a class="article-category-link" href="/categories/随笔/">随笔</a></p>
-        <p class="date"><time datetime="2014-11-11T13:51:38.000Z" itemprop="datePublished">2014-11-11</time></p>
-      </div>
-      <h2 class="article-title">
-        <a href="/2014/11/11/生活小记/" class="title">生活小记</a>
-      </h2>
-      <p class="article-excerpt">
-        
-        还记得高中时喜欢写随笔，写出的一些文字也受到过老师的嘉奖，现在过去了不过两年，却已经快忘却了文字的感觉。当时总觉得迷惘的感觉很酷，却没有真正体会过何为迷惘；当时总觉得心怀梦想，却未曾好好想过何为自己真正的梦。人毕竟也是成长的，这在大学生活的两年，的确想明白了一些事情，可是同时却发现一个更大的未知世界在我前方。我只能先写下这些文字，记下生活的痕迹，与未来的我共勉。
-总会先想起初恋。想起过去将近两年美
-      </p>
-    </div>
-  </article>
-
-    
-  
-        
-  <article class="article article-summary">
-    <div class="article-summary-inner">
-      <a href="/2014/11/03/设计模式学习（2）之观察者模式/" class="thumbnail">
-  
-  <span class="thumbnail-image thumbnail-none"></span>
-
-</a>
-      <div class="article-meta">
-        <p class="category"><a class="article-category-link" href="/categories/设计模式/">设计模式</a></p>
-        <p class="date"><time datetime="2014-11-03T08:35:44.000Z" itemprop="datePublished">2014-11-03</time></p>
-      </div>
-      <h2 class="article-title">
-        <a href="/2014/11/03/设计模式学习（2）之观察者模式/" class="title">设计模式学习（2）之观察者模式</a>
-      </h2>
-      <p class="article-excerpt">
-        
-        我个人觉得观察者模式应该算是设计模式中最好理解的一个了。顾名思义，所谓观察者（observer），就是一种订阅-发布机制。同时有几个观察者观察同一个目标（subject）状态，当目标状态更新后自动通知观察者们，从而使观察者更新自身状态。下面给出一些标准的定义：
-意图定义对象间的一种一对多的依赖关系，当一个对象的状态发生改变时，所有依赖于它的对象都得到通知并被自动更新。
-动机举一个常见的使用观察者模
-      </p>
-    </div>
-  </article>
-
-    
-      </div>
-    
-  
-  
-    <nav id="page-nav">
-      <span class="pages">第 1 页，共 2 页</span>
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">&raquo;</a>
-    </nav>
-  
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
 
 
-            </div>
-          </section>
-          <aside id="sidebar">
-  <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
-  <div class="sidebar-top">
-    <p>关注我 :</p>
-    <ul class="social-links">
-      
-    </ul>
-  </div>
-  
-  <div class="widgets-container">
-    
-  </div>
-</aside>
-        </div>
-      </div>
-    </div>
-    <footer id="footer">
-  
-  <div class="container">
-    <div class="container-inner">
-      <a id="back-to-top" href="javascript:;"><i class="icon" id="icon-angle-up"></i></a>
-      <div class="credit">
-        <h1 class="logo-wrap">
-          <a href="/" class="logo"></a>
-        </h1>
-        <p>&copy; 2015 Cod</p>
-        <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
-      </div>
-    </div>
-  </div>
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
 </footer>
+
+
+    </article>
+
+
+
+
+
+
+   
     
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/03/19/常用排序算法总结/" title="常用排序算法总结" itemprop="url">常用排序算法总结</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://yoursite.com/about" title="Cod" target="_blank" itemprop="author">Cod</a>
+		
+  <p class="article-time">
+    <time datetime="2015-03-19T15:10:41.000Z" itemprop="datePublished"> 发表于 2015-03-19</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>记得当年大一时学习了传说中的冒泡排序，可惜智商不够总是没彻底理解，现在到了找工作的时候都要考排序算法，所以是时候整理一下各种常用算法了，至少可以有个模板吧！</p>
+<h3 id="简单排序算法">简单排序算法</h3><h4 id="选择排序">选择排序</h4><h5 id="原理">原理</h5><p>选择排序应该就是最简单的排序方法了，它的思想就是<strong>找</strong>（选择）出一个序列中最小（大）的数，放到最开头，然后在剩下的里面接着找最小（大）的那个，再放到开头，最后整个数组即为有序。在实现时，可以简单地遍历整个数组，一般设置一个临时变量记录最大（小）值，并将其与每个元素进行对比，如果该元素更小，则交换至开头。</p>
+<p>该算法复杂度为O(n^2)，因为要遍历数组1+2+3+…+n次，所以整体复杂度为n平方。</p>
+<h5 id="代码">代码</h5><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">SelectionSort</span><span class="params">(<span class="keyword">int</span> arr[],<span class="keyword">int</span> n)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="comment">//分别用外层与内层循环</span></span><br><span class="line">    <span class="keyword">int</span> i,j;</span><br><span class="line">    <span class="comment">//开始循环选择最小的</span></span><br><span class="line">    <span class="keyword">for</span>(i = <span class="number">0</span>;i &lt; n - <span class="number">1</span>;i++)</span><br><span class="line">        <span class="keyword">for</span> (j = i + <span class="number">1</span>; j &lt; n; j++)</span><br><span class="line">            <span class="comment">//如果找到更小的就交换两者</span></span><br><span class="line">            <span class="keyword">if</span> (arr[j] &lt; arr[i])</span><br><span class="line">                Swap(arr[j], arr[i]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="分析">分析</h5><p>首先我们认为数组第一个元素自身是有序的，剩下的部分是无序的，则从第二个元素开始分别与第一个比较，如果更小（大）则交换两者。代码中外层循环用于控制检测数组一遍，每次检测当前元素值是否比待比较的小，内层为每次在剩余无序的部分找出最小（大）元素并交换。</p>
+<h4 id="插入排序">插入排序</h4><h5 id="原理-1">原理</h5><p>插入排序原理类似于打扑克时整理手中扑克的过程，顾名思义就是每次新拿到一张扑克，就在手中已存在的序列中一张一张比较，知道插入一个合适的位置中，由此也可以发现，手中的扑克一定都是有序的，每次插入一个新元素也可以保证已排好的序列是有序的。在初始时认为一个元素自身有序，从而执行排序过程。</p>
+<p>该算法最坏情况下每次插入都要进行i次比较，i表示拿到第i张扑克（元素），所以总共进行1+2+…+n次比较，整体复杂度为O(n^2)。</p>
+<h5 id="代码-1">代码</h5><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">InsertionSort</span><span class="params">(<span class="keyword">int</span> arr[],<span class="keyword">int</span> n)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="comment">//分别用于外层循环和内层循环</span></span><br><span class="line">    <span class="keyword">int</span> i,j;</span><br><span class="line">    <span class="comment">//用于记录下一个待比较的数</span></span><br><span class="line">    <span class="keyword">int</span> next = <span class="number">0</span>;</span><br><span class="line">    <span class="comment">//从第二个数开始比较（认为第一个数本身已经有序）</span></span><br><span class="line">    <span class="keyword">for</span>(i = <span class="number">1</span>;i &lt; n;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">//下一个待处理的数就是i指向的那个</span></span><br><span class="line">        next = arr[i];</span><br><span class="line">        <span class="comment">//开始插入过程，找到合适的插入位置并移动元素</span></span><br><span class="line">        <span class="comment">//j用于记录比较的每一个元素</span></span><br><span class="line">        <span class="keyword">for</span>(j = i - <span class="number">1</span>;j &gt;= <span class="number">0</span> &amp;&amp; arr[j] &gt; next;j--)</span><br><span class="line">            <span class="comment">//将元素后移</span></span><br><span class="line">            arr[j + <span class="number">1</span>] = arr[j];</span><br><span class="line">        <span class="comment">//找到合适的位置后插入</span></span><br><span class="line">        arr[j + <span class="number">1</span>] = next;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="分析-1">分析</h4><p>初始时认为原始数组中第一个数是有序的，故从第二个元素开始进行插入。使用一个临时变量next记录下一个待比较的数，每次在已排好序的部分拿出一个元素与next比较，知道找到合适插入的位置，先将后面的所有元素后移一个位置，再将待插入元素插入，最后即完成。</p>
+<h4 id="冒泡排序">冒泡排序</h4><h4 id="原理-2">原理</h4><p>冒泡排序形象地说就是水中有一堆大大小小的泡泡，那么里面空气多的（大的）泡泡就会上浮的比较快，所以最大的泡泡第一个浮出水面，第二的次之。这个思想也可以用来排序，即：每次将最大（小）的那个元素置换到数组开头，以此类推。我觉得这个方法跟选择排序差不多，只不过实现方式不太相同，冒泡排序是每次只交换相邻的两个元素，一趟交换过后，最大的即可被交换到开头。</p>
+<h4 id="代码-2">代码</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">BubbleSort</span><span class="params">(<span class="keyword">int</span> arr[],<span class="keyword">int</span> n)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i,j;</span><br><span class="line">    <span class="comment">//外层循环负责从最大值处向低处走，索引大于i的已被排好序</span></span><br><span class="line">    <span class="keyword">for</span>(i = n - <span class="number">1</span>;i &gt;= <span class="number">0</span>;i--)</span><br><span class="line">        <span class="comment">//将最大的冒到最上面</span></span><br><span class="line">        <span class="keyword">for</span>(j = <span class="number">1</span>;j &lt;= i;j++)</span><br><span class="line">            <span class="keyword">if</span>(arr[j-<span class="number">1</span>] &gt; arr[j])</span><br><span class="line">                Swap(arr[j],arr[j-<span class="number">1</span>]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="分析-2">分析</h4><p>外层循环从最大值处向地处走，逐渐缩小范围，内层循环每次负责将该范围内的最大的数冒到最上面，从而完成排序。</p>
+<h4 id="希尔排序">希尔排序</h4><h5 id="原理-3">原理</h5><h5 id="代码-3">代码</h5><h5 id="分析-3">分析</h5><hr>
+<h3 id="复杂点的排序算法">复杂点的排序算法</h3><h4 id="快速排序">快速排序</h4><h5 id="原理-4">原理</h5><p>终于说到重点了，上面那几种排序方法其实都很费时间，几乎都是O(n^2)的复杂度，后来有人发明了快速排序，将复杂度降低到了O(nlogn)。其实快排的精髓在于，它定义了一个轴变量（pivot），并且每次都保证在轴变量左边的所有元素都小于轴，右边的都大于轴，然后递归左部与右部。当某次递归发现左部或者右部只剩下一个元素时，就完成排序了。</p>
+<p>但是它如何保证左部都要小，右部都要大的呢？其实就是不断挪动<strong>轴元素位置</strong>，即：首先找一个元素作为轴元素，一般都是找第一个。然后设置两个索引i、j，分别从最左边和最右边向中间遍历，比如先从左边到中间遍历，如果当前遍历到的元素值比轴元素大，则交换轴和当前元素的值，然后在从右边遍历。这个过程本身也是一个循环，当左边的索引和右边的索引相遇后，则停止循环，这样轴元素就在它应该在的位置上了。然后对左右两个部分继续调用快速排序，最后当每一部分只剩下一个元素时左右的那个索引会立刻相遇，则说明所有的元素都有序了。</p>
+<h5 id="代码-4">代码</h5><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">QuickSort</span><span class="params">(<span class="keyword">int</span> arr[],<span class="keyword">int</span> low,<span class="keyword">int</span> high)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	<span class="comment">//如果索引相交则说明轴元素已经就位</span></span><br><span class="line">    <span class="keyword">if</span>(low &gt; high)</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    <span class="comment">//设置轴元素值</span></span><br><span class="line">    <span class="keyword">int</span> pivot = arr[low];</span><br><span class="line">    <span class="comment">//设置两方向计数</span></span><br><span class="line">    <span class="keyword">int</span> left = low;</span><br><span class="line">    <span class="keyword">int</span> right = high;</span><br><span class="line">    <span class="comment">//扫描一遍数组，将轴元素放至正确位置</span></span><br><span class="line">    <span class="keyword">while</span>(left &lt; right)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">//先将right向左移动，找到第一个比轴元素小的元素</span></span><br><span class="line">        <span class="keyword">while</span>(left &lt; right &amp;&amp; arr[right] &gt;= pivot)</span><br><span class="line">            --right;</span><br><span class="line">        <span class="comment">//如果找到则直接将该元素赋值给arr[low]因为arr[low]值被pivot存储</span></span><br><span class="line">        <span class="keyword">if</span>(left &lt; right)</span><br><span class="line">            arr[left] = arr[right];</span><br><span class="line">        <span class="comment">//再将low向右移动，找到第一个比轴元素大的元素</span></span><br><span class="line">        <span class="keyword">while</span>(left &lt; right &amp;&amp; arr[left] &lt;= pivot)</span><br><span class="line">            ++left;</span><br><span class="line">        <span class="comment">//赋值</span></span><br><span class="line">        <span class="keyword">if</span>(left &lt; right)</span><br><span class="line">            arr[right] = arr[left];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//给轴元素赋值</span></span><br><span class="line">    arr[left] = pivot;</span><br><span class="line">    <span class="comment">//此时left和right已经相等</span></span><br><span class="line">    <span class="comment">//递归左右两部分</span></span><br><span class="line">    QuickSort(arr,low,left - <span class="number">1</span>);</span><br><span class="line">    QuickSort(arr,right + <span class="number">1</span>,high);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="分析-4">分析</h5><p>可以看到最外层循环判断的的变量是左右两个索引，这两个索引用于找到第一个大于或者小于轴元素的位置，然后交换轴元素和那个位置的元素，这个外层循环经过一轮后，轴元素就处于正确位置了，然后在递归对左部和右部分别调用该函数，知道左部和右部都是一个元素为止，那么此时整个数组就是有序的了。</p>
+<p>可见外层循环完成需要比较n次元素，递归调用需要有logn次，所以整体复杂度就是O(nlogn)。</p>
+<h4 id="堆排序">堆排序</h4><h5 id="原理-5">原理</h5><p>堆排序也是一种性能比较好的排序方法，它的基础是一种叫堆的数据结构。所谓堆，就是一种特殊的<strong>完全二叉树</strong>，并且满足每个根节点的值要比其两个孩子节点都要大或者小，称其为大顶堆或者小顶堆。形象地理解一下就是一堆沙子，上面体积最小，下面体积最大（大顶堆就意会一下一样的）。那么根据这个性质，至少可以知道，一个堆的堆顶元素肯定是这堆中所有元素的最大的或者最小的。那么我们将一个数组构建成堆，每次从堆顶取走最大值，再对这个堆进行某种调整使之继续保持堆的性质，再从堆顶取走第二大的值，最后就可以将整个数组进行排序。</p>
+<p>但是当堆顶元素被取走如何进行“某种调整”来继续保证堆的性质呢？这里我们可以想象一下，因为一个堆本身是一个二叉树，那么当进行层序遍历后，可以使用一个数组进行存储，并且元素间是存在某种对应关系的，比如：左孩子的节点索引值必定为根节点索引值得二倍，右孩子是它的值加一。那么当堆顶元素被取走，我们可以将堆底元素放到堆顶（直接赋值即可），此时堆只有堆顶元素不满足堆的性质，那么我们只需要调节当前这个堆顶元素至合适的位置即可重新构建堆。</p>
+<p>这个调节的过程就是：在堆顶元素的两个孩子中找到比较大的那个孩子，如果那个孩子的值大于堆顶元素，则将两者交换，然后继续对其子树进行比较交换，这样最后堆顶元素就会被交换到合适的位置，那么堆也就调整完毕。</p>
+<p>有了这个堆的调节方法，我们就可以直接对一个数组进行堆的构建。将待排序的数组看成一棵层序遍历的二叉树，那么可以从<strong>最后一个叶节点的根节点</strong>开始，对于这个根节点对应的子树，进行堆的调整使其成为一个堆，然后依次向上遍历，最后整个数组调整为一个堆。调整完后即可从根节点读取数据然后交换堆底和堆顶元素再继续堆调整，直到整个堆都被读取完毕。</p>
+<h5 id="代码-5">代码</h5><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">HeapAdjust</span><span class="params">(<span class="keyword">int</span> arr[],<span class="keyword">int</span> root,<span class="keyword">int</span> length)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="comment">//堆顶节点值</span></span><br><span class="line">    <span class="keyword">int</span> rootVal = arr[root];</span><br><span class="line">    <span class="comment">//表示当前的左孩子节点</span></span><br><span class="line">    <span class="comment">//由于数组从0开始所以需要计算出的值加一</span></span><br><span class="line">    <span class="keyword">int</span> child = root*<span class="number">2</span> + <span class="number">1</span>;</span><br><span class="line">    <span class="comment">//开始比较过程</span></span><br><span class="line">    <span class="keyword">while</span>(child &lt;= length)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">//先找到更大的那个孩子节点</span></span><br><span class="line">        <span class="keyword">if</span>(child + <span class="number">1</span> &lt; length &amp;&amp; arr[child] &lt; arr[child+<span class="number">1</span>])</span><br><span class="line">            child++;</span><br><span class="line">        <span class="comment">//然后比较孩子节点与父节点值，如果父节点大则不用调整直接退出</span></span><br><span class="line">        <span class="keyword">if</span>(arr[child] &lt; rootVal)</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="comment">//否则直接把孩子节点赋值给父节点</span></span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            arr[root] = arr[child];</span><br><span class="line">            <span class="comment">//修改父节点索引以便继续循环</span></span><br><span class="line">            root = child;</span><br><span class="line">            child = <span class="number">2</span>*root + <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//交换后的父节点值</span></span><br><span class="line">        arr[root] = rootVal;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//开始堆排序</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">HeapSort</span><span class="params">(<span class="keyword">int</span> arr[],<span class="keyword">int</span> n)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="comment">//首先进行堆的初始化，从最后一个叶节点的根节点开始</span></span><br><span class="line">    <span class="comment">//依次循环至根节点</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = n/<span class="number">2</span> - <span class="number">1</span>;i &gt;= <span class="number">0</span>;--i)</span><br><span class="line">        HeapAdjust(arr,i,n);</span><br><span class="line">    <span class="comment">//然后每次读出堆顶元素值即可</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = n - <span class="number">1</span>;i &gt; <span class="number">0</span>;i--)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">//删除堆顶元素</span></span><br><span class="line">        <span class="comment">//cout &lt;&lt; arr[0] &lt;&lt; endl;</span></span><br><span class="line">        <span class="comment">//将最后一个元素放到堆顶</span></span><br><span class="line">        arr[<span class="number">0</span>] = arr[i];</span><br><span class="line">        <span class="comment">//调整堆</span></span><br><span class="line">        HeapAdjust(arr,<span class="number">0</span>,i);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="分析-5">分析</h5><p>HeapAdjust函数用于调整一个堆，这个函数的前提是待调整的堆仅仅是堆顶元素不满足条件，因此交换堆底和堆顶元素并向下比较，直到堆顶元素被放置到正确的位置。</p>
+<p>HeapSort函数用于执行排序，首先要调整堆，从最后一个子树开始，向上递归，最后整体调整为一个堆，再读取堆顶并调整，最后所有元素被读取，即排序完毕。</p>
+<h4 id="归并排序">归并排序</h4><h5 id="原理-6">原理</h5><p>归并排序的原理是基于合并的思想（Merge），如果我们有两个已经有序的序列，需要合并成一个序列时，我们可以设置两个索引分别表示两个序列的当前值，每次读取更大的那个放入结果队列，最后再将没放进去的那些全部放进去（因为本身都有序）。合并的过程其实很简单，那么我们如何构造两个已经有序的序列呢？这就需要递归的思想，不断递归知道两个待合并的序列只有一个元素时，那么它们就是有序的了，然后合并两者并继续递归，最后即可完成整体的排序。</p>
+<h6 id="代码-6">代码</h6><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Merge</span><span class="params">(<span class="keyword">int</span>* origin,<span class="keyword">int</span>* result,<span class="keyword">int</span> i,<span class="keyword">int</span> m,<span class="keyword">int</span> n)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="comment">//用于结果数组索引</span></span><br><span class="line">    <span class="keyword">int</span> k = i;</span><br><span class="line">    <span class="comment">//用于第二个数组索引</span></span><br><span class="line">    <span class="keyword">int</span> j = m + <span class="number">1</span>;</span><br><span class="line">    <span class="comment">//开始合并</span></span><br><span class="line">    <span class="keyword">while</span>(i &lt;= m &amp;&amp; j &lt;= n)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">//把小的那个数加入到结果数组中</span></span><br><span class="line">        <span class="keyword">if</span>(origin[i] &gt; origin[j])</span><br><span class="line">            result[k++] = origin[j++];</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            result[k++] = origin[i++];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//当其中一部分已经完成后继续将剩下的全部放入结果数组</span></span><br><span class="line">    <span class="keyword">while</span>(i &lt;= m)</span><br><span class="line">        result[k++] = origin[i++];</span><br><span class="line">    <span class="keyword">while</span>(j &lt;= n)</span><br><span class="line">        result[k++] = origin[j++];</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//排序用函数</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">MergeSort</span><span class="params">(<span class="keyword">int</span> origin[],<span class="keyword">int</span> result[],<span class="keyword">int</span> n)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="comment">//用来在后面交换两个数组指针</span></span><br><span class="line">    <span class="keyword">int</span>* tmp = <span class="keyword">nullptr</span>;</span><br><span class="line">    <span class="comment">//初始时是相邻两个合并，每个元素当作一个序列，所以len=1</span></span><br><span class="line">    <span class="keyword">int</span> len = <span class="number">1</span>;</span><br><span class="line">    <span class="comment">//合并数组长度从1到最后的n</span></span><br><span class="line">    <span class="keyword">while</span>(len &lt; n)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">int</span> i;</span><br><span class="line">        <span class="comment">//相邻两个序列合并至结果数组中</span></span><br><span class="line">        <span class="keyword">for</span>(i = <span class="number">0</span>;i &lt; n - <span class="number">2</span>*len;i += len*<span class="number">2</span>)</span><br><span class="line">            Merge(origin,result,i,i + len - <span class="number">1</span>,i + <span class="number">2</span>*len - <span class="number">1</span>);</span><br><span class="line">        <span class="comment">//判断是否最后多出来一个（原始数组长度为奇数时）</span></span><br><span class="line">        <span class="keyword">if</span>(i + len &lt; n)</span><br><span class="line">            Merge(origin,result,i,i + len - <span class="number">1</span>,n - <span class="number">1</span>);</span><br><span class="line">        <span class="comment">//将result的所有结果赋值给origin，以便下一次归并操作</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> t = <span class="number">0</span>;t &lt; n;t++)</span><br><span class="line">            origin[t] = result[t];</span><br><span class="line">        <span class="comment">//将len加倍</span></span><br><span class="line">        len *= <span class="number">2</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="分析-6">分析</h5><p>由于合并后需要将结果存至一个数组，所以传递参数需要多加一个结果数组指针。MergeSort函数中len表示当前待合并的数组长度为多少，初始时设置为1,然后逐渐加倍，直到为n。合并的过程就是将相邻两个待合并数组合并（二路归并），然后将结果值赋值给origin以便下一次的合并。</p>
+<h4 id="桶排序">桶排序</h4><hr>
+<h3 id="总结">总结</h3>
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/算法/">算法</a>
+</div>
 
 
-  <script src="http://code.jquery.com/jquery-2.1.3.min.js"></script>
-
-
-
-
-
-
-<script src="/js/html-patch.js" type="text/javascript"></script>
-<script src="/js/script.js" type="text/javascript"></script>
-
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/C/">C++</a><a href="/tags/算法/">算法</a>
   </div>
-</body>
-</html>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/03/09/学习C-11新标准多线程支持/" title="学习C++11新标准多线程支持" itemprop="url">学习C++11新标准多线程支持</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://yoursite.com/about" title="Cod" target="_blank" itemprop="author">Cod</a>
+		
+  <p class="article-time">
+    <time datetime="2015-03-09T13:08:46.000Z" itemprop="datePublished"> 发表于 2015-03-09</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>最近读了《C++ Concurrency in Action》一书，发现C++11新标准对多线程的支持的确达到了前所未有的高程度，完全可以和JAVA的线程模型相媲美。尤其是提供了std::async这种异步函数调用，免去了使用者调用底层API的痛苦，并且是跨平台的，所以的确值得大家用心学学。</p>
+<p>根据<a href="http://www.cplusplus.com/reference/" target="_blank" rel="external">C++ Reference</a>网站提供的文档，主要有如下几个头文件用于多线程支持：</p>
+<ul>
+<li>&lt; thread &gt;：用于产生线程对象，多线程基础</li>
+<li>&lt; mutex &gt;：互斥量</li>
+<li>&lt; condition_variable &gt;：条件变量</li>
+<li>&lt; future &gt;：用于存储异步调用的结果并提供获取方法</li>
+<li>&lt; atomic &gt;：用于原子操作</li>
+</ul>
+<p>这里首先记录一下关于future的相关用法，因为互斥量、条件变量等属于偏于底层的设施，使用者比较多，所以我更加关注于异步调用与future的使用。我使用的是fedora 21（64位） + g++ 4.8.3，线程库是POSIX。</p>
+<p>我觉得首先要提到的就是std::async调用。这个标准库函数用于开启一个新的异步调用，在内部实现是它可能是新开起一个线程或者在当前线程同步执行，可以通过枚举参数显示指定（std::launch::async和std::launch::defered）。这个函数使用起来如下：<code>std::async(func,arg1,arg2...)</code>。第一个参数是一个可调用对象（callable），包括函数、函数指针、兰布达表达式或者是重载了调用运算的类对象。后面的参数调用对象的参数列表，注意这里给async传递的参数<strong>必定</strong>会被拷贝（需要拷贝到内核空间），所以如果需要传递引用需使用std::ref()。第一个参数可以指定上面说的枚举对象来之定执行策略（新线程或者在当前线程同步执行），默认就是那两个的二进制或（|）。这个函数在我的平台下需要POSIX的支持，所以在编译时需加入-pthread选项。</p>
+<p>如果我们放入后台异步执行的函数有返回值的话，我们就可以使用std::future这种对象来获取了。这个对象在标准文档中的定义是：A future is an object that can retrieve a value from some provider object or function, properly synchronizing this access if in different threads。大意就是这种对象专门用于存储某种提供者（provider）返回的值，因此用于同步不同的两个线程的执行。举个简单的例子就是，我们要计算一个很大的值（比如3132554447）是否为素数，这种计算也许需要一定的时间，我们不希望它在主线程中执行它，因为会阻塞主线程中其他的功能性代码，但是我们又懒得自己开启新线程，因此可以使用async来让标准库完成这一任务，然后我们在主线程中等待它的结果被计算出来就行了。就像这样<code>std::future&lt;bool&gt; result = std::async(IsPrime,3132554447)</code>。其中IsPrime就是用于计算的函数，我们将参数一块传递进去，然后在主线程中执行其他任务，最后等待其计算结果即可：<code>int res = result.get()</code>。这里如果结果还没有被计算出来，那么get调用会阻塞之到IsPrime函数返回。这样我们就简单实现了我们的要求，并且少写了很多代码。</p>
+<p>C++标准也提供了更多的线程间同步的方法，比如std::packaged_task就可以用来将任务在线程间传递，官方文档对其的定义是：“A packaged_task wraps a callable element and allows its result to be retrieved asynchronously.”。就是说它封装了一个可调用对象，可以通过它来异步获取某个任务的返回结果。这个对象本身也是可调用的，因此可以直接调用它的调用运算符，例如：task()，其中task是一个std::packaged_task，这样就可以直接调用它绑定的那个函数对象。也可以将它传递给std::thread，从而开启新线程执行其内部绑定的函数对象。可以调用get_future成员函数获取它内部的future对象进而从该对象获得执行结果。</p>
+<p>新标准也提供了另一个类：std::promise，这个对象跟packaged_task很像，也是用线程间同步，但是它主要是用于给future赋一个值，标准定义是：“A promise is an object that can store a value of type T to be retrieved by a future object (possibly in another thread), offering a synchronization point.”。promise提供了一个set_value方法，用于设置内部shared_state的值，在设置好之后，与其对应的future即变为ready，可用于读取。</p>
+<p>这几个类的简单用法可参考<a href="http://www.cplusplus.com/" target="_blank" rel="external">C++官网</a>，其中又不少简单实用的例子。</p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/C/">C++</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/C/">C++</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/02/03/Linux下互斥锁以及条件变量的使用/" title="Linux下互斥锁以及条件变量的使用" itemprop="url">Linux下互斥锁以及条件变量的使用</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://yoursite.com/about" title="Cod" target="_blank" itemprop="author">Cod</a>
+		
+  <p class="article-time">
+    <time datetime="2015-02-03T01:56:13.000Z" itemprop="datePublished"> 发表于 2015-02-03</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>在Linux环境下，POSIX标准为我们提供了很多用于进线程同步的系统调用，其中最常用的当属互斥锁（Mutex）和条件变量（Condition Variable），对这两个东西的掌握会给我们在并发条件下编程带来很多便利。</p>
+<h5 id="POSIX互斥锁">POSIX互斥锁</h5><p>主要系统调用如下：<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;pthread.h&gt;</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">pthread_mutex_init</span><span class="params">(pthread_mutex_t* mutex,<span class="keyword">const</span> pthread_mutexattr_t* mutexattr)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">pthread_mutex_destroy</span><span class="params">(pthread_mutex_t* mutex)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">pthread_mutex_lock</span><span class="params">(pthread_mutex_t* mutex)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">pthread_mutex_trylock</span><span class="params">(pthread_mutex_t* mutex)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">pthread_mutex_unlock</span><span class="params">(pthread_mutex_t* mutex)</span></span>;</span><br></pre></td></tr></table></figure></p>
+<p>这些接口看起来都差不多，都用到了一个pthread_mutex_t结构体指针，就是这个结构体用来标识一个互斥锁。其他这几个函数的作用一看名字即可知道，有初始化、销毁、加锁、非阻塞加锁以及解锁。其中在初始化时第二个参数是pthread_mutexattr_t结构体指针，该结构体用于指定互斥锁的<strong>属性</strong>。其中主要有两种属性最常用：pshared和type，即互斥锁是否允许跨进程共享以及互斥锁类型。pshared有两种取值：<code>PTHREAD_PROCESS_SHARED</code>表示可用于跨进程共享，另一个是<code>PTHREAD_PROCESS_PRIVATE</code>表示只能被跟该锁的<strong>初始化线程</strong>隶属于同一个<strong>进程</strong>的线程共享。互斥锁的type属性用于指定互斥锁类型，有如下四种取值：<code>PTHREAD_MUTEX_NORMAL</code>、<code>PTHREAD_MUTEX_ERRORCHECK</code>、<code>PTHREAD_MUTEX_RECURSIVE</code>以及<code>PTHREAD_MUTEX_DEFAULT</code>。其中普通锁是默认的类型，当一个线程对一个普通锁加锁后，后续请求该锁的线程将形成一个等待队列，并按照优先级（系统的调度）获得该锁，但是这种锁也容易引发死锁（对已经上锁的锁再次加锁等）；检错锁加上了检错功能：一个线程如果对一个已加锁的检错锁再次加锁，则会返回错误码EDEADLK，对已解锁的锁再次解锁也会得到错误码EPERM。嵌套锁允许一个线程在释放锁之前多次对其加锁而不发生死锁，不过其他线程要想获得这个锁则锁的当前拥有者必须执行相应次数的解锁操作。这些互斥锁<strong>属性</strong>的操作也有几个系统调用，跟上面的比较类似，就不用举例了。</p>
+<h5 id="条件变量">条件变量</h5><p>《现代操作系统》一书中说，条件变量允许线程由于一些未到达的条件而阻塞。以生产者消费者问题为例，生产者线程将产品放入缓冲区，如果发现缓冲区是满的（消费者还没有来得及取走产品），生产者则必须阻塞。这里生产者阻塞自身并且在消费者取走产品后被唤醒，则需要条件变量来操作了。不过我觉得使用三个互斥量（临界区、满以及空）也可以完成该功能，不过使用条件变量更加简单而已。</p>
+<p>POSIX提供了一些系统调用来支持条件变量，其实跟Mutex差不多：<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;pthread.h&gt;</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">pthread_cond_init</span><span class="params">(pthread_cond_t* cond,<span class="keyword">const</span> pthread_condattr_t* attr)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">pthread_cond_destroy</span><span class="params">(pthread_cond_t* cond)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">pthread_cond_broadcast</span><span class="params">(pthread_cond_t* cond)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">pthread_cond_signal</span><span class="params">(pthread_con_t* cond)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">pthread_cond_wait</span><span class="params">(pthread_cond_t* cond,pthread_mutex_t* mutex)</span></span>;</span><br></pre></td></tr></table></figure></p>
+<p>这些API看起来跟Mutex几乎一样，其中pthread_cond_t也是一个结构体，用于表示条件变量，而pthread_condattr_t表示该条件变量的属性。broadcast表示给<strong>所有</strong>在此条件变量上等待的线程都发送信号将其唤醒，而signal表示只唤醒其中一个，至于哪一个则取决于调度算法。wait表示在该条件变量上等待（阻塞线程）知道收到唤醒信号。</p>
+<p>这个wait调用有一点需要注意，它的第二个参数是一个mutex，这也说明了它内部的原理：<strong>mutex参数是用于保护条件变量的互斥锁</strong>，以确保wait操作的<strong>原子性</strong>。在调用wait之前，必须确保mutex参数的互斥锁已被<strong>加锁</strong>，因为在wait执行时，首先将调用它的线程放入条件变量的等待队列内，然后将互斥锁mutex<strong>解锁</strong>，当wait返回时（被唤醒），互斥锁mutex将被再次<strong>加锁</strong>。下面是《现代操作系统》中使用条件变量解决生产者消费者同步问题的代码：<br><img src="/img/p-c-prob.png" alt=""><br>可以看出在每次调用wait前先对mutex加锁，唤醒另一个线程后在解锁。</p>
+<h5 id="使用C++简单封装">使用C++简单封装</h5><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> Mutex</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">friend</span> <span class="keyword">class</span> Locker;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	Mutex(MutexType type);</span><br><span class="line">	~Mutex();</span><br><span class="line">	Mutex(<span class="keyword">const</span> Mutex&amp;) = <span class="keyword">delete</span>;</span><br><span class="line">	pthread_mutex_t* GetMutex();</span><br><span class="line">	<span class="function"><span class="keyword">bool</span> <span class="title">Lock</span><span class="params">()</span></span><br><span class="line">	</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> pthread_mutex_lock(&amp;mutex) == <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">bool</span> <span class="title">Unlock</span><span class="params">()</span></span><br><span class="line">	</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> pthread_mutex_unlock(&amp;mutex) == <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	pthread_mutex_t mutex;</span><br><span class="line">	pthread_mutexattr_t attr;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">Mutex::Mutex(MutexType type = MutexType::Normal)</span><br><span class="line">&#123;</span><br><span class="line">	pthread_mutexattr_init(&amp;attr);</span><br><span class="line">	<span class="keyword">switch</span>(type)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">case</span> Normal:</span><br><span class="line">		&#123;</span><br><span class="line">			pthread_mutexattr_settype(&amp;attr,PTHREAD_MUTEX_NORMAL);</span><br><span class="line">			pthread_mutex_init(&amp;mutex,&amp;attr);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">case</span> ErrorCheck:</span><br><span class="line">		&#123;</span><br><span class="line">			pthread_mutexattr_settype(&amp;attr,PTHREAD_MUTEX_ERRORCHECK);</span><br><span class="line">			pthread_mutex_init(&amp;mutex,&amp;attr);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">case</span> Recursive:</span><br><span class="line">		&#123;</span><br><span class="line">			pthread_mutexattr_settype(&amp;attr,PTHREAD_MUTEX_RECURSIVE);</span><br><span class="line">			pthread_mutex_init(&amp;mutex,&amp;attr);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Mutex::~Mutex()</span><br><span class="line">&#123;</span><br><span class="line">	pthread_mutexattr_destroy(&amp;attr);</span><br><span class="line">	pthread_mutex_destroy(&amp;mutex);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">pthread_mutex_t* Mutex::GetMutex()</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">return</span> &amp;mutex;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> CondVariable</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="keyword">explicit</span> <span class="title">CondVariable</span><span class="params">(Mutex&amp; m)</span></span><br><span class="line">		:<span class="title">mutex</span><span class="params">(m)</span></span><br><span class="line">	</span>&#123;</span><br><span class="line">		pthread_cond_init(&amp;cond,<span class="keyword">nullptr</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	~CondVariable()</span><br><span class="line">	&#123;</span><br><span class="line">		pthread_cond_destroy(&amp;cond);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">bool</span> <span class="title">Wait</span><span class="params">()</span></span><br><span class="line">	</span>&#123;</span><br><span class="line">		<span class="keyword">int</span> ret = pthread_cond_wait(&amp;cond,mutex.GetMutex());</span><br><span class="line">		<span class="keyword">return</span> ret == <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">bool</span> <span class="title">Notify</span><span class="params">()</span></span><br><span class="line">	</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> pthread_cond_signal(&amp;cond) == <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">bool</span> <span class="title">NotifyAll</span><span class="params">()</span></span><br><span class="line">	</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> pthread_cond_broadcast(&amp;cond) == <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	Mutex&amp; mutex;</span><br><span class="line">	pthread_cond_t cond;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>其实所谓封装就是在一个类中调用这些系统调用，不过有一些细节会有变化，具体的代码请访问我的<a href="https://github.com/MorningCoder/NetworkPrograming/tree/master/Concurrency" target="_blank" rel="external">github</a>。其中CondVariable程序中简单实现了生产者消费者的问题。Mutex程序中写了两个类，一个表示Mutex本身，另一个Locker作为它的管理者（RAII手法），仅能使用Locker操作Mutex的上锁和解锁。</p>
+<h5 id="C++_11_标准中对并发编程的支持">C++ 11 标准中对并发编程的支持</h5><p>所有C++的标准文档请参阅：<a href="http://www.cplusplus.com/reference/" target="_blank" rel="external">C++ reference</a><br>在C++11标准中，增加了不少对并发编程的支持，包括线程对象std::thread、互斥锁对象：std::mutex以及条件变量：std::condition_variable。下面我们使用这几个类来简单看看他们的使用方法。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;iostream&gt;</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;thread&gt;</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;mutex&gt;</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;condition_variable&gt;</span></span><br><span class="line"></span><br><span class="line">std::mutex mtx;</span><br><span class="line">std::condition_variable cv;</span><br><span class="line"><span class="keyword">bool</span> ready = <span class="keyword">false</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">print_id</span> <span class="params">(<span class="keyword">int</span> id)</span> </span>&#123;</span><br><span class="line">  std::unique_lock&lt;std::mutex&gt; lck(mtx);</span><br><span class="line">  <span class="keyword">while</span> (!ready) cv.wait(lck);</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">  std::<span class="built_in">cout</span> &lt;&lt; <span class="string">"thread "</span> &lt;&lt; id &lt;&lt; <span class="string">'\n'</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">go</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  std::unique_lock&lt;std::mutex&gt; lck(mtx);</span><br><span class="line">  ready = <span class="keyword">true</span>;</span><br><span class="line">  cv.notify_all();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span> <span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line">  std::thread threads[<span class="number">10</span>];</span><br><span class="line">  <span class="comment">// spawn 10 threads:</span></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;<span class="number">10</span>; ++i)</span><br><span class="line">    threads[i] = std::thread(print_id,i);</span><br><span class="line"></span><br><span class="line">  std::<span class="built_in">cout</span> &lt;&lt; <span class="string">"10 threads ready to race...\n"</span>;</span><br><span class="line">  go();                       <span class="comment">// go!</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">auto</span>&amp; th : threads) th.join();</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>以上这段代码摘抄自C++官方文档，主要来解释下这个代码的作用。</p>
+<p>在main函数中，首先使用thread类创建了十个thread对象：<code>thread[i] = std::thread(print_id,i);</code>注意这里thread的构造函数中第一个参数是线程函数，后续参数都是给该线程函数传递的参数，直接传递即可，不用类型转换（很好用，虽然不太清楚是怎么实现的…）。这个对象创建完毕后即产生了新的线程（处于就绪态，等待调度）。</p>
+<p>线程函数print_id内部首先使用unique_lock对mutex加锁，这里的unique_lock就是一个mutex资源的管理者，由于它是局部变量，拥有<strong>automatic duration</strong>即自动生命期限，所以当它从栈上被销毁时绝对会调用其析构函数，从而安全销毁它管理的mutex，保证了资源的合理释放。在print_id函数中，所有十个进程都会在cv.wait处阻塞（处于阻塞态，等待唤醒信号）。然后main中调用go()，在其中调用cv.notify_all()同时唤醒所有在cv上被阻塞的线程，所有线程同时处于就绪态等待被调度，就像一个比赛（race）一样，因此在次之后会相继使用cout对象输出信息。</p>
+<p>我们在运行这段代码后每次得到的结果肯定是不同的。根据调度算法的不同，同一时刻会有不同的线程占有锁，使用cout变量，因此产生不同的结果。</p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/linux/">linux</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/C/">C++</a><a href="/tags/linux/">linux</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/01/26/IO复用技术之select总结/" title="IO复用技术之select总结" itemprop="url">IO复用技术之select总结</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://yoursite.com/about" title="Cod" target="_blank" itemprop="author">Cod</a>
+		
+  <p class="article-time">
+    <time datetime="2015-01-26T03:33:51.000Z" itemprop="datePublished"> 发表于 2015-01-26</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>最近玩命学习linux下网络编程，终于对这些奇怪的系统API们有了一点了解。今天研究了下IO复用的技术，发现其实服务器的确都是遵循某种框架（模式）编写而成，因此先将这些模式以及概念总结如下。</p>
+<h4 id="同步和异步以及阻塞和非阻塞">同步和异步以及阻塞和非阻塞</h4><p>简单来说，同步(sync)指的是事情必须一件一件地做，调用者必须等待被调用过程返回。异步则是指调用后结果并不能立刻得到，而是由某种事件或信号触发告知调用者（因此并不是顺序执行的事件，也许内核在后台新开了线程在执行？）。</p>
+<p>阻塞（block）主要指的是进程状态，只在调用结果返回之前进程进入阻塞态，不会被CPU调度。而非阻塞则指某过程调用后立刻返回当时的数据可用性情况，如果数据尚不可用，自然而然可以使用轮询不断调用该过程来检测数据可用性，但这样比较浪费资源，但是进程不会因此而暂停，而是一直处于被激活的状态。</p>
+<h4 id="Linux下五种IO模型">Linux下五种IO模型</h4><p>linux内核提供了五种IO模型，分别如下：</p>
+<ul>
+<li>阻塞IO： 程序阻塞于读写的函数</li>
+<li>非阻塞IO： 读写函数立刻返回，但不一定会有可用数据，需要不断轮询（忙等待）</li>
+<li>IO复用： 程序阻塞于<strong>IO复用系统调用</strong>，但是可同时监听多个IO事件（读、写、异常）。</li>
+<li>SIGIO信号： 用信号触发读写就绪等事件，用户程序执行读写操作。在等待信号发射之前，进程<strong>不会</strong>阻塞。</li>
+<li>异步IO： 完全有内核执行数据读写，并触发读写完成事件，程序本身不阻塞。</li>
+</ul>
+<p>以上前四种模型都属于同步模型，因为在将数据从内核缓冲区拷贝到用户空间缓冲区时进程必将会停止响应（也可以说阻塞，另外拷贝时间很短但是也处于内核态下）。只有异步模式中，所有的操作（包括数据的拷贝）完全由内核管理，应用进程在内核发送信号前执行自己的流程，接收到信号后表明数据已经被赋值好了，即可使用。</p>
+<p>在此借一个大神博客<a href="http://blog.csdn.net/jay900323/article/details/18141217" target="_blank" rel="external">深秋哋黎明的专栏</a>中的图来表示这五个模型的对比：<br><img src="/img/1334216724_2405.jpg" alt=""></p>
+<h4 id="IO复用的概念">IO复用的概念</h4><p>IO复用顾名思义就是可以同时监听多个IO的状态，它同样会阻塞在IO复用函数处，但是由于可以监听多个IO流，它可以同时对多个读、写操作IO进行检测，当其中有数据可读或可写时，才可以调用真正的IO函数。IO复用在下列情况下很好用：</p>
+<ul>
+<li>客户端需要同时处理多个socket</li>
+<li>客户端需要同时处理用户输入（标准输入）和连接socket</li>
+<li>服务器需要同时处理监听socket和连接socket</li>
+<li>服务器需要同时处理TCP和UDP请求</li>
+<li>服务器需要同时处理多个端口的连接请求</li>
+</ul>
+<p>Linux下实现IO复用的系统调用主要有select、poll和epoll。先主要说说select的使用。</p>
+<h4 id="select函数的使用">select函数的使用</h4><p>首先，select系统调用的作用：在一段指定时间内（可以为零，可以为无穷大），<strong>监听</strong>用户感兴趣的文件描述符（socket）上的<strong>可读</strong>、<strong>可写</strong>以及<strong>异常</strong>事件。</p>
+<h5 id="select原型">select原型</h5><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;sys/select.h&gt;</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">select</span><span class="params">(<span class="keyword">int</span> nfds,fd_set* readfd,fd_set* writefd,fd_set* exceptfd,<span class="keyword">struct</span> timeval* timeout)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>参数描述如下：</p>
+<ol>
+<li>nfds参数指定被监听的文件描述符总数，通常情况下是<strong>所有</strong>监听描述符中最大值加一（文件描述符值总是从零开始递增）。</li>
+<li><p>三种fd_set结构，分别表示可读、可写以及异常事件对应的文件描述符<strong>集合</strong>。应用程序调用select时将通过这三个参数传递自己感兴趣的文件描述符，select返回时，内核将<strong>修改</strong>它们来通知应用程序哪些描述符已经就绪。fd_set结构体在typesizes.h中定义，但是我们只需要使用下面这一组宏即可操作它们：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;sys/select.h&gt;</span></span><br><span class="line">FD_ZERO(fd_set* fdset);<span class="comment">//用于清除fdset所有位</span></span><br><span class="line">FD_SET(<span class="keyword">int</span> fd,fd_set* fdset);<span class="comment">//设置fdset中的fd位（即将fd添加进fdset中）</span></span><br><span class="line">FD_CLR(<span class="keyword">int</span> fd,fd_set* fdset);<span class="comment">//清除fdset中的fd位（从fdset中删除fd）</span></span><br><span class="line">FD_ISSET(<span class="keyword">int</span> fd,fd_set* fdset);<span class="comment">//测试fdset中的fd是否就绪</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>timeout结构体用于设置select的超时时间。其定义如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> timeval</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">long</span> tv_sec;<span class="comment">//秒</span></span><br><span class="line">	<span class="keyword">long</span> tv_usec;<span class="comment">//微秒</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>如果传递0,则表示select立刻返回（非阻塞，需要轮询）；如果传递NULL,则表示select阻塞，知道有一个文件描述符就绪才返回。select成功时返回就绪的描述符<strong>个数</strong>，超时则返回0,失败返回-1。</p>
+<h5 id="文件描述符就绪条件">文件描述符就绪条件</h5><p>以下情况表示文件描述符可读：</p>
+<ul>
+<li>socket内核接受缓冲区中的字节数大于或等于其低水位标记SO_RCVLOWAT，此时可以无阻塞读取该socket且返回字节数大于0</li>
+<li>socket对方关闭连接，此时对该描述符的读操作将返回0</li>
+<li>监听socket又新的连接请求</li>
+<li>socket又未处理错误</li>
+</ul>
+<p>以下情况表示文件描述符可写：</p>
+<ul>
+<li>socket内核缓冲区中可用字节数大于等于其低水位标记，可以无阻塞写</li>
+<li>socekt写操作被关闭，对写操作被关闭的socket执行写操作将触发SIGPIPE信号</li>
+<li>socket使用<strong>非阻塞</strong>connect连接成功或失败（超时）之后</li>
+<li>有未处理错误</li>
+</ul>
+<p>至于异常可处理，只有一种情况，就是接收到带外数据（紧急数据）</p>
+<h5 id="使用select制作简易回显服务器">使用select制作简易回显服务器</h5><p>主要思路就是：首先将监听描述符添加进readfd（判断可读即可），在一个大的循环体内调用select，判断监听描述符是否就绪，如果就绪表明有新的连接可以接受，则接受，并将接受后的连接描述符添加进readfd，然后如果其他连接描述符也就绪，则表明可以接受客户端数据，则处理客户端数据（回显），最后重新循环。</p>
+<p>主要代码如下：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//用于使用select处理IO复用</span></span><br><span class="line"><span class="comment">//参数必定是一个已开始监听的listenfd</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">DoSelect</span><span class="params">(<span class="keyword">int</span> listenfd)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	<span class="comment">//客户端连接socket描述符，将存储在vector中</span></span><br><span class="line">	<span class="keyword">int</span> connfd;</span><br><span class="line">	<span class="comment">//记录最大描述符值</span></span><br><span class="line">	<span class="keyword">int</span> maxfd;</span><br><span class="line">	<span class="comment">//记录select返回的可用描述符个数</span></span><br><span class="line">	<span class="keyword">int</span> ready;</span><br><span class="line">	<span class="comment">//客户端地址结构体以及其长度</span></span><br><span class="line">	sockaddr_in caddr;</span><br><span class="line">	socklen_t caddrlen = <span class="keyword">sizeof</span>(caddr);</span><br><span class="line">	<span class="comment">//文件描述符fd_set结构（只用于判断可读性）</span></span><br><span class="line">	fd_set readfd;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//开始循环</span></span><br><span class="line">	<span class="keyword">while</span>(<span class="keyword">true</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="comment">//clear all</span></span><br><span class="line">		FD_ZERO(&amp;readfd);</span><br><span class="line">		<span class="comment">//首先将监听socket描述符添加进fd_set结构体</span></span><br><span class="line">		FD_SET(listenfd,&amp;readfd);</span><br><span class="line">		<span class="comment">//更新最大描述符值</span></span><br><span class="line">		maxfd = listenfd;</span><br><span class="line">		<span class="comment">//重新添加客户端连接描述符</span></span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; <span class="number">10</span>;i++)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">if</span>(ClientConnfd[i] &gt; <span class="number">0</span>)</span><br><span class="line">			&#123;</span><br><span class="line">				maxfd = maxfd &lt; ClientConnfd[i] ? ClientConnfd[i] : maxfd;</span><br><span class="line">				FD_SET(ClientConnfd[i],&amp;readfd);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">//调用select</span></span><br><span class="line">		ready = select(maxfd + <span class="number">1</span>,&amp;readfd,NULL,NULL,NULL);</span><br><span class="line">		<span class="comment">//select出错</span></span><br><span class="line">		<span class="keyword">if</span>(ready == -<span class="number">1</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="built_in">cout</span> &lt;&lt; <span class="string">"select出错"</span> &lt;&lt; endl;</span><br><span class="line">			<span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="function"><span class="keyword">else</span> <span class="title">if</span><span class="params">(ready == 0)</span></span><br><span class="line">			<span class="keyword">continue</span></span>;</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">		&#123;</span><br><span class="line">			<span class="comment">//检查监听描述符是否就绪</span></span><br><span class="line">			<span class="keyword">if</span>(FD_ISSET(listenfd,&amp;readfd))</span><br><span class="line">			&#123;</span><br><span class="line">				<span class="comment">//如果就绪说明有新的连接可以接受</span></span><br><span class="line">				<span class="keyword">if</span>((connfd = accept(listenfd,(<span class="keyword">struct</span> sockaddr*)&amp;caddr,&amp;caddrlen)) == -<span class="number">1</span>)</span><br><span class="line">				&#123;</span><br><span class="line">					<span class="keyword">if</span>(errno == EINTR)</span><br><span class="line">						<span class="keyword">continue</span>;</span><br><span class="line">					<span class="keyword">else</span></span><br><span class="line">					&#123;</span><br><span class="line">						<span class="built_in">cout</span> &lt;&lt; <span class="string">"accept出错"</span> &lt;&lt; endl;</span><br><span class="line">						<span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">					&#125;</span><br><span class="line">				&#125;</span><br><span class="line">				<span class="comment">//输出新连接信息到终端</span></span><br><span class="line">				<span class="built_in">cout</span> &lt;&lt; <span class="string">"客户端："</span> &lt;&lt; inet_ntoa(caddr.sin_addr) &lt;&lt; <span class="string">"已连接"</span> &lt;&lt; endl;</span><br><span class="line">				<span class="comment">//将新连接的客户端连接描述符添加进vector</span></span><br><span class="line">				<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; <span class="number">10</span>;i++)</span><br><span class="line">					<span class="keyword">if</span>(ClientConnfd[i] &lt; <span class="number">0</span>)</span><br><span class="line">					&#123;</span><br><span class="line">						ClientConnfd[i] = connfd;</span><br><span class="line">						<span class="keyword">break</span>;</span><br><span class="line">					&#125;</span><br><span class="line">				<span class="comment">//同时将该描述符添加进select集合中</span></span><br><span class="line">				FD_SET(connfd,&amp;readfd);</span><br><span class="line">				<span class="comment">//更新最大描述符值</span></span><br><span class="line">				maxfd = (maxfd &lt; connfd ? connfd : maxfd);</span><br><span class="line">				<span class="comment">//判断是否只有监听描述符就绪（即没有已连接的客户端发送消息，只有新连接请求）</span></span><br><span class="line">				<span class="keyword">if</span>(ready == <span class="number">1</span>)</span><br><span class="line">					<span class="keyword">continue</span>;</span><br><span class="line">			&#125;</span><br><span class="line">			DoEcho(&amp;readfd);</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>完整代码在我的github上：<a href="https://github.com/MorningCoder/NetworkPrograming" target="_blank" rel="external">MorningCoder</a>。欢迎访问！</p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/linux/">linux</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/linux/">linux</a><a href="/tags/网络编程/">网络编程</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/01/23/linux网络编程基础API/" title="linux网络编程基础API" itemprop="url">linux网络编程基础API</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://yoursite.com/about" title="Cod" target="_blank" itemprop="author">Cod</a>
+		
+  <p class="article-time">
+    <time datetime="2015-01-23T02:26:07.000Z" itemprop="datePublished"> 发表于 2015-01-23</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>依稀记得大一时对网络编程强烈的好奇心，非常想知道如何将信息从本机传递到另一台机器。现在上了两年半大学，学了一学期计算机网络，可算是在网络方面有了一点理解。这个假期准备开始好好研究linux下的网络编程，顺便写写学习笔记。</p>
+<p>linux下网络编程的核心也是基础就是他提供的一堆系统调用，说白了就是一堆函数，学习这些基础API的用法对日后真正构建服务器有很大帮助。</p>
+<h5 id="主机字节序与网络字节序的转换函数：">主机字节序与网络字节序的转换函数：</h5><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;netinet/in.h&gt;</span></span><br><span class="line"><span class="function"><span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="keyword">int</span> <span class="title">htonl</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="keyword">int</span> hostlong)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">unsigned</span> <span class="keyword">short</span> <span class="keyword">int</span> <span class="title">htons</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">short</span> <span class="keyword">int</span> hostshort)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="keyword">int</span> <span class="title">ntohl</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="keyword">int</span> netlong)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">unsigned</span> <span class="keyword">short</span> <span class="keyword">int</span> <span class="title">ntohs</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">short</span> <span class="keyword">int</span> netshort)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>含义可从名字看出来，比如htonl表示”host to net long“，即将长整形主机字节序转化为网络字节序。这四个函数中，长整形函数通常用来转换ip地址，而短整形用来转换端口号。当然不一定必须是这样。</p>
+<h5 id="Socket地址的表示结构体：">Socket地址的表示结构体：</h5><p>linux下提供了很多种表示地址（ip+port）的结构体，其中最通用的是sockaddr：<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;bits/socket.h&gt;</span></span><br><span class="line"><span class="keyword">struct</span> sockaddr</span><br><span class="line">&#123;</span><br><span class="line">	sa_family_t sa_family;<span class="comment">//地址族类型</span></span><br><span class="line">	<span class="keyword">char</span> sa_data[<span class="number">14</span>];<span class="comment">//存储socket地址</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>由于sa_data字段容量仅为14bytes，linux又定义了一个新的通用地址结构体：<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span>&lt;bits/socket.h&gt;</span></span><br><span class="line"><span class="keyword">struct</span> sockaddr_storage</span><br><span class="line">&#123;</span><br><span class="line">	sa_family_t sa_family;<span class="comment">//地址族类型</span></span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="keyword">int</span>  __sa_align;<span class="comment">//用于对其内存</span></span><br><span class="line">	<span class="keyword">char</span> __ss_padding[<span class="number">128</span> - <span class="keyword">sizeof</span>(__ss_align)];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>但是在真正编程时我们使用的是专用socket结构体。（上面那两个只是作为各种API参数，传递的实参是专用的socket结构体）首先是UNIX本地域协议族：<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span>&lt;sys/un.h&gt;</span></span><br><span class="line"><span class="keyword">struct</span> sockaddr_un</span><br><span class="line">&#123;</span><br><span class="line">	sa_family_t sin_family;<span class="comment">//地址族</span></span><br><span class="line">	<span class="keyword">char</span> sun_path[<span class="number">108</span>];<span class="comment">//文件路径名</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>对于TCP/IP协议族有：<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> sockaddr_in<span class="comment">//用于ipv4</span></span><br><span class="line">&#123;</span><br><span class="line">	sa_family_t sin_family;<span class="comment">//地址族</span></span><br><span class="line">	u_int16_t sin_port;<span class="comment">//使用网络字节序表示的端口号</span></span><br><span class="line">	<span class="keyword">struct</span> in_addr sin_addr;<span class="comment">//ipv4地址结构体</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">struct</span> in_addr</span><br><span class="line">&#123;</span><br><span class="line">	u_int32_t s_addr;<span class="comment">//ipv4地址，用网络字节序表示</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>ipv6暂时还不用，就不用写了。有一个问题要注意的就是：所有socket编程接口使用的地址参数均为sockaddr类型，所以在编程时，均使用强制类型转换即可。</p>
+<h5 id="ip地址转换函数">ip地址转换函数</h5><p>这种函数就是用来将ip地址在字符串表示和整数表示的形式之间转换。<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span>&lt;arpa/inet.h&gt;</span></span><br><span class="line"><span class="comment">//字符串（点分十进制） -&gt; 整数表示</span></span><br><span class="line"><span class="function">in_addr_t <span class="title">inet_addr</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span>* strptr)</span></span>;</span><br><span class="line"><span class="comment">//同上</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">inet_aton</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span>* cp,<span class="keyword">struct</span> in_addr8 inp)</span></span>;</span><br><span class="line"><span class="comment">//反向转换</span></span><br><span class="line"><span class="keyword">char</span>* inet_ntoa(<span class="keyword">struct</span> in_addr in);</span><br></pre></td></tr></table></figure></p>
+<p>有下列更新的函数完成上面的功能：<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;arpa/inet.h&gt;</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">inet_pton</span><span class="params">(<span class="keyword">int</span> af,<span class="keyword">const</span> <span class="keyword">char</span>* src,<span class="keyword">void</span>* dst)</span></span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">char</span>* inet_ntop(<span class="keyword">int</span> af,<span class="keyword">const</span> <span class="keyword">void</span>* src,<span class="keyword">char</span> dst,socklen_t cnt);</span><br></pre></td></tr></table></figure></p>
+<h5 id="socket操作函数">socket操作函数</h5><ul>
+<li><p>创建socket：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;sys/types.h&gt;</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;sys/socket.h&gt;</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">socket</span><span class="params">(<span class="keyword">int</span> domain,<span class="keyword">int</span> type,<span class="keyword">int</span> protocol)</span></span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>命名socket（绑定）</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;sys/types.h&gt;</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;sys/socket.h&gt;</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">bind</span><span class="params">(<span class="keyword">int</span> sockfd,<span class="keyword">const</span> <span class="keyword">struct</span> sockaddr* my_addr,socklen_t addrlen)</span></span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>监听socket</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;sys/socket.h&gt;</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">listen</span><span class="params">(<span class="keyword">int</span> sockfd,<span class="keyword">int</span> backlog)</span></span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>接受连接</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;sys/types.h&gt;</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;sys/socket.h&gt;</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">accept</span><span class="params">(<span class="keyword">int</span> sockfd,<span class="keyword">struct</span> sockaddr* addr,socklen_t* addrlen)</span></span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>发起连接</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;sys/types.h&gt;</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;sys/socket.h&gt;</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">connect</span><span class="params">(<span class="keyword">int</span> sockfd,<span class="keyword">const</span> <span class="keyword">struct</span> sockaddr* serveraddr,socklen_t addrlen)</span></span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>关闭连接</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;unistd.h&gt;</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">close</span><span class="params">(<span class="keyword">int</span> fd)</span></span>;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h5 id="TCP数据读写">TCP数据读写</h5><p>socket有自己的读写缓冲区函数<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;sys/types.h&gt;</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;sys/socket.h&gt;</span></span><br><span class="line"><span class="function">ssize_t <span class="title">recv</span><span class="params">(<span class="keyword">int</span> sockfd,<span class="keyword">void</span>* buf,size_t len,<span class="keyword">int</span> flags)</span></span>;</span><br><span class="line"><span class="function">ssize_t <span class="title">send</span><span class="params">(<span class="keyword">int</span> sockfd,<span class="keyword">const</span> <span class="keyword">void</span>* buf,size_t len,<span class="keyword">int</span> flags)</span></span>;</span><br></pre></td></tr></table></figure></p>
+<h5 id="网络信息API">网络信息API</h5><p>大概是通过DNS获取目标主机的完整信息<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;netdb.h&gt;</span></span><br><span class="line"><span class="keyword">struct</span> hostent* gethostbyname(<span class="keyword">const</span> <span class="keyword">char</span>* name);</span><br><span class="line"><span class="keyword">struct</span> hostent* gethostbyaddr(<span class="keyword">const</span> <span class="keyword">void</span>* addr,size_t len,<span class="keyword">int</span> type);</span><br></pre></td></tr></table></figure></p>
+<p>其中hostent结构体定义如下：<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> hostent</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">char</span>* h_name;</span><br><span class="line">	<span class="keyword">char</span>** h_aliases;</span><br><span class="line">	<span class="keyword">int</span> h_addrtype;</span><br><span class="line">	<span class="keyword">int</span> h_length;</span><br><span class="line">	<span class="keyword">char</span>** h_addr_list;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/linux/">linux</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/linux/">linux</a><a href="/tags/网络编程/">网络编程</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2014/12/14/设计模式学习之抽象工厂/" title="设计模式学习之抽象工厂" itemprop="url">设计模式学习之抽象工厂</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://yoursite.com/about" title="Cod" target="_blank" itemprop="author">Cod</a>
+		
+  <p class="article-time">
+    <time datetime="2014-12-14T03:23:40.000Z" itemprop="datePublished"> 发表于 2014-12-14</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>抽象工厂这个名字最初听起来好象很高端，不过在研究了一段时间后，再加上对面向对象理解的加深，对工厂的概念也就了解差不多了。简单来说，工厂就是用于产生产品的地方，在面向对象语言中，产品显而易见就是某种类对象。使用工厂的一个好处就是可以规范化对象的产生过程，并且提供了统一接口，使对象使用起来更加方便。还是先来几个标准定义：</p>
+<h4 id="意图">意图</h4><p>提供一个创建一系列相关或者相互依赖的对象的接口，而无需指定他们的具体的类。</p>
+<h4 id="动机">动机</h4><p>一个简单的例子就是Windows窗体设计中，有很多种窗口组件（滚动条、按钮等），同时也有很多种不同的风格（主题）。当我们编写一个窗体应用，当然不该为一个特定风格的外观<strong>硬编码</strong>它的窗口组件，而是应该使用一个抽象工厂类。这个工厂类声明了不同的用来创建每一类基本窗口组件的接口，每个窗口组件（工厂的产品）都是一个抽象类，而其具体的子类则决定了具体的风格。对于每一个<strong>抽象窗口组件类</strong>，<strong>抽象工厂类</strong>都有一个返回新窗口组件的方法。客户仅使用抽象工厂的接口而无需知道具体的工厂类。在实现方面，其实每个产品系只需要一个具体工厂实例，因此它经常被作为单例使用。同时，每个具体的工厂一般都会定义一个<strong>工厂方法</strong>，用于产生具体的产品。</p>
+<h4 id="结构">结构</h4><h4 id="参与者">参与者</h4><ul>
+<li>AbstractFactory：抽象工厂基类，声明创建不同产品的接口方法。</li>
+<li>ConcreteFactory：具体工厂类，实现每个具体产品的创建操作（使用工厂方法）。</li>
+<li>AbstractProduct：抽象产品类，声明产品的抽象接口。</li>
+<li>ConcreteProduct：具体产品类，定义被具体工厂创建的对象。</li>
+<li>Client：客户仅使用抽象工厂和产品类提供的接口。</li>
+</ul>
+<h4 id="协作">协作</h4><p>通常在运行时创建不同的具体工厂类实例（单例），用来创建不同的具有特定实现的产品对象。为创建不同的产品对象，客户应使用不同的具体工厂。</p>
+<h4 id="代码示例">代码示例</h4><p>这里的几个类基本按照《设计模式》一书的例子完成。大体意思是我们制作了一个迷宫游戏，为了简便，迷宫中只有三种组件（产品类）：墙、房间和门。一个房间有四面墙（或门）组成，墙、门和房间都继承与抽象基类（抽象产品类）：MapSite，这个表示游戏组件的基类，我们可以在这个的基础上再写新的游戏组件。同时我又为了简便，没有写用于房间的工厂，一个房间只是根据不同的墙壁和门生产出来的。<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*Game.h</span><br><span class="line">定义游戏基本组件部分</span><br><span class="line">包括墙壁、门、房间</span><br><span class="line"> */</span></span><br><span class="line"><span class="preprocessor">#ifndef GAME</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> GAME</span></span><br><span class="line"></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;memory&gt;</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;vector&gt;</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;map&gt;</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;iostream&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> std::<span class="built_in">shared_ptr</span>;</span><br><span class="line"><span class="keyword">class</span> MazeFactory;</span><br><span class="line"><span class="comment">//定义四个方向枚举</span></span><br><span class="line"><span class="keyword">enum</span> Direction</span><br><span class="line">&#123; North,South,East,West &#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//定义游戏组件基类</span></span><br><span class="line"><span class="keyword">class</span> MapSite</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="comment">//纯虚的进入方法</span></span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">Enter</span><span class="params">()</span> </span>= <span class="number">0</span>;</span><br><span class="line">    <span class="comment">//设为虚析构函数</span></span><br><span class="line">    <span class="keyword">virtual</span> ~MapSite() = <span class="keyword">default</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//房间类</span></span><br><span class="line"><span class="keyword">class</span> Room : <span class="keyword">public</span> MapSite</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="comment">//拷贝控制部分</span></span><br><span class="line">    Room()</span><br><span class="line">        :sites(),num(Room::getnum())&#123; &#125;</span><br><span class="line">    <span class="keyword">virtual</span> ~Room() = <span class="keyword">default</span>;</span><br><span class="line">    <span class="comment">//不允许拷贝赋值</span></span><br><span class="line">    Room(<span class="keyword">const</span> Room&amp;) = <span class="keyword">delete</span>;</span><br><span class="line">    Room&amp; <span class="keyword">operator</span>=(<span class="keyword">const</span> Room&amp;) = <span class="keyword">delete</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//获取该方向的组件（墙壁或门）</span></span><br><span class="line">    <span class="built_in">shared_ptr</span>&lt;MapSite&gt; GetSite(Direction) <span class="keyword">const</span>;</span><br><span class="line">    <span class="comment">//获取房间号</span></span><br><span class="line">    <span class="function"><span class="keyword">unsigned</span> <span class="keyword">int</span> <span class="title">GetRoomNum</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="comment">//设置该方向的组件</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">SetSite</span><span class="params">(Direction,<span class="built_in">shared_ptr</span>&lt;MapSite&gt;)</span></span>;</span><br><span class="line">    <span class="comment">//实现Enter方法</span></span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">Enter</span><span class="params">()</span> override</span>;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="comment">//用于产生新的房间号</span></span><br><span class="line">    <span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">getnum</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="comment">//房间号</span></span><br><span class="line">    <span class="keyword">int</span> num;</span><br><span class="line">    <span class="comment">//用于存储房间四面的墙或者门</span></span><br><span class="line">    std::<span class="stl_container"><span class="built_in">array</span>&lt;<span class="built_in">shared_ptr</span>&lt;MapSite&gt;</span>,<span class="number">4</span>&gt; sites;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//墙壁类</span></span><br><span class="line"><span class="keyword">class</span> Wall : <span class="keyword">public</span>  MapSite</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="comment">//默认构造</span></span><br><span class="line">    Wall() = <span class="keyword">default</span>;</span><br><span class="line">    <span class="comment">//默认析构</span></span><br><span class="line">    <span class="keyword">virtual</span> ~Wall() = <span class="keyword">default</span>;</span><br><span class="line">    <span class="comment">//默认赋值等</span></span><br><span class="line">    Wall(<span class="keyword">const</span> Wall&amp;) = <span class="keyword">default</span>;</span><br><span class="line">    <span class="comment">//重写Enter</span></span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">Enter</span><span class="params">()</span> override</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//门类</span></span><br><span class="line"><span class="keyword">class</span> Door : <span class="keyword">public</span> MapSite</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="comment">//使用两个房间构造</span></span><br><span class="line">    Door(<span class="built_in">shared_ptr</span>&lt;Room&gt; l,<span class="built_in">shared_ptr</span>&lt;Room&gt; r)</span><br><span class="line">            :isopen(<span class="keyword">false</span>),lhs(l),rhs(r)&#123; &#125;</span><br><span class="line">    <span class="comment">//析构</span></span><br><span class="line">    <span class="keyword">virtual</span> ~Door() = <span class="keyword">default</span>;</span><br><span class="line">    <span class="comment">//返回另一个房间</span></span><br><span class="line">    <span class="built_in">shared_ptr</span>&lt;Room&gt; GetOther(<span class="built_in">shared_ptr</span>&lt;Room&gt;&amp;) <span class="keyword">const</span>;</span><br><span class="line">    <span class="comment">//重写Enter</span></span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">Enter</span><span class="params">()</span> override</span>;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="comment">//判断是否打开</span></span><br><span class="line">    <span class="keyword">bool</span> isopen;</span><br><span class="line">    <span class="comment">//门的两侧</span></span><br><span class="line">    <span class="built_in">shared_ptr</span>&lt;Room&gt; lhs;</span><br><span class="line">    <span class="built_in">shared_ptr</span>&lt;Room&gt; rhs;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//整个迷宫类</span></span><br><span class="line"><span class="comment">//用来产生迷宫</span></span><br><span class="line"><span class="comment">//使用单例模式</span></span><br><span class="line"><span class="keyword">class</span> Maze</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="comment">//使用工厂产生迷宫</span></span><br><span class="line">    <span class="keyword">static</span> <span class="built_in">shared_ptr</span>&lt;Maze&gt; CreateMaze(MazeFactory&amp;);</span><br><span class="line">    <span class="comment">//显示所有房间信息</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">ShowRoom</span><span class="params">(<span class="built_in">std</span>::ostream&amp;)</span></span>;</span><br><span class="line">    <span class="comment">//添加房间</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">AddRoom</span><span class="params">(<span class="built_in">shared_ptr</span>&lt;Room&gt; room)</span></span>;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="comment">//保存所有房间指针</span></span><br><span class="line">    std::<span class="stl_container"><span class="built_in">vector</span>&lt;<span class="built_in">shared_ptr</span>&lt;Room&gt;</span>&gt; rooms;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="preprocessor">#<span class="keyword">endif</span></span></span><br></pre></td></tr></table></figure></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*Factory.h</span><br><span class="line">* 定义迷宫抽象工厂</span><br><span class="line">* 以及几个具体工厂类*/</span></span><br><span class="line"><span class="preprocessor">#ifndef FACTORY</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> FACTORY</span></span><br><span class="line"></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> "Game.h"</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> "DerivedSite.h"</span></span><br><span class="line"><span class="keyword">using</span> std::<span class="built_in">shared_ptr</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//定义迷宫工厂基类</span></span><br><span class="line"><span class="comment">//直接设为单例</span></span><br><span class="line"><span class="keyword">class</span> Wall;</span><br><span class="line"><span class="keyword">class</span> Door;</span><br><span class="line"><span class="keyword">class</span> Room;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> MazeFactory</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    MazeFactory() = <span class="keyword">default</span>;</span><br><span class="line">    <span class="comment">//产生不同墙和门的虚拟工厂方法</span></span><br><span class="line">    <span class="keyword">virtual</span>  <span class="built_in">shared_ptr</span>&lt;Wall&gt; MakeWall() <span class="keyword">const</span>;</span><br><span class="line">    <span class="keyword">virtual</span>  <span class="built_in">shared_ptr</span>&lt;Door&gt; MakeDoor(<span class="built_in">shared_ptr</span>&lt;Room&gt; l,<span class="built_in">shared_ptr</span>&lt;Room&gt; r) <span class="keyword">const</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//定义具体的迷宫工厂1</span></span><br><span class="line"><span class="comment">//使用镜面墙壁和需要咒语的门</span></span><br><span class="line"><span class="keyword">class</span> EnchantedFactory : <span class="keyword">public</span> MazeFactory</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="comment">//产生自己的单例</span></span><br><span class="line">    <span class="keyword">static</span> EnchantedFactory&amp; GetFactory();</span><br><span class="line">    <span class="comment">//重写产生门和墙的方法</span></span><br><span class="line">    <span class="keyword">virtual</span> <span class="built_in">shared_ptr</span>&lt;Wall&gt; MakeWall() <span class="keyword">const</span> override;</span><br><span class="line">    <span class="keyword">virtual</span> <span class="built_in">shared_ptr</span>&lt;Door&gt; MakeDoor(<span class="built_in">shared_ptr</span>&lt;Room&gt; l, <span class="built_in">shared_ptr</span>&lt;Room&gt; r) <span class="keyword">const</span> override;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    EnchantedFactory() = <span class="keyword">default</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//具体工厂2</span></span><br><span class="line"><span class="comment">//使用反弹墙和无法打开的门</span></span><br><span class="line"><span class="comment">//（那估计这迷宫没啥用了。。。）</span></span><br><span class="line"><span class="keyword">class</span> UselessmazeFactory : <span class="keyword">public</span> MazeFactory</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="comment">//产生单例</span></span><br><span class="line">    <span class="keyword">static</span> UselessmazeFactory&amp; GetFactory();</span><br><span class="line">    <span class="comment">//重写方法</span></span><br><span class="line">    <span class="keyword">virtual</span> <span class="built_in">shared_ptr</span>&lt;Wall&gt; MakeWall() <span class="keyword">const</span> override;</span><br><span class="line">    <span class="keyword">virtual</span> <span class="built_in">shared_ptr</span>&lt;Door&gt; MakeDoor(<span class="built_in">shared_ptr</span>&lt;Room&gt; l,<span class="built_in">shared_ptr</span>&lt;Room&gt; r) <span class="keyword">const</span> override;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    UselessmazeFactory() = <span class="keyword">default</span>;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="preprocessor">#<span class="keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*Derived.h</span><br><span class="line">定义继承自Room、Door以及Wall的迷宫组件类</span><br><span class="line">定义各自的独特性质</span><br><span class="line"> */</span></span><br><span class="line"><span class="preprocessor">#ifndef DERIVED</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> DERIVED</span></span><br><span class="line"></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;string&gt;</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> "Game.h"</span></span><br><span class="line"><span class="keyword">using</span> std::<span class="built_in">string</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//定义一个镜面墙壁</span></span><br><span class="line"><span class="keyword">class</span> MirrorWall : <span class="keyword">public</span> Wall</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    MirrorWall() = <span class="keyword">default</span>;</span><br><span class="line">    ~MirrorWall() = <span class="keyword">default</span>;</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">Enter</span><span class="params">()</span> final</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//一个可以反弹的墙壁</span></span><br><span class="line"><span class="keyword">class</span> ReboundWall : <span class="keyword">public</span> Wall</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    ReboundWall()</span><br><span class="line">            :Wall()&#123; &#125;</span><br><span class="line">    ~ReboundWall() = <span class="keyword">default</span>;</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">Enter</span><span class="params">()</span> final</span>;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">//定义一个施法的门</span></span><br><span class="line"><span class="comment">//需要咒语才可以打开</span></span><br><span class="line"><span class="keyword">class</span> EnchantedDoor : <span class="keyword">public</span> Door</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    EnchantedDoor(<span class="built_in">shared_ptr</span>&lt;Room&gt; lhs,<span class="built_in">shared_ptr</span>&lt;Room&gt; rhs,<span class="keyword">const</span> <span class="built_in">string</span>&amp; s)</span><br><span class="line">            :Door(lhs,rhs),spell(s)&#123; &#125;</span><br><span class="line">    ~EnchantedDoor() = <span class="keyword">default</span>;</span><br><span class="line">    <span class="comment">//重写进入方法</span></span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">Enter</span><span class="params">()</span> final</span>;</span><br><span class="line">    <span class="comment">//设置咒语</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">SetSpell</span><span class="params">(<span class="keyword">const</span> <span class="built_in">string</span>&amp;)</span></span>;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="comment">//定义一个用于检查咒语的方法</span></span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">check</span><span class="params">()</span> <span class="keyword">const</span></span>;</span><br><span class="line">    <span class="comment">//一个简单咒语</span></span><br><span class="line">    <span class="built_in">string</span> spell;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//一个打不开的门</span></span><br><span class="line"><span class="keyword">class</span> NotOpenDoor : <span class="keyword">public</span> Door</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    NotOpenDoor(<span class="built_in">shared_ptr</span>&lt;Room&gt; lhs,<span class="built_in">shared_ptr</span>&lt;Room&gt; rhs)</span><br><span class="line">        : Door(lhs,rhs) &#123; &#125;</span><br><span class="line">    ~NotOpenDoor() = <span class="keyword">default</span>;</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">Enter</span><span class="params">()</span> final</span>;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="preprocessor">#<span class="keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+<p>在主函数中我们可以使用工厂构造不同构成的房间，从而产生迷宫。<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    EnchantedFactory enchantedFactory = EnchantedFactory::GetFactory();</span><br><span class="line">    <span class="built_in">shared_ptr</span>&lt;Maze&gt; maze = Maze::CreateMaze(enchantedFactory);</span><br><span class="line">    maze-&gt;ShowRoom(std::<span class="built_in">cout</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>一个基本的工厂就是这样，抽象工厂定义了产生门和墙的接口，具体工厂负责实现他们，而客户只需要使用抽象接口即可产生具体类对象。</p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/设计模式/">设计模式</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/设计模式/">设计模式</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2014/12/01/最简单的设计模式——单例模式/" title="最简单的设计模式——单例模式" itemprop="url">最简单的设计模式——单例模式</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://yoursite.com/about" title="Cod" target="_blank" itemprop="author">Cod</a>
+		
+  <p class="article-time">
+    <time datetime="2014-12-01T13:45:11.000Z" itemprop="datePublished"> 发表于 2014-12-01</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>单例模式应该算是最简单的设计模式了，它的目的很简单，即保证一个类仅有一个实例，并提供一个访问它的全局访问点。虽然这个模式很简单，但是用处却很广。举例来说，一个信息系统中负责访问数据库的类只能有一个；负责连接打印机的类只能有一个等等，现实中一个国家只能有一个总统，一个城市只能有一个市长也是很形象的例子。单例的另一个好处是它是对全局变量的一种改进，避免了全局变量污染命名空间的问题。单例类也可以有子类，也可以使用多态性质产生不同的单例子类来动态配置应用。要保证一个类只能由一个实例，首先得保证它不会被随意构造或产生（工厂），另外还得提供一个能够访问到那个唯一实例的方法。</p>
+<p>在《设计模式》中，提供了一个很传统但是很标准的实现单例的方法：单例类自身负责保存它的唯一实例，将它的构造函数设置为私有来保证其他客户代码无法构造它，并且这个类对外提供一个共有接口来提供单例全局访问点。代码如下：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> Singleton</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="keyword">static</span> Singleton* GetInstance();</span><br><span class="line"><span class="keyword">protected</span>:</span><br><span class="line">	<span class="comment">//将构造函数设为保护的</span></span><br><span class="line">	Singleton();</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="comment">//静态的实例指针</span></span><br><span class="line">	<span class="keyword">static</span> Singleton* instance;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">//必须先定义静态变量</span></span><br><span class="line">Singleton* Singleton::instance = null;</span><br><span class="line"><span class="comment">//获取实例的方法</span></span><br><span class="line">Singleton* Singleton::GetInstance()</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">if</span>(instance == null)</span><br><span class="line">		instance = <span class="keyword">new</span> Singleton;</span><br><span class="line">	<span class="keyword">return</span> instance;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>可以看出这里使用的是<strong>原始指针</strong>，并且可以多次返回对于这个静态成员变量的指针（instance）。我们在使用指针时，很容易就会忘记<strong>delete</strong>它，因此有一个对此的改进版本，即加入一个工具类来帮助我们释放内存：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> Manager</span><br><span class="line">&#123;</span><br><span class="line">	~Manager()</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span>(Singleton::instance != <span class="keyword">nullptr</span>)</span><br><span class="line">			<span class="keyword">delete</span> Singleton::instancce;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>在Singleton类中使用这个工具类（设置为友元），在整个程序结束时，Manager类的析构函数会被自动调用，从而释放那部分内存。</p>
+<p>不过加一个这个工具类貌似没起到多大作用，如果我们声明了两个指针，都被赋值为它返回的instance，并且在不同地方先后调用了delete，同样会造成程序错误。所以一个更好的方法是这么写：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> Singleton</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">protected</span>:</span><br><span class="line">	<span class="comment">//定义为删除的强制不能使用</span></span><br><span class="line">	Singleton(<span class="keyword">const</span> Singleton&amp;) = <span class="keyword">delete</span>;</span><br><span class="line">	Singleton&amp; <span class="keyword">operator</span>=(<span class="keyword">const</span> Singleton&amp;) = <span class="keyword">delete</span>;</span><br><span class="line">	<span class="comment">//默认构造函数</span></span><br><span class="line">	Singleton() = <span class="keyword">default</span>;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="comment">//注意这里引用符号</span></span><br><span class="line">	<span class="keyword">static</span> Singleton&amp; GetInstance();</span><br><span class="line">&#125;;</span><br><span class="line">Singleton&amp; Singleton::GetInstance()</span><br><span class="line">&#123;</span><br><span class="line">	<span class="comment">//创建一个静态变量</span></span><br><span class="line">	<span class="keyword">static</span> Singleton instance;</span><br><span class="line">	<span class="comment">//返回该引用</span></span><br><span class="line">	<span class="keyword">return</span> instance;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这里代码精简了一些并且更加清晰了，我们使用了静态方法中的静态变量，保证了<strong>instance</strong>在<strong>整个程序</strong>运行期间存在，并且在第一次使用时被初始化（省去了额外初始化的部分），并且我们把拷贝构造函数和拷贝赋值运算符定义为删除的，从而避免了单例类的值拷贝或者传值参数行为。这样在使用单例时只能这样：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Singleton&amp; single1 = Singleton::GetInstance();</span><br><span class="line"><span class="comment">//...</span></span><br></pre></td></tr></table></figure></p>
+<p>这样保证了单例的唯一性，也避免了内存释放问题。</p>
+<p>不过话说回来，既然我们都使用了C++11的新特性（delete函数），我们也可以使用智能指针，将返回的单例指针交给智能指针管理，就不用在担心内存释放的问题了：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">std::<span class="built_in">shared_ptr</span>&lt;Singleton&gt; sin1(Singleton::GetInstance());</span><br><span class="line"><span class="comment">//...</span></span><br></pre></td></tr></table></figure></p>
+<p>这样就可以既使用简单的单例，也可以执行拷贝等动作，智能指针会帮助我们处理好一切！</p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/设计模式/">设计模式</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/设计模式/">设计模式</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2014/11/11/生活小记/" title="生活小记" itemprop="url">生活小记</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://yoursite.com/about" title="Cod" target="_blank" itemprop="author">Cod</a>
+		
+  <p class="article-time">
+    <time datetime="2014-11-11T13:51:38.000Z" itemprop="datePublished"> 发表于 2014-11-11</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>还记得高中时喜欢写随笔，写出的一些文字也受到过老师的嘉奖，现在过去了不过两年，却已经快忘却了文字的感觉。当时总觉得迷惘的感觉很酷，却没有真正体会过何为迷惘；当时总觉得心怀梦想，却未曾好好想过何为自己真正的梦。人毕竟也是成长的，这在大学生活的两年，的确想明白了一些事情，可是同时却发现一个更大的未知世界在我前方。我只能先写下这些文字，记下生活的痕迹，与未来的我共勉。</p>
+<p>总会先想起初恋。想起过去将近两年美好时光，无论怎样，留到最后的只有歉意和感谢，只是感谢那个女孩带给我的美好瞬间，只是抱歉我带给她的委屈和失落。我心中有天使也有魔鬼，时而会有分裂的情感在一瞬间爆发，在无眠的午夜和朦胧的清晨。只是希望那天使能够带着幸运陪伴在她周围，带给她应得美好。</p>
+<p>也总会想起过去的人和事。想起高中的那个成人礼、那个乐队、那个满怀期待的岁月。也不知道是人的成长还是时间的力量，我的确是被动地看到了世界的真实，的确是被迫改变了当初的期待。当卡夫卡单独面对世界时，最终也是看到了险恶和温存的混合体，也是体会到了肉体的欢愉和精神的痛苦。当我从初识人生、初识世界到体会她的险恶再到感受温存，我想会需要一生的时间，此时我应该在体会世界最深的险恶吧。希望我能够穷尽一生体会大千世界，希望能够逃脱那些束缚，去想去的地方，看想看的风景以及陪伴想陪伴的人。</p>
+<p>憧憬未来总是美好的，但是在最深得梦境中，看到的总是最深的恐惧。也许是我心中的软弱和畏惧，也许是我从小缺乏的自信，每次看到美好的事物总会想到它被毁灭后的悲惨样子。小时在一个一个小环境中的安稳生活带给我的只是被磨去的冒险精神和那种向往，现在却发现真正在向往一个事时却总因为外界的束缚或者是没有足有的力量去实现，最后只能转而成为更深的梦。希望我能够有更强的力量支撑着我不再憧憬一个梦。</p>
+<p>我是一个幻想家，喜欢忧郁的幻想家，喜欢孤独的幻想家。总会留恋在自己创造的世界中，总会尝试离开一个又一个牢笼，最后又会陷在无限的循环中。作为一个浪漫主义者，却生活在一个如此追求现实的世界中，我知道有很多人与我一样向往梦，却又要醒来与生活斗争。我能够在这个国度中看到希望，但却无法满足我对更多美好的更大的向往。我想我会保存住内心的幻想，我想我也会学会现实斗争的法则，我想我会足够强大，最终会有一天我会带给我心中的幻想真正的幻想。</p>
+<p>看了太多教科书，很多人双眼被蒙蔽，可是更多人因此而让双眼更加明亮。可谁能知道呢，是那险恶占据上风还是那温存感化世界？我想我会一直让心开放，让眼明亮，让身体穿越那险恶和温存，找到梦中的国度。</p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/随笔/">随笔</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/生活/">生活</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2014/11/03/设计模式学习（2）之观察者模式/" title="设计模式学习（2）之观察者模式" itemprop="url">设计模式学习（2）之观察者模式</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://yoursite.com/about" title="Cod" target="_blank" itemprop="author">Cod</a>
+		
+  <p class="article-time">
+    <time datetime="2014-11-03T08:35:44.000Z" itemprop="datePublished"> 发表于 2014-11-03</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>我个人觉得观察者模式应该算是设计模式中最好理解的一个了。顾名思义，所谓观察者（observer），就是一种订阅-发布机制。同时有几个观察者观察同一个目标（subject）状态，当目标状态更新后自动通知观察者们，从而使观察者更新自身状态。下面给出一些标准的定义：</p>
+<h4 id="意图">意图</h4><p>定义对象间的一种<strong>一对多</strong>的依赖关系，当一个对象的状态发生改变时，所有依赖于它的对象都得到<strong>通知</strong>并被自动更新。</p>
+<h4 id="动机">动机</h4><p>举一个常见的使用观察者模式的情景，考虑一个字处理软件（如MS Word），同样的一组统计数据，可以使用不同的用户界面控件表示。例如一个表格、一个柱状图以及一个饼图都可以图形形式表示某一组统计数据。当底层统计数据变化时，对应的上层的多个显示控件中的内容也应该同时变化。这里底层的统计数据就被称为<strong>目标（subject）</strong>，而多个显示控件被称为<strong>观察者</strong>。</p>
+<h4 id="结构">结构</h4><p>典型的类结构如下UML表示：<br><img src="/img/designpattern2_1.png" alt="designpattern2_1"></p>
+<h4 id="参与者">参与者</h4><ul>
+<li>Subject（目标）：目标负责维护观察它的的观察者列表，并提供<strong>注册</strong>和<strong>删除</strong>观察者对象的接口。</li>
+<li>Observer（观察者）：为那些在目标状态发生改变时，需获得通知的对象定义一个<strong>更新</strong>接口。</li>
+<li>ConcreteSubject（具体目标）：将有关状态存入各ConcreteObserver对象；当它的状态发生改变时，向各个观察者发出通知。</li>
+<li>ConcreteObserver（具体观察者）：维护一个指向某具体目标的引用，存储有关状态并保持与目标状态一致（实现Observer更新接口）。</li>
+</ul>
+<h5 id="代码示例">代码示例</h5><p>我这里根据《设计模式》一书的代码，写了一个简单的钟表程序（C++），用来练习观察者模式。这里主要的想法就是，某个时刻的时间就是目标，为了表示同一个时间，可以有不同的表的形式（电子表、石英钟表等），那么具体的表就是观察者。为了简便，这里只使用一个StringClock（就是用字符串表示），一个NumClock（就是整数表示）。（简单起见嘛。。。）</p>
+<p>观察者抽象基类<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">pragma</span> once</span></span><br><span class="line"><span class="keyword">class</span> Observer</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="comment">//拷贝控制成员</span></span><br><span class="line">	Observer() = <span class="keyword">default</span>;</span><br><span class="line">	<span class="keyword">virtual</span> ~Observer() = <span class="keyword">default</span>;</span><br><span class="line">	<span class="comment">//观察者更新自身状态</span></span><br><span class="line">	<span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">Update</span><span class="params">()</span> </span>= <span class="number">0</span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>目标抽象基类<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">pragma</span> once</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span>&lt;list&gt;</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> "Observer.h"</span></span><br><span class="line"><span class="keyword">class</span> Subject</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="comment">//拷贝控制成员</span></span><br><span class="line">	Subject() = <span class="keyword">default</span>;</span><br><span class="line">	<span class="keyword">virtual</span> ~Subject() = <span class="keyword">default</span>;</span><br><span class="line">	<span class="comment">//将一个观察者添加进观察者列表</span></span><br><span class="line">	<span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">Add</span><span class="params">(Observer*)</span></span>;</span><br><span class="line">	<span class="comment">//删除一个观察者</span></span><br><span class="line">	<span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">Delete</span><span class="params">(Observer*)</span></span>;</span><br><span class="line">	<span class="comment">//通知所有观察者状态更新</span></span><br><span class="line">	<span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">Notify</span><span class="params">()</span></span>;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="comment">//保存观察者链表</span></span><br><span class="line">	std::<span class="stl_container"><span class="built_in">list</span>&lt;Observer*&gt;</span> observers;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>字符串表<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">pragma</span> once</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> "Observer.h"</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> "ClockTime.h"</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;iostream&gt;</span></span><br><span class="line"><span class="comment">//字符串表类</span></span><br><span class="line"><span class="keyword">using</span> std::<span class="built_in">string</span>;</span><br><span class="line"><span class="keyword">class</span> StringClock : <span class="keyword">public</span> Observer</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="comment">//构造函数读取一个ClockTIme引用</span></span><br><span class="line">	StringClock(ClockTime* c)</span><br><span class="line">		:own_subject(c)&#123; &#125;</span><br><span class="line">	~StringClock() = <span class="keyword">default</span>;</span><br><span class="line">	<span class="comment">//重写Update</span></span><br><span class="line">	<span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">Update</span><span class="params">()</span> override</span>;</span><br><span class="line">	<span class="comment">//显示字符串时间</span></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">Print</span><span class="params">(<span class="built_in">std</span>::ostream&amp;)</span></span>;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="comment">//保存对目标的引用</span></span><br><span class="line">	ClockTime* own_subject;</span><br><span class="line">	<span class="comment">//保存字符串表示的时间</span></span><br><span class="line">	std::<span class="built_in">string</span> time;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>整数表<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">pragma</span> once</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;iostream&gt;</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> "Observer.h"</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> "ClockTime.h"</span></span><br><span class="line"><span class="keyword">using</span> std::<span class="built_in">string</span>;</span><br><span class="line"><span class="keyword">class</span> NumberClock : <span class="keyword">public</span> Observer</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	NumberClock(ClockTime* c)</span><br><span class="line">		:own_subject(c)&#123; &#125;</span><br><span class="line">	~NumberClock() = <span class="keyword">default</span>;</span><br><span class="line">	<span class="comment">//重写update</span></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">Update</span><span class="params">()</span> override</span>;</span><br><span class="line">	<span class="comment">//打印时间</span></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">Print</span><span class="params">(<span class="built_in">std</span>::ostream&amp;)</span></span>;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="comment">//对目标的引用</span></span><br><span class="line">	ClockTime* own_subject;</span><br><span class="line">	<span class="comment">//保存整数时间</span></span><br><span class="line">	<span class="keyword">unsigned</span> time;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>具体目标（时间）<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//具体目标（主题）时钟时间</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">pragma</span> once</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span>&lt;string&gt;</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> "Subject.h"</span></span><br><span class="line"><span class="keyword">using</span> std::<span class="built_in">string</span>;</span><br><span class="line"><span class="keyword">class</span> ClockTime : <span class="keyword">public</span> Subject</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	ClockTime()</span><br><span class="line">		:hour(<span class="number">0</span>), minut(<span class="number">0</span>), second(<span class="number">0</span>)&#123; &#125;</span><br><span class="line">	~ClockTime() = <span class="keyword">default</span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//内部触发器定期触发通知观察者</span></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">Tick</span><span class="params">()</span></span>;</span><br><span class="line">	<span class="comment">//获取时间秒数</span></span><br><span class="line">	<span class="function"><span class="keyword">unsigned</span> <span class="title">GetSecond</span><span class="params">()</span></span>;</span><br><span class="line">	<span class="comment">//获取分钟数</span></span><br><span class="line">	<span class="function"><span class="keyword">unsigned</span> <span class="title">GetMinute</span><span class="params">()</span></span>;</span><br><span class="line">	<span class="comment">//获取小时数</span></span><br><span class="line">	<span class="function"><span class="keyword">unsigned</span> <span class="title">GetHour</span><span class="params">()</span></span>;</span><br><span class="line">	<span class="comment">//设置整形时间</span></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">SetTime</span><span class="params">(<span class="keyword">unsigned</span> h, <span class="keyword">unsigned</span> m, <span class="keyword">unsigned</span> s)</span></span>;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="keyword">unsigned</span> hour;</span><br><span class="line">	<span class="keyword">unsigned</span> minut;</span><br><span class="line">	<span class="keyword">unsigned</span> second;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>所有这些代码我都已经打包提交到Github上，欢迎访问！</p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/设计模式/">设计模式</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/设计模式/">设计模式</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+
+  <nav id="page-nav" class="clearfix">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next<span></span></a>
+  </nav>
+
+</div>
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/C/" title="C++">C++<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Python/" title="Python">Python<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/linux/" title="linux">linux<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/算法/" title="算法">算法<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/设计模式/" title="设计模式">设计模式<sup>4</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/随笔/" title="随笔">随笔<sup>1</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/设计模式/" title="设计模式">设计模式<sup>4</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/linux/" title="linux">linux<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/C/" title="C++">C++<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Python/" title="Python">Python<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/网络编程/" title="网络编程">网络编程<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/生活/" title="生活">生活<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/算法/" title="算法">算法<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="https://coderq.com" target="_blank" title="一个面向程序员交流分享的新一代社区">码农圈</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://wuchong.me" target="_blank" title="Jark&#39;s Blog">Jark&#39;s Blog</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m Larry Page in Google. <br/>
+			This is my blog,believe it or not.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2015 
+		
+		<a href="http://yoursite.com/about" target="_blank" title="Cod">Cod</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Analytics Begin -->
+
+
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+ </html>

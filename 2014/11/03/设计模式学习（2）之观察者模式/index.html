@@ -1,11 +1,17 @@
-<!DOCTYPE html>
-<html>
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
 <head>
-  <meta charset="utf-8">
+  <meta charset="UTF-8">
   
-  <title>设计模式学习（2）之观察者模式 | Cod&#39;s Blog</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="我个人觉得观察者模式应该算是设计模式中最好理解的一个了。顾名思义，所谓观察者（observer），就是一种订阅-发布机制。同时有几个观察者观察同一个目标（subject）状态，当目标状态更新后自动通知观察者们，从而使观察者更新自身状态。下面给出一些标准的定义：
+    <title>设计模式学习（2）之观察者模式 | Cod&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Cod">
+    
+
+    
+    <meta name="description" content="我个人觉得观察者模式应该算是设计模式中最好理解的一个了。顾名思义，所谓观察者（observer），就是一种订阅-发布机制。同时有几个观察者观察同一个目标（subject）状态，当目标状态更新后自动通知观察者们，从而使观察者更新自身状态。下面给出一些标准的定义：
 意图定义对象间的一种一对多的依赖关系，当一个对象的状态发生改变时，所有依赖于它的对象都得到通知并被自动更新。
 动机举一个常见的使用观察者模">
 <meta property="og:type" content="article">
@@ -21,88 +27,85 @@
 <meta name="twitter:description" content="我个人觉得观察者模式应该算是设计模式中最好理解的一个了。顾名思义，所谓观察者（observer），就是一种订阅-发布机制。同时有几个观察者观察同一个目标（subject）状态，当目标状态更新后自动通知观察者们，从而使观察者更新自身状态。下面给出一些标准的定义：
 意图定义对象间的一种一对多的依赖关系，当一个对象的状态发生改变时，所有依赖于它的对象都得到通知并被自动更新。
 动机举一个常见的使用观察者模">
-  
-  
 
-  <link rel="stylesheet" href="/css/style.css" type="text/css">
-  
-  
-  
-
-
-  
-
-  
-    <link href='//fonts.useso.com/css?family=Titillium+Web:300,400,600' rel='stylesheet' type='text/css'>
-    <link href="//fonts.useso.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
-  
-
+    
+    <link rel="alternative" href="/atom.xml" title="Cod&#39;s Blog" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
 </head>
 
-<body>
-  <div id="wrap">
-    <header id="header">
-  <div id="header-outer" class="outer">
-    <div class="container">
-      <div class="container-inner">
-        <div id="header-title">
-          <h1 class="logo-wrap">
-            <a href="/" class="logo"></a>
-          </h1>
-          
-            <h2 class="subtitle-wrap">
-              <p class="subtitle">Consider Yourself Denied</p>
-            </h2>
-          
-        </div>
-        <div id="header-inner" class="nav-container">
-          <a id="main-nav-toggle" class="nav-icon"></a>
-          <div class="nav-container-inner">
-            <ul id="main-nav">
-              
-            </ul>
-            <nav id="sub-nav">
-              <div id="search-form-wrap">
-                <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="搜索"><input type="hidden" name="q" value="site:http://yoursite.com"></form>
-              </div>
-            </nav>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="Cod&#39;s Blog" title="Cod&#39;s Blog"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Cod&#39;s Blog">Cod&#39;s Blog</a></h1>
+				<h2 class="blog-motto">Consider Yourself Denied</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:yoursite.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2014/11/03/设计模式学习（2）之观察者模式/" title="设计模式学习（2）之观察者模式" itemprop="url">设计模式学习（2）之观察者模式</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://yoursite.com/about" title="Cod" target="_blank" itemprop="author">Cod</a>
+		
+  <p class="article-time">
+    <time datetime="2014-11-03T08:35:44.000Z" itemprop="datePublished"> 发表于 2014-11-03</time>
+    
+  </p>
 </header>
-    <div class="container">
-      <div class="main-body container-inner">
-        <div class="main-body-inner">
-          <section id="main">
-            <div class="main-body-header">
-
-              <h1 class="header"><a class="page-title-link" href="/categories/设计模式/">设计模式</a></h1>
-            </div>
-            <div class="main-body-content">
-              
-  <article id="post-设计模式学习（2）之观察者模式" class="article article-single article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-      <!--  -->
-      
-        <header class="article-header">
-          
-  
-    <h1 class="article-title" itemprop="name">
-      设计模式学习（2）之观察者模式
-    </h1>
-  
-
-        </header>
-      
-      <p class="article-byline">
-        <a href="/2014/11/03/设计模式学习（2）之观察者模式/" class="article-date">
-  <time datetime="2014-11-03T08:35:44.000Z" itemprop="datePublished">2014-11-03</time>
-</a>
-      </p>
-      <div class="article-entry" itemprop="articleBody">
-        <p>我个人觉得观察者模式应该算是设计模式中最好理解的一个了。顾名思义，所谓观察者（observer），就是一种订阅-发布机制。同时有几个观察者观察同一个目标（subject）状态，当目标状态更新后自动通知观察者们，从而使观察者更新自身状态。下面给出一些标准的定义：</p>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#意图"><span class="toc-number">1.</span> <span class="toc-text">意图</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#动机"><span class="toc-number">2.</span> <span class="toc-text">动机</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#结构"><span class="toc-number">3.</span> <span class="toc-text">结构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#参与者"><span class="toc-number">4.</span> <span class="toc-text">参与者</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#代码示例"><span class="toc-number">4.1.</span> <span class="toc-text">代码示例</span></a></li></ol></li></ol>
+		
+		</div>
+		
+		<p>我个人觉得观察者模式应该算是设计模式中最好理解的一个了。顾名思义，所谓观察者（observer），就是一种订阅-发布机制。同时有几个观察者观察同一个目标（subject）状态，当目标状态更新后自动通知观察者们，从而使观察者更新自身状态。下面给出一些标准的定义：</p>
 <h4 id="意图">意图</h4><p>定义对象间的一种<strong>一对多</strong>的依赖关系，当一个对象的状态发生改变时，所有依赖于它的对象都得到<strong>通知</strong>并被自动更新。</p>
 <h4 id="动机">动机</h4><p>举一个常见的使用观察者模式的情景，考虑一个字处理软件（如MS Word），同样的一组统计数据，可以使用不同的用户界面控件表示。例如一个表格、一个柱状图以及一个饼图都可以图形形式表示某一组统计数据。当底层统计数据变化时，对应的上层的多个显示控件中的内容也应该同时变化。这里底层的统计数据就被称为<strong>目标（subject）</strong>，而多个显示控件被称为<strong>观察者</strong>。</p>
 <h4 id="结构">结构</h4><p>典型的类结构如下UML表示：<br><img src="/img/designpattern2_1.png" alt="designpattern2_1"></p>
@@ -119,88 +122,372 @@
 <p>整数表<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">pragma</span> once</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;iostream&gt;</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> "Observer.h"</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> "ClockTime.h"</span></span><br><span class="line"><span class="keyword">using</span> std::<span class="built_in">string</span>;</span><br><span class="line"><span class="keyword">class</span> NumberClock : <span class="keyword">public</span> Observer</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	NumberClock(ClockTime* c)</span><br><span class="line">		:own_subject(c)&#123; &#125;</span><br><span class="line">	~NumberClock() = <span class="keyword">default</span>;</span><br><span class="line">	<span class="comment">//重写update</span></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">Update</span><span class="params">()</span> override</span>;</span><br><span class="line">	<span class="comment">//打印时间</span></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">Print</span><span class="params">(<span class="built_in">std</span>::ostream&amp;)</span></span>;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="comment">//对目标的引用</span></span><br><span class="line">	ClockTime* own_subject;</span><br><span class="line">	<span class="comment">//保存整数时间</span></span><br><span class="line">	<span class="keyword">unsigned</span> time;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
 <p>具体目标（时间）<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//具体目标（主题）时钟时间</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">pragma</span> once</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span>&lt;string&gt;</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> "Subject.h"</span></span><br><span class="line"><span class="keyword">using</span> std::<span class="built_in">string</span>;</span><br><span class="line"><span class="keyword">class</span> ClockTime : <span class="keyword">public</span> Subject</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	ClockTime()</span><br><span class="line">		:hour(<span class="number">0</span>), minut(<span class="number">0</span>), second(<span class="number">0</span>)&#123; &#125;</span><br><span class="line">	~ClockTime() = <span class="keyword">default</span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//内部触发器定期触发通知观察者</span></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">Tick</span><span class="params">()</span></span>;</span><br><span class="line">	<span class="comment">//获取时间秒数</span></span><br><span class="line">	<span class="function"><span class="keyword">unsigned</span> <span class="title">GetSecond</span><span class="params">()</span></span>;</span><br><span class="line">	<span class="comment">//获取分钟数</span></span><br><span class="line">	<span class="function"><span class="keyword">unsigned</span> <span class="title">GetMinute</span><span class="params">()</span></span>;</span><br><span class="line">	<span class="comment">//获取小时数</span></span><br><span class="line">	<span class="function"><span class="keyword">unsigned</span> <span class="title">GetHour</span><span class="params">()</span></span>;</span><br><span class="line">	<span class="comment">//设置整形时间</span></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">SetTime</span><span class="params">(<span class="keyword">unsigned</span> h, <span class="keyword">unsigned</span> m, <span class="keyword">unsigned</span> s)</span></span>;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="keyword">unsigned</span> hour;</span><br><span class="line">	<span class="keyword">unsigned</span> minut;</span><br><span class="line">	<span class="keyword">unsigned</span> second;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
 <p>所有这些代码我都已经打包提交到Github上，欢迎访问！</p>
-
-      </div>
-      <footer class="article-footer">
-        <a data-url="http://yoursite.com/2014/11/03/设计模式学习（2）之观察者模式/" data-id="ci7k42vv0000734ijixmsqu0p" class="article-share-link">分享到</a>
-        
-        
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/设计模式/">设计模式</a></li></ul>
-
-      </footer>
-    </div>
-  </article>
   
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
 
-            </div>
-          </section>
-          <aside id="sidebar">
-  <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
-  <div class="sidebar-top">
-    <p>关注我 :</p>
-    <ul class="social-links">
-      
-    </ul>
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/设计模式/">设计模式</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/设计模式/">设计模式</a>
   </div>
-  
-    
-<nav id="article-nav">
-  
-    <a href="/2014/11/11/生活小记/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">下一篇</strong>
-      <p class="article-nav-title">
-        
-          生活小记
-        
-      </p>
-      <i class="icon" id="icon-chevron-right"></i>
-    </a>
-  
-  
-    <a href="/2014/10/30/Python学习笔记（3）：函数与模块定义/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">上一篇</strong>
-      <p class="article-nav-title">Python学习笔记（3）：函数与模块定义</p>
-      <i class="icon" id="icon-chevron-left"></i>
-    </a>
-  
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://yoursite.com/2014/11/03/设计模式学习（2）之观察者模式/" data-title="设计模式学习（2）之观察者模式 | Cod&#39;s Blog" data-tsina="null" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2014/11/11/生活小记/" title="生活小记">
+  <strong>上一篇：</strong><br/>
+  <span>
+  生活小记</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2014/10/30/Python学习笔记（3）：函数与模块定义/"  title="Python学习笔记（3）：函数与模块定义">
+ <strong>下一篇：</strong><br/> 
+ <span>Python学习笔记（3）：函数与模块定义
+</span>
+</a>
+</div>
+
 </nav>
 
-  
-  <div class="widgets-container">
-    
+	
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#意图"><span class="toc-number">1.</span> <span class="toc-text">意图</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#动机"><span class="toc-number">2.</span> <span class="toc-text">动机</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#结构"><span class="toc-number">3.</span> <span class="toc-text">结构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#参与者"><span class="toc-number">4.</span> <span class="toc-text">参与者</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#代码示例"><span class="toc-number">4.1.</span> <span class="toc-text">代码示例</span></a></li></ol></li></ol>
+ 
   </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/C/" title="C++">C++<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Python/" title="Python">Python<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/linux/" title="linux">linux<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/算法/" title="算法">算法<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/设计模式/" title="设计模式">设计模式<sup>4</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/随笔/" title="随笔">随笔<sup>1</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/设计模式/" title="设计模式">设计模式<sup>4</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/linux/" title="linux">linux<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/C/" title="C++">C++<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Python/" title="Python">Python<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/网络编程/" title="网络编程">网络编程<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/生活/" title="生活">生活<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/算法/" title="算法">算法<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="https://coderq.com" target="_blank" title="一个面向程序员交流分享的新一代社区">码农圈</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://wuchong.me" target="_blank" title="Jark&#39;s Blog">Jark&#39;s Blog</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
 </aside>
-        </div>
-      </div>
+</div>
     </div>
-    <footer id="footer">
-  
-  <div class="container">
-    <div class="container-inner">
-      <a id="back-to-top" href="javascript:;"><i class="icon" id="icon-angle-up"></i></a>
-      <div class="credit">
-        <h1 class="logo-wrap">
-          <a href="/" class="logo"></a>
-        </h1>
-        <p>&copy; 2015 Cod</p>
-        <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
-      </div>
-    </div>
-  </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m Larry Page in Google. <br/>
+			This is my blog,believe it or not.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2015 
+		
+		<a href="http://yoursite.com/about" target="_blank" title="Cod">Cod</a>
+		
+		</p>
+</div>
 </footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
     
+});
+</script>
 
 
-  <script src="http://code.jquery.com/jquery-2.1.3.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#nothing"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
 
 
 
 
 
 
-<script src="/js/html-patch.js" type="text/javascript"></script>
-<script src="/js/script.js" type="text/javascript"></script>
 
-  </div>
-</body>
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
 </html>
