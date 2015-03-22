@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>设计模式学习之抽象工厂 | Cod&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="抽象工厂这个名字最初听起来好象很高端，不过在研究了一段时间后，再加上对面向对象理解的加深，对工厂的概念也就了解差不多了。简单来说，工厂就是用于产生产品的地方，在面向对象语言中，产品显而易见就是某种类对象。使用工厂的一个好处就是可以规范化对象的产生过程，并且提供了统一接口，使对象使用起来更加方便。还是先来几个标准定义：
+意图提供一个创建一系列相关或者相互依赖的对象的接口，而无需指定他们的具体的类。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="设计模式学习之抽象工厂">
+<meta property="og:url" content="http://yoursite.com/2014/12/14/设计模式学习之抽象工厂/index.html">
+<meta property="og:site_name" content="Cod's Blog">
+<meta property="og:description" content="抽象工厂这个名字最初听起来好象很高端，不过在研究了一段时间后，再加上对面向对象理解的加深，对工厂的概念也就了解差不多了。简单来说，工厂就是用于产生产品的地方，在面向对象语言中，产品显而易见就是某种类对象。使用工厂的一个好处就是可以规范化对象的产生过程，并且提供了统一接口，使对象使用起来更加方便。还是先来几个标准定义：
+意图提供一个创建一系列相关或者相互依赖的对象的接口，而无需指定他们的具体的类。">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="设计模式学习之抽象工厂">
+<meta name="twitter:description" content="抽象工厂这个名字最初听起来好象很高端，不过在研究了一段时间后，再加上对面向对象理解的加深，对工厂的概念也就了解差不多了。简单来说，工厂就是用于产生产品的地方，在面向对象语言中，产品显而易见就是某种类对象。使用工厂的一个好处就是可以规范化对象的产生过程，并且提供了统一接口，使对象使用起来更加方便。还是先来几个标准定义：
+意图提供一个创建一系列相关或者相互依赖的对象的接口，而无需指定他们的具体的类。">
+  
+  
+
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+  
+  
+
+
+  
+
+  
+    <link href='//fonts.useso.com/css?family=Titillium+Web:300,400,600' rel='stylesheet' type='text/css'>
+    <link href="//fonts.useso.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+
+</head>
+
+<body>
+  <div id="wrap">
+    <header id="header">
+  <div id="header-outer" class="outer">
+    <div class="container">
+      <div class="container-inner">
+        <div id="header-title">
+          <h1 class="logo-wrap">
+            <a href="/" class="logo"></a>
+          </h1>
+          
+            <h2 class="subtitle-wrap">
+              <p class="subtitle">Consider Yourself Denied</p>
+            </h2>
+          
+        </div>
+        <div id="header-inner" class="nav-container">
+          <a id="main-nav-toggle" class="nav-icon"></a>
+          <div class="nav-container-inner">
+            <ul id="main-nav">
+              
+            </ul>
+            <nav id="sub-nav">
+              <div id="search-form-wrap">
+                <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="搜索"><input type="hidden" name="q" value="site:http://yoursite.com"></form>
+              </div>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+    <div class="container">
+      <div class="main-body container-inner">
+        <div class="main-body-inner">
+          <section id="main">
+            <div class="main-body-header">
+
+              <h1 class="header"><a class="page-title-link" href="/categories/设计模式/">设计模式</a></h1>
+            </div>
+            <div class="main-body-content">
+              
+  <article id="post-设计模式学习之抽象工厂" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+      <!--  -->
+      
+        <header class="article-header">
+          
+  
+    <h1 class="article-title" itemprop="name">
+      设计模式学习之抽象工厂
+    </h1>
+  
+
+        </header>
+      
+      <p class="article-byline">
+        <a href="/2014/12/14/设计模式学习之抽象工厂/" class="article-date">
+  <time datetime="2014-12-14T03:23:40.000Z" itemprop="datePublished">2014-12-14</time>
+</a>
+      </p>
+      <div class="article-entry" itemprop="articleBody">
+        <p>抽象工厂这个名字最初听起来好象很高端，不过在研究了一段时间后，再加上对面向对象理解的加深，对工厂的概念也就了解差不多了。简单来说，工厂就是用于产生产品的地方，在面向对象语言中，产品显而易见就是某种类对象。使用工厂的一个好处就是可以规范化对象的产生过程，并且提供了统一接口，使对象使用起来更加方便。还是先来几个标准定义：</p>
+<h4 id="意图">意图</h4><p>提供一个创建一系列相关或者相互依赖的对象的接口，而无需指定他们的具体的类。</p>
+<h4 id="动机">动机</h4><p>一个简单的例子就是Windows窗体设计中，有很多种窗口组件（滚动条、按钮等），同时也有很多种不同的风格（主题）。当我们编写一个窗体应用，当然不该为一个特定风格的外观<strong>硬编码</strong>它的窗口组件，而是应该使用一个抽象工厂类。这个工厂类声明了不同的用来创建每一类基本窗口组件的接口，每个窗口组件（工厂的产品）都是一个抽象类，而其具体的子类则决定了具体的风格。对于每一个<strong>抽象窗口组件类</strong>，<strong>抽象工厂类</strong>都有一个返回新窗口组件的方法。客户仅使用抽象工厂的接口而无需知道具体的工厂类。在实现方面，其实每个产品系只需要一个具体工厂实例，因此它经常被作为单例使用。同时，每个具体的工厂一般都会定义一个<strong>工厂方法</strong>，用于产生具体的产品。</p>
+<h4 id="结构">结构</h4><h4 id="参与者">参与者</h4><ul>
+<li>AbstractFactory：抽象工厂基类，声明创建不同产品的接口方法。</li>
+<li>ConcreteFactory：具体工厂类，实现每个具体产品的创建操作（使用工厂方法）。</li>
+<li>AbstractProduct：抽象产品类，声明产品的抽象接口。</li>
+<li>ConcreteProduct：具体产品类，定义被具体工厂创建的对象。</li>
+<li>Client：客户仅使用抽象工厂和产品类提供的接口。</li>
+</ul>
+<h4 id="协作">协作</h4><p>通常在运行时创建不同的具体工厂类实例（单例），用来创建不同的具有特定实现的产品对象。为创建不同的产品对象，客户应使用不同的具体工厂。</p>
+<h4 id="代码示例">代码示例</h4><p>这里的几个类基本按照《设计模式》一书的例子完成。大体意思是我们制作了一个迷宫游戏，为了简便，迷宫中只有三种组件（产品类）：墙、房间和门。一个房间有四面墙（或门）组成，墙、门和房间都继承与抽象基类（抽象产品类）：MapSite，这个表示游戏组件的基类，我们可以在这个的基础上再写新的游戏组件。同时我又为了简便，没有写用于房间的工厂，一个房间只是根据不同的墙壁和门生产出来的。<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*Game.h</span><br><span class="line">定义游戏基本组件部分</span><br><span class="line">包括墙壁、门、房间</span><br><span class="line"> */</span></span><br><span class="line"><span class="preprocessor">#ifndef GAME</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> GAME</span></span><br><span class="line"></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;memory&gt;</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;vector&gt;</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;map&gt;</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;iostream&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> std::<span class="built_in">shared_ptr</span>;</span><br><span class="line"><span class="keyword">class</span> MazeFactory;</span><br><span class="line"><span class="comment">//定义四个方向枚举</span></span><br><span class="line"><span class="keyword">enum</span> Direction</span><br><span class="line">&#123; North,South,East,West &#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//定义游戏组件基类</span></span><br><span class="line"><span class="keyword">class</span> MapSite</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="comment">//纯虚的进入方法</span></span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">Enter</span><span class="params">()</span> </span>= <span class="number">0</span>;</span><br><span class="line">    <span class="comment">//设为虚析构函数</span></span><br><span class="line">    <span class="keyword">virtual</span> ~MapSite() = <span class="keyword">default</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//房间类</span></span><br><span class="line"><span class="keyword">class</span> Room : <span class="keyword">public</span> MapSite</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="comment">//拷贝控制部分</span></span><br><span class="line">    Room()</span><br><span class="line">        :sites(),num(Room::getnum())&#123; &#125;</span><br><span class="line">    <span class="keyword">virtual</span> ~Room() = <span class="keyword">default</span>;</span><br><span class="line">    <span class="comment">//不允许拷贝赋值</span></span><br><span class="line">    Room(<span class="keyword">const</span> Room&amp;) = <span class="keyword">delete</span>;</span><br><span class="line">    Room&amp; <span class="keyword">operator</span>=(<span class="keyword">const</span> Room&amp;) = <span class="keyword">delete</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//获取该方向的组件（墙壁或门）</span></span><br><span class="line">    <span class="built_in">shared_ptr</span>&lt;MapSite&gt; GetSite(Direction) <span class="keyword">const</span>;</span><br><span class="line">    <span class="comment">//获取房间号</span></span><br><span class="line">    <span class="function"><span class="keyword">unsigned</span> <span class="keyword">int</span> <span class="title">GetRoomNum</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="comment">//设置该方向的组件</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">SetSite</span><span class="params">(Direction,<span class="built_in">shared_ptr</span>&lt;MapSite&gt;)</span></span>;</span><br><span class="line">    <span class="comment">//实现Enter方法</span></span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">Enter</span><span class="params">()</span> override</span>;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="comment">//用于产生新的房间号</span></span><br><span class="line">    <span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">getnum</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="comment">//房间号</span></span><br><span class="line">    <span class="keyword">int</span> num;</span><br><span class="line">    <span class="comment">//用于存储房间四面的墙或者门</span></span><br><span class="line">    std::<span class="stl_container"><span class="built_in">array</span>&lt;<span class="built_in">shared_ptr</span>&lt;MapSite&gt;</span>,<span class="number">4</span>&gt; sites;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//墙壁类</span></span><br><span class="line"><span class="keyword">class</span> Wall : <span class="keyword">public</span>  MapSite</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="comment">//默认构造</span></span><br><span class="line">    Wall() = <span class="keyword">default</span>;</span><br><span class="line">    <span class="comment">//默认析构</span></span><br><span class="line">    <span class="keyword">virtual</span> ~Wall() = <span class="keyword">default</span>;</span><br><span class="line">    <span class="comment">//默认赋值等</span></span><br><span class="line">    Wall(<span class="keyword">const</span> Wall&amp;) = <span class="keyword">default</span>;</span><br><span class="line">    <span class="comment">//重写Enter</span></span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">Enter</span><span class="params">()</span> override</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//门类</span></span><br><span class="line"><span class="keyword">class</span> Door : <span class="keyword">public</span> MapSite</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="comment">//使用两个房间构造</span></span><br><span class="line">    Door(<span class="built_in">shared_ptr</span>&lt;Room&gt; l,<span class="built_in">shared_ptr</span>&lt;Room&gt; r)</span><br><span class="line">            :isopen(<span class="keyword">false</span>),lhs(l),rhs(r)&#123; &#125;</span><br><span class="line">    <span class="comment">//析构</span></span><br><span class="line">    <span class="keyword">virtual</span> ~Door() = <span class="keyword">default</span>;</span><br><span class="line">    <span class="comment">//返回另一个房间</span></span><br><span class="line">    <span class="built_in">shared_ptr</span>&lt;Room&gt; GetOther(<span class="built_in">shared_ptr</span>&lt;Room&gt;&amp;) <span class="keyword">const</span>;</span><br><span class="line">    <span class="comment">//重写Enter</span></span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">Enter</span><span class="params">()</span> override</span>;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="comment">//判断是否打开</span></span><br><span class="line">    <span class="keyword">bool</span> isopen;</span><br><span class="line">    <span class="comment">//门的两侧</span></span><br><span class="line">    <span class="built_in">shared_ptr</span>&lt;Room&gt; lhs;</span><br><span class="line">    <span class="built_in">shared_ptr</span>&lt;Room&gt; rhs;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//整个迷宫类</span></span><br><span class="line"><span class="comment">//用来产生迷宫</span></span><br><span class="line"><span class="comment">//使用单例模式</span></span><br><span class="line"><span class="keyword">class</span> Maze</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="comment">//使用工厂产生迷宫</span></span><br><span class="line">    <span class="keyword">static</span> <span class="built_in">shared_ptr</span>&lt;Maze&gt; CreateMaze(MazeFactory&amp;);</span><br><span class="line">    <span class="comment">//显示所有房间信息</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">ShowRoom</span><span class="params">(<span class="built_in">std</span>::ostream&amp;)</span></span>;</span><br><span class="line">    <span class="comment">//添加房间</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">AddRoom</span><span class="params">(<span class="built_in">shared_ptr</span>&lt;Room&gt; room)</span></span>;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="comment">//保存所有房间指针</span></span><br><span class="line">    std::<span class="stl_container"><span class="built_in">vector</span>&lt;<span class="built_in">shared_ptr</span>&lt;Room&gt;</span>&gt; rooms;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="preprocessor">#<span class="keyword">endif</span></span></span><br></pre></td></tr></table></figure></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*Factory.h</span><br><span class="line">* 定义迷宫抽象工厂</span><br><span class="line">* 以及几个具体工厂类*/</span></span><br><span class="line"><span class="preprocessor">#ifndef FACTORY</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> FACTORY</span></span><br><span class="line"></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> "Game.h"</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> "DerivedSite.h"</span></span><br><span class="line"><span class="keyword">using</span> std::<span class="built_in">shared_ptr</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//定义迷宫工厂基类</span></span><br><span class="line"><span class="comment">//直接设为单例</span></span><br><span class="line"><span class="keyword">class</span> Wall;</span><br><span class="line"><span class="keyword">class</span> Door;</span><br><span class="line"><span class="keyword">class</span> Room;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> MazeFactory</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    MazeFactory() = <span class="keyword">default</span>;</span><br><span class="line">    <span class="comment">//产生不同墙和门的虚拟工厂方法</span></span><br><span class="line">    <span class="keyword">virtual</span>  <span class="built_in">shared_ptr</span>&lt;Wall&gt; MakeWall() <span class="keyword">const</span>;</span><br><span class="line">    <span class="keyword">virtual</span>  <span class="built_in">shared_ptr</span>&lt;Door&gt; MakeDoor(<span class="built_in">shared_ptr</span>&lt;Room&gt; l,<span class="built_in">shared_ptr</span>&lt;Room&gt; r) <span class="keyword">const</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//定义具体的迷宫工厂1</span></span><br><span class="line"><span class="comment">//使用镜面墙壁和需要咒语的门</span></span><br><span class="line"><span class="keyword">class</span> EnchantedFactory : <span class="keyword">public</span> MazeFactory</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="comment">//产生自己的单例</span></span><br><span class="line">    <span class="keyword">static</span> EnchantedFactory&amp; GetFactory();</span><br><span class="line">    <span class="comment">//重写产生门和墙的方法</span></span><br><span class="line">    <span class="keyword">virtual</span> <span class="built_in">shared_ptr</span>&lt;Wall&gt; MakeWall() <span class="keyword">const</span> override;</span><br><span class="line">    <span class="keyword">virtual</span> <span class="built_in">shared_ptr</span>&lt;Door&gt; MakeDoor(<span class="built_in">shared_ptr</span>&lt;Room&gt; l, <span class="built_in">shared_ptr</span>&lt;Room&gt; r) <span class="keyword">const</span> override;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    EnchantedFactory() = <span class="keyword">default</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//具体工厂2</span></span><br><span class="line"><span class="comment">//使用反弹墙和无法打开的门</span></span><br><span class="line"><span class="comment">//（那估计这迷宫没啥用了。。。）</span></span><br><span class="line"><span class="keyword">class</span> UselessmazeFactory : <span class="keyword">public</span> MazeFactory</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="comment">//产生单例</span></span><br><span class="line">    <span class="keyword">static</span> UselessmazeFactory&amp; GetFactory();</span><br><span class="line">    <span class="comment">//重写方法</span></span><br><span class="line">    <span class="keyword">virtual</span> <span class="built_in">shared_ptr</span>&lt;Wall&gt; MakeWall() <span class="keyword">const</span> override;</span><br><span class="line">    <span class="keyword">virtual</span> <span class="built_in">shared_ptr</span>&lt;Door&gt; MakeDoor(<span class="built_in">shared_ptr</span>&lt;Room&gt; l,<span class="built_in">shared_ptr</span>&lt;Room&gt; r) <span class="keyword">const</span> override;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    UselessmazeFactory() = <span class="keyword">default</span>;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="preprocessor">#<span class="keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*Derived.h</span><br><span class="line">定义继承自Room、Door以及Wall的迷宫组件类</span><br><span class="line">定义各自的独特性质</span><br><span class="line"> */</span></span><br><span class="line"><span class="preprocessor">#ifndef DERIVED</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> DERIVED</span></span><br><span class="line"></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;string&gt;</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> "Game.h"</span></span><br><span class="line"><span class="keyword">using</span> std::<span class="built_in">string</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//定义一个镜面墙壁</span></span><br><span class="line"><span class="keyword">class</span> MirrorWall : <span class="keyword">public</span> Wall</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    MirrorWall() = <span class="keyword">default</span>;</span><br><span class="line">    ~MirrorWall() = <span class="keyword">default</span>;</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">Enter</span><span class="params">()</span> final</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//一个可以反弹的墙壁</span></span><br><span class="line"><span class="keyword">class</span> ReboundWall : <span class="keyword">public</span> Wall</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    ReboundWall()</span><br><span class="line">            :Wall()&#123; &#125;</span><br><span class="line">    ~ReboundWall() = <span class="keyword">default</span>;</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">Enter</span><span class="params">()</span> final</span>;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">//定义一个施法的门</span></span><br><span class="line"><span class="comment">//需要咒语才可以打开</span></span><br><span class="line"><span class="keyword">class</span> EnchantedDoor : <span class="keyword">public</span> Door</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    EnchantedDoor(<span class="built_in">shared_ptr</span>&lt;Room&gt; lhs,<span class="built_in">shared_ptr</span>&lt;Room&gt; rhs,<span class="keyword">const</span> <span class="built_in">string</span>&amp; s)</span><br><span class="line">            :Door(lhs,rhs),spell(s)&#123; &#125;</span><br><span class="line">    ~EnchantedDoor() = <span class="keyword">default</span>;</span><br><span class="line">    <span class="comment">//重写进入方法</span></span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">Enter</span><span class="params">()</span> final</span>;</span><br><span class="line">    <span class="comment">//设置咒语</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">SetSpell</span><span class="params">(<span class="keyword">const</span> <span class="built_in">string</span>&amp;)</span></span>;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="comment">//定义一个用于检查咒语的方法</span></span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">check</span><span class="params">()</span> <span class="keyword">const</span></span>;</span><br><span class="line">    <span class="comment">//一个简单咒语</span></span><br><span class="line">    <span class="built_in">string</span> spell;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//一个打不开的门</span></span><br><span class="line"><span class="keyword">class</span> NotOpenDoor : <span class="keyword">public</span> Door</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    NotOpenDoor(<span class="built_in">shared_ptr</span>&lt;Room&gt; lhs,<span class="built_in">shared_ptr</span>&lt;Room&gt; rhs)</span><br><span class="line">        : Door(lhs,rhs) &#123; &#125;</span><br><span class="line">    ~NotOpenDoor() = <span class="keyword">default</span>;</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">Enter</span><span class="params">()</span> final</span>;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="preprocessor">#<span class="keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+<p>在主函数中我们可以使用工厂构造不同构成的房间，从而产生迷宫。<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    EnchantedFactory enchantedFactory = EnchantedFactory::GetFactory();</span><br><span class="line">    <span class="built_in">shared_ptr</span>&lt;Maze&gt; maze = Maze::CreateMaze(enchantedFactory);</span><br><span class="line">    maze-&gt;ShowRoom(std::<span class="built_in">cout</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>一个基本的工厂就是这样，抽象工厂定义了产生门和墙的接口，具体工厂负责实现他们，而客户只需要使用抽象接口即可产生具体类对象。</p>
+
+      </div>
+      <footer class="article-footer">
+        <a data-url="http://yoursite.com/2014/12/14/设计模式学习之抽象工厂/" data-id="ci7k42vv7000f34ijepyzgfge" class="article-share-link">分享到</a>
+        
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/设计模式/">设计模式</a></li></ul>
+
+      </footer>
+    </div>
+  </article>
+  
+
+            </div>
+          </section>
+          <aside id="sidebar">
+  <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+  <div class="sidebar-top">
+    <p>关注我 :</p>
+    <ul class="social-links">
+      
+    </ul>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2015/01/23/linux网络编程基础API/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <p class="article-nav-title">
+        
+          linux网络编程基础API
+        
+      </p>
+      <i class="icon" id="icon-chevron-right"></i>
+    </a>
+  
+  
+    <a href="/2014/12/01/最简单的设计模式——单例模式/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <p class="article-nav-title">最简单的设计模式——单例模式</p>
+      <i class="icon" id="icon-chevron-left"></i>
+    </a>
+  
+</nav>
+
+  
+  <div class="widgets-container">
+    
+  </div>
+</aside>
+        </div>
+      </div>
+    </div>
+    <footer id="footer">
+  
+  <div class="container">
+    <div class="container-inner">
+      <a id="back-to-top" href="javascript:;"><i class="icon" id="icon-angle-up"></i></a>
+      <div class="credit">
+        <h1 class="logo-wrap">
+          <a href="/" class="logo"></a>
+        </h1>
+        <p>&copy; 2015 Cod</p>
+        <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+      </div>
+    </div>
+  </div>
+</footer>
+    
+
+
+  <script src="http://code.jquery.com/jquery-2.1.3.min.js"></script>
+
+
+
+
+
+
+<script src="/js/html-patch.js" type="text/javascript"></script>
+<script src="/js/script.js" type="text/javascript"></script>
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Linux下互斥锁以及条件变量的使用 | Cod&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="在Linux环境下，POSIX标准为我们提供了很多用于进线程同步的系统调用，其中最常用的当属互斥锁（Mutex）和条件变量（Condition Variable），对这两个东西的掌握会给我们在并发条件下编程带来很多便利。
+POSIX互斥锁主要系统调用如下：123456#include &amp;lt;pthread.h&amp;gt;int pthread_mutex_init(pthread_mutex_t*">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux下互斥锁以及条件变量的使用">
+<meta property="og:url" content="http://yoursite.com/2015/02/03/Linux下互斥锁以及条件变量的使用/index.html">
+<meta property="og:site_name" content="Cod's Blog">
+<meta property="og:description" content="在Linux环境下，POSIX标准为我们提供了很多用于进线程同步的系统调用，其中最常用的当属互斥锁（Mutex）和条件变量（Condition Variable），对这两个东西的掌握会给我们在并发条件下编程带来很多便利。
+POSIX互斥锁主要系统调用如下：123456#include &amp;lt;pthread.h&amp;gt;int pthread_mutex_init(pthread_mutex_t*">
+<meta property="og:image" content="/img/p-c-prob.png">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Linux下互斥锁以及条件变量的使用">
+<meta name="twitter:description" content="在Linux环境下，POSIX标准为我们提供了很多用于进线程同步的系统调用，其中最常用的当属互斥锁（Mutex）和条件变量（Condition Variable），对这两个东西的掌握会给我们在并发条件下编程带来很多便利。
+POSIX互斥锁主要系统调用如下：123456#include &amp;lt;pthread.h&amp;gt;int pthread_mutex_init(pthread_mutex_t*">
+  
+  
+
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+  
+  
+
+
+  
+
+  
+    <link href='//fonts.useso.com/css?family=Titillium+Web:300,400,600' rel='stylesheet' type='text/css'>
+    <link href="//fonts.useso.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+
+</head>
+
+<body>
+  <div id="wrap">
+    <header id="header">
+  <div id="header-outer" class="outer">
+    <div class="container">
+      <div class="container-inner">
+        <div id="header-title">
+          <h1 class="logo-wrap">
+            <a href="/" class="logo"></a>
+          </h1>
+          
+            <h2 class="subtitle-wrap">
+              <p class="subtitle">Consider Yourself Denied</p>
+            </h2>
+          
+        </div>
+        <div id="header-inner" class="nav-container">
+          <a id="main-nav-toggle" class="nav-icon"></a>
+          <div class="nav-container-inner">
+            <ul id="main-nav">
+              
+            </ul>
+            <nav id="sub-nav">
+              <div id="search-form-wrap">
+                <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="搜索"><input type="hidden" name="q" value="site:http://yoursite.com"></form>
+              </div>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+    <div class="container">
+      <div class="main-body container-inner">
+        <div class="main-body-inner">
+          <section id="main">
+            <div class="main-body-header">
+
+              <h1 class="header"><a class="page-title-link" href="/categories/linux/">linux</a></h1>
+            </div>
+            <div class="main-body-content">
+              
+  <article id="post-Linux下互斥锁以及条件变量的使用" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+      <!--  -->
+      
+        <header class="article-header">
+          
+  
+    <h1 class="article-title" itemprop="name">
+      Linux下互斥锁以及条件变量的使用
+    </h1>
+  
+
+        </header>
+      
+      <p class="article-byline">
+        <a href="/2015/02/03/Linux下互斥锁以及条件变量的使用/" class="article-date">
+  <time datetime="2015-02-03T01:56:13.000Z" itemprop="datePublished">2015-02-03</time>
+</a>
+      </p>
+      <div class="article-entry" itemprop="articleBody">
+        <p>在Linux环境下，POSIX标准为我们提供了很多用于进线程同步的系统调用，其中最常用的当属互斥锁（Mutex）和条件变量（Condition Variable），对这两个东西的掌握会给我们在并发条件下编程带来很多便利。</p>
+<h5 id="POSIX互斥锁">POSIX互斥锁</h5><p>主要系统调用如下：<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;pthread.h&gt;</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">pthread_mutex_init</span><span class="params">(pthread_mutex_t* mutex,<span class="keyword">const</span> pthread_mutexattr_t* mutexattr)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">pthread_mutex_destroy</span><span class="params">(pthread_mutex_t* mutex)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">pthread_mutex_lock</span><span class="params">(pthread_mutex_t* mutex)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">pthread_mutex_trylock</span><span class="params">(pthread_mutex_t* mutex)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">pthread_mutex_unlock</span><span class="params">(pthread_mutex_t* mutex)</span></span>;</span><br></pre></td></tr></table></figure></p>
+<p>这些接口看起来都差不多，都用到了一个pthread_mutex_t结构体指针，就是这个结构体用来标识一个互斥锁。其他这几个函数的作用一看名字即可知道，有初始化、销毁、加锁、非阻塞加锁以及解锁。其中在初始化时第二个参数是pthread_mutexattr_t结构体指针，该结构体用于指定互斥锁的<strong>属性</strong>。其中主要有两种属性最常用：pshared和type，即互斥锁是否允许跨进程共享以及互斥锁类型。pshared有两种取值：<code>PTHREAD_PROCESS_SHARED</code>表示可用于跨进程共享，另一个是<code>PTHREAD_PROCESS_PRIVATE</code>表示只能被跟该锁的<strong>初始化线程</strong>隶属于同一个<strong>进程</strong>的线程共享。互斥锁的type属性用于指定互斥锁类型，有如下四种取值：<code>PTHREAD_MUTEX_NORMAL</code>、<code>PTHREAD_MUTEX_ERRORCHECK</code>、<code>PTHREAD_MUTEX_RECURSIVE</code>以及<code>PTHREAD_MUTEX_DEFAULT</code>。其中普通锁是默认的类型，当一个线程对一个普通锁加锁后，后续请求该锁的线程将形成一个等待队列，并按照优先级（系统的调度）获得该锁，但是这种锁也容易引发死锁（对已经上锁的锁再次加锁等）；检错锁加上了检错功能：一个线程如果对一个已加锁的检错锁再次加锁，则会返回错误码EDEADLK，对已解锁的锁再次解锁也会得到错误码EPERM。嵌套锁允许一个线程在释放锁之前多次对其加锁而不发生死锁，不过其他线程要想获得这个锁则锁的当前拥有者必须执行相应次数的解锁操作。这些互斥锁<strong>属性</strong>的操作也有几个系统调用，跟上面的比较类似，就不用举例了。</p>
+<h5 id="条件变量">条件变量</h5><p>《现代操作系统》一书中说，条件变量允许线程由于一些未到达的条件而阻塞。以生产者消费者问题为例，生产者线程将产品放入缓冲区，如果发现缓冲区是满的（消费者还没有来得及取走产品），生产者则必须阻塞。这里生产者阻塞自身并且在消费者取走产品后被唤醒，则需要条件变量来操作了。不过我觉得使用三个互斥量（临界区、满以及空）也可以完成该功能，不过使用条件变量更加简单而已。</p>
+<p>POSIX提供了一些系统调用来支持条件变量，其实跟Mutex差不多：<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;pthread.h&gt;</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">pthread_cond_init</span><span class="params">(pthread_cond_t* cond,<span class="keyword">const</span> pthread_condattr_t* attr)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">pthread_cond_destroy</span><span class="params">(pthread_cond_t* cond)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">pthread_cond_broadcast</span><span class="params">(pthread_cond_t* cond)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">pthread_cond_signal</span><span class="params">(pthread_con_t* cond)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">pthread_cond_wait</span><span class="params">(pthread_cond_t* cond,pthread_mutex_t* mutex)</span></span>;</span><br></pre></td></tr></table></figure></p>
+<p>这些API看起来跟Mutex几乎一样，其中pthread_cond_t也是一个结构体，用于表示条件变量，而pthread_condattr_t表示该条件变量的属性。broadcast表示给<strong>所有</strong>在此条件变量上等待的线程都发送信号将其唤醒，而signal表示只唤醒其中一个，至于哪一个则取决于调度算法。wait表示在该条件变量上等待（阻塞线程）知道收到唤醒信号。</p>
+<p>这个wait调用有一点需要注意，它的第二个参数是一个mutex，这也说明了它内部的原理：<strong>mutex参数是用于保护条件变量的互斥锁</strong>，以确保wait操作的<strong>原子性</strong>。在调用wait之前，必须确保mutex参数的互斥锁已被<strong>加锁</strong>，因为在wait执行时，首先将调用它的线程放入条件变量的等待队列内，然后将互斥锁mutex<strong>解锁</strong>，当wait返回时（被唤醒），互斥锁mutex将被再次<strong>加锁</strong>。下面是《现代操作系统》中使用条件变量解决生产者消费者同步问题的代码：<br><img src="/img/p-c-prob.png" alt=""><br>可以看出在每次调用wait前先对mutex加锁，唤醒另一个线程后在解锁。</p>
+<h5 id="使用C++简单封装">使用C++简单封装</h5><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> Mutex</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">friend</span> <span class="keyword">class</span> Locker;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	Mutex(MutexType type);</span><br><span class="line">	~Mutex();</span><br><span class="line">	Mutex(<span class="keyword">const</span> Mutex&amp;) = <span class="keyword">delete</span>;</span><br><span class="line">	pthread_mutex_t* GetMutex();</span><br><span class="line">	<span class="function"><span class="keyword">bool</span> <span class="title">Lock</span><span class="params">()</span></span><br><span class="line">	</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> pthread_mutex_lock(&amp;mutex) == <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">bool</span> <span class="title">Unlock</span><span class="params">()</span></span><br><span class="line">	</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> pthread_mutex_unlock(&amp;mutex) == <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	pthread_mutex_t mutex;</span><br><span class="line">	pthread_mutexattr_t attr;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">Mutex::Mutex(MutexType type = MutexType::Normal)</span><br><span class="line">&#123;</span><br><span class="line">	pthread_mutexattr_init(&amp;attr);</span><br><span class="line">	<span class="keyword">switch</span>(type)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">case</span> Normal:</span><br><span class="line">		&#123;</span><br><span class="line">			pthread_mutexattr_settype(&amp;attr,PTHREAD_MUTEX_NORMAL);</span><br><span class="line">			pthread_mutex_init(&amp;mutex,&amp;attr);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">case</span> ErrorCheck:</span><br><span class="line">		&#123;</span><br><span class="line">			pthread_mutexattr_settype(&amp;attr,PTHREAD_MUTEX_ERRORCHECK);</span><br><span class="line">			pthread_mutex_init(&amp;mutex,&amp;attr);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">case</span> Recursive:</span><br><span class="line">		&#123;</span><br><span class="line">			pthread_mutexattr_settype(&amp;attr,PTHREAD_MUTEX_RECURSIVE);</span><br><span class="line">			pthread_mutex_init(&amp;mutex,&amp;attr);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Mutex::~Mutex()</span><br><span class="line">&#123;</span><br><span class="line">	pthread_mutexattr_destroy(&amp;attr);</span><br><span class="line">	pthread_mutex_destroy(&amp;mutex);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">pthread_mutex_t* Mutex::GetMutex()</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">return</span> &amp;mutex;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> CondVariable</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="keyword">explicit</span> <span class="title">CondVariable</span><span class="params">(Mutex&amp; m)</span></span><br><span class="line">		:<span class="title">mutex</span><span class="params">(m)</span></span><br><span class="line">	</span>&#123;</span><br><span class="line">		pthread_cond_init(&amp;cond,<span class="keyword">nullptr</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	~CondVariable()</span><br><span class="line">	&#123;</span><br><span class="line">		pthread_cond_destroy(&amp;cond);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">bool</span> <span class="title">Wait</span><span class="params">()</span></span><br><span class="line">	</span>&#123;</span><br><span class="line">		<span class="keyword">int</span> ret = pthread_cond_wait(&amp;cond,mutex.GetMutex());</span><br><span class="line">		<span class="keyword">return</span> ret == <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">bool</span> <span class="title">Notify</span><span class="params">()</span></span><br><span class="line">	</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> pthread_cond_signal(&amp;cond) == <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">bool</span> <span class="title">NotifyAll</span><span class="params">()</span></span><br><span class="line">	</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> pthread_cond_broadcast(&amp;cond) == <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	Mutex&amp; mutex;</span><br><span class="line">	pthread_cond_t cond;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>其实所谓封装就是在一个类中调用这些系统调用，不过有一些细节会有变化，具体的代码请访问我的<a href="https://github.com/MorningCoder/NetworkPrograming/tree/master/Concurrency" target="_blank" rel="external">github</a>。其中CondVariable程序中简单实现了生产者消费者的问题。Mutex程序中写了两个类，一个表示Mutex本身，另一个Locker作为它的管理者（RAII手法），仅能使用Locker操作Mutex的上锁和解锁。</p>
+<h5 id="C++_11_标准中对并发编程的支持">C++ 11 标准中对并发编程的支持</h5><p>所有C++的标准文档请参阅：<a href="http://www.cplusplus.com/reference/" target="_blank" rel="external">C++ reference</a><br>在C++11标准中，增加了不少对并发编程的支持，包括线程对象std::thread、互斥锁对象：std::mutex以及条件变量：std::condition_variable。下面我们使用这几个类来简单看看他们的使用方法。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;iostream&gt;</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;thread&gt;</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;mutex&gt;</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;condition_variable&gt;</span></span><br><span class="line"></span><br><span class="line">std::mutex mtx;</span><br><span class="line">std::condition_variable cv;</span><br><span class="line"><span class="keyword">bool</span> ready = <span class="keyword">false</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">print_id</span> <span class="params">(<span class="keyword">int</span> id)</span> </span>&#123;</span><br><span class="line">  std::unique_lock&lt;std::mutex&gt; lck(mtx);</span><br><span class="line">  <span class="keyword">while</span> (!ready) cv.wait(lck);</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">  std::<span class="built_in">cout</span> &lt;&lt; <span class="string">"thread "</span> &lt;&lt; id &lt;&lt; <span class="string">'\n'</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">go</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  std::unique_lock&lt;std::mutex&gt; lck(mtx);</span><br><span class="line">  ready = <span class="keyword">true</span>;</span><br><span class="line">  cv.notify_all();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span> <span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line">  std::thread threads[<span class="number">10</span>];</span><br><span class="line">  <span class="comment">// spawn 10 threads:</span></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;<span class="number">10</span>; ++i)</span><br><span class="line">    threads[i] = std::thread(print_id,i);</span><br><span class="line"></span><br><span class="line">  std::<span class="built_in">cout</span> &lt;&lt; <span class="string">"10 threads ready to race...\n"</span>;</span><br><span class="line">  go();                       <span class="comment">// go!</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">auto</span>&amp; th : threads) th.join();</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>以上这段代码摘抄自C++官方文档，主要来解释下这个代码的作用。</p>
+<p>在main函数中，首先使用thread类创建了十个thread对象：<code>thread[i] = std::thread(print_id,i);</code>注意这里thread的构造函数中第一个参数是线程函数，后续参数都是给该线程函数传递的参数，直接传递即可，不用类型转换（很好用，虽然不太清楚是怎么实现的…）。这个对象创建完毕后即产生了新的线程（处于就绪态，等待调度）。</p>
+<p>线程函数print_id内部首先使用unique_lock对mutex加锁，这里的unique_lock就是一个mutex资源的管理者，由于它是局部变量，拥有<strong>automatic duration</strong>即自动生命期限，所以当它从栈上被销毁时绝对会调用其析构函数，从而安全销毁它管理的mutex，保证了资源的合理释放。在print_id函数中，所有十个进程都会在cv.wait处阻塞（处于阻塞态，等待唤醒信号）。然后main中调用go()，在其中调用cv.notify_all()同时唤醒所有在cv上被阻塞的线程，所有线程同时处于就绪态等待被调度，就像一个比赛（race）一样，因此在次之后会相继使用cout对象输出信息。</p>
+<p>我们在运行这段代码后每次得到的结果肯定是不同的。根据调度算法的不同，同一时刻会有不同的线程占有锁，使用cout变量，因此产生不同的结果。</p>
+
+      </div>
+      <footer class="article-footer">
+        <a data-url="http://yoursite.com/2015/02/03/Linux下互斥锁以及条件变量的使用/" data-id="ci7k42vw3001h34ijeq9rnbhb" class="article-share-link">分享到</a>
+        
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/">linux</a></li></ul>
+
+      </footer>
+    </div>
+  </article>
+  
+
+            </div>
+          </section>
+          <aside id="sidebar">
+  <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+  <div class="sidebar-top">
+    <p>关注我 :</p>
+    <ul class="social-links">
+      
+    </ul>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2015/03/09/学习C-11新标准多线程支持/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <p class="article-nav-title">
+        
+          学习C++11新标准多线程支持
+        
+      </p>
+      <i class="icon" id="icon-chevron-right"></i>
+    </a>
+  
+  
+    <a href="/2015/01/26/IO复用技术之select总结/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <p class="article-nav-title">IO复用技术之select总结</p>
+      <i class="icon" id="icon-chevron-left"></i>
+    </a>
+  
+</nav>
+
+  
+  <div class="widgets-container">
+    
+  </div>
+</aside>
+        </div>
+      </div>
+    </div>
+    <footer id="footer">
+  
+  <div class="container">
+    <div class="container-inner">
+      <a id="back-to-top" href="javascript:;"><i class="icon" id="icon-angle-up"></i></a>
+      <div class="credit">
+        <h1 class="logo-wrap">
+          <a href="/" class="logo"></a>
+        </h1>
+        <p>&copy; 2015 Cod</p>
+        <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+      </div>
+    </div>
+  </div>
+</footer>
+    
+
+
+  <script src="http://code.jquery.com/jquery-2.1.3.min.js"></script>
+
+
+
+
+
+
+<script src="/js/html-patch.js" type="text/javascript"></script>
+<script src="/js/script.js" type="text/javascript"></script>
+
+  </div>
+</body>
+</html>

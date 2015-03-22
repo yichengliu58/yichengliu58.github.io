@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>学习C++11新标准多线程支持 | Cod&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="最近读了《C++ Concurrency in Action》一书，发现C++11新标准对多线程的支持的确达到了前所未有的高程度，完全可以和JAVA的线程模型相媲美。尤其是提供了std::async这种异步函数调用，免去了使用者调用底层API的痛苦，并且是跨平台的，所以的确值得大家用心学学。
+根据C++ Reference网站提供的文档，主要有如下几个头文件用于多线程支持：
+
+&amp;lt; threa">
+<meta property="og:type" content="article">
+<meta property="og:title" content="学习C++11新标准多线程支持">
+<meta property="og:url" content="http://yoursite.com/2015/03/09/学习C-11新标准多线程支持/index.html">
+<meta property="og:site_name" content="Cod's Blog">
+<meta property="og:description" content="最近读了《C++ Concurrency in Action》一书，发现C++11新标准对多线程的支持的确达到了前所未有的高程度，完全可以和JAVA的线程模型相媲美。尤其是提供了std::async这种异步函数调用，免去了使用者调用底层API的痛苦，并且是跨平台的，所以的确值得大家用心学学。
+根据C++ Reference网站提供的文档，主要有如下几个头文件用于多线程支持：
+
+&amp;lt; threa">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="学习C++11新标准多线程支持">
+<meta name="twitter:description" content="最近读了《C++ Concurrency in Action》一书，发现C++11新标准对多线程的支持的确达到了前所未有的高程度，完全可以和JAVA的线程模型相媲美。尤其是提供了std::async这种异步函数调用，免去了使用者调用底层API的痛苦，并且是跨平台的，所以的确值得大家用心学学。
+根据C++ Reference网站提供的文档，主要有如下几个头文件用于多线程支持：
+
+&amp;lt; threa">
+  
+  
+
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+  
+  
+
+
+  
+
+  
+    <link href='//fonts.useso.com/css?family=Titillium+Web:300,400,600' rel='stylesheet' type='text/css'>
+    <link href="//fonts.useso.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+
+</head>
+
+<body>
+  <div id="wrap">
+    <header id="header">
+  <div id="header-outer" class="outer">
+    <div class="container">
+      <div class="container-inner">
+        <div id="header-title">
+          <h1 class="logo-wrap">
+            <a href="/" class="logo"></a>
+          </h1>
+          
+            <h2 class="subtitle-wrap">
+              <p class="subtitle">Consider Yourself Denied</p>
+            </h2>
+          
+        </div>
+        <div id="header-inner" class="nav-container">
+          <a id="main-nav-toggle" class="nav-icon"></a>
+          <div class="nav-container-inner">
+            <ul id="main-nav">
+              
+            </ul>
+            <nav id="sub-nav">
+              <div id="search-form-wrap">
+                <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="搜索"><input type="hidden" name="q" value="site:http://yoursite.com"></form>
+              </div>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+    <div class="container">
+      <div class="main-body container-inner">
+        <div class="main-body-inner">
+          <section id="main">
+            <div class="main-body-header">
+
+              <h1 class="header"><a class="page-title-link" href="/categories/C/">C++</a></h1>
+            </div>
+            <div class="main-body-content">
+              
+  <article id="post-学习C-11新标准多线程支持" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+      <!--  -->
+      
+        <header class="article-header">
+          
+  
+    <h1 class="article-title" itemprop="name">
+      学习C++11新标准多线程支持
+    </h1>
+  
+
+        </header>
+      
+      <p class="article-byline">
+        <a href="/2015/03/09/学习C-11新标准多线程支持/" class="article-date">
+  <time datetime="2015-03-09T13:08:46.000Z" itemprop="datePublished">2015-03-09</time>
+</a>
+      </p>
+      <div class="article-entry" itemprop="articleBody">
+        <p>最近读了《C++ Concurrency in Action》一书，发现C++11新标准对多线程的支持的确达到了前所未有的高程度，完全可以和JAVA的线程模型相媲美。尤其是提供了std::async这种异步函数调用，免去了使用者调用底层API的痛苦，并且是跨平台的，所以的确值得大家用心学学。</p>
+<p>根据<a href="http://www.cplusplus.com/reference/" target="_blank" rel="external">C++ Reference</a>网站提供的文档，主要有如下几个头文件用于多线程支持：</p>
+<ul>
+<li>&lt; thread &gt;：用于产生线程对象，多线程基础</li>
+<li>&lt; mutex &gt;：互斥量</li>
+<li>&lt; condition_variable &gt;：条件变量</li>
+<li>&lt; future &gt;：用于存储异步调用的结果并提供获取方法</li>
+<li>&lt; atomic &gt;：用于原子操作</li>
+</ul>
+<p>这里首先记录一下关于future的相关用法，因为互斥量、条件变量等属于偏于底层的设施，使用者比较多，所以我更加关注于异步调用与future的使用。我使用的是fedora 21（64位） + g++ 4.8.3，线程库是POSIX。</p>
+<p>我觉得首先要提到的就是std::async调用。这个标准库函数用于开启一个新的异步调用，在内部实现是它可能是新开起一个线程或者在当前线程同步执行，可以通过枚举参数显示指定（std::launch::async和std::launch::defered）。这个函数使用起来如下：<code>std::async(func,arg1,arg2...)</code>。第一个参数是一个可调用对象（callable），包括函数、函数指针、兰布达表达式或者是重载了调用运算的类对象。后面的参数调用对象的参数列表，注意这里给async传递的参数<strong>必定</strong>会被拷贝（需要拷贝到内核空间），所以如果需要传递引用需使用std::ref()。第一个参数可以指定上面说的枚举对象来之定执行策略（新线程或者在当前线程同步执行），默认就是那两个的二进制或（|）。这个函数在我的平台下需要POSIX的支持，所以在编译时需加入-pthread选项。</p>
+<p>如果我们放入后台异步执行的函数有返回值的话，我们就可以使用std::future这种对象来获取了。这个对象在标准文档中的定义是：A future is an object that can retrieve a value from some provider object or function, properly synchronizing this access if in different threads。大意就是这种对象专门用于存储某种提供者（provider）返回的值，因此用于同步不同的两个线程的执行。举个简单的例子就是，我们要计算一个很大的值（比如3132554447）是否为素数，这种计算也许需要一定的时间，我们不希望它在主线程中执行它，因为会阻塞主线程中其他的功能性代码，但是我们又懒得自己开启新线程，因此可以使用async来让标准库完成这一任务，然后我们在主线程中等待它的结果被计算出来就行了。就像这样<code>std::future&lt;bool&gt; result = std::async(IsPrime,3132554447)</code>。其中IsPrime就是用于计算的函数，我们将参数一块传递进去，然后在主线程中执行其他任务，最后等待其计算结果即可：<code>int res = result.get()</code>。这里如果结果还没有被计算出来，那么get调用会阻塞之到IsPrime函数返回。这样我们就简单实现了我们的要求，并且少写了很多代码。</p>
+<p>C++标准也提供了更多的线程间同步的方法，比如std::packaged_task就可以用来将任务在线程间传递，官方文档对其的定义是：“A packaged_task wraps a callable element and allows its result to be retrieved asynchronously.”。就是说它封装了一个可调用对象，可以通过它来异步获取某个任务的返回结果。这个对象本身也是可调用的，因此可以直接调用它的调用运算符，例如：task()，其中task是一个std::packaged_task，这样就可以直接调用它绑定的那个函数对象。也可以将它传递给std::thread，从而开启新线程执行其内部绑定的函数对象。可以调用get_future成员函数获取它内部的future对象进而从该对象获得执行结果。</p>
+<p>新标准也提供了另一个类：std::promise，这个对象跟packaged_task很像，也是用线程间同步，但是它主要是用于给future赋一个值，标准定义是：“A promise is an object that can store a value of type T to be retrieved by a future object (possibly in another thread), offering a synchronization point.”。promise提供了一个set_value方法，用于设置内部shared_state的值，在设置好之后，与其对应的future即变为ready，可用于读取。</p>
+<p>这几个类的简单用法可参考<a href="http://www.cplusplus.com/" target="_blank" rel="external">C++官网</a>，其中又不少简单实用的例子。</p>
+
+      </div>
+      <footer class="article-footer">
+        <a data-url="http://yoursite.com/2015/03/09/学习C-11新标准多线程支持/" data-id="ci7k42vvk000x34ijw2w8kr4f" class="article-share-link">分享到</a>
+        
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C++</a></li></ul>
+
+      </footer>
+    </div>
+  </article>
+  
+
+            </div>
+          </section>
+          <aside id="sidebar">
+  <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+  <div class="sidebar-top">
+    <p>关注我 :</p>
+    <ul class="social-links">
+      
+    </ul>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2015/03/19/常用排序算法总结/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <p class="article-nav-title">
+        
+          常用排序算法总结
+        
+      </p>
+      <i class="icon" id="icon-chevron-right"></i>
+    </a>
+  
+  
+    <a href="/2015/02/03/Linux下互斥锁以及条件变量的使用/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <p class="article-nav-title">Linux下互斥锁以及条件变量的使用</p>
+      <i class="icon" id="icon-chevron-left"></i>
+    </a>
+  
+</nav>
+
+  
+  <div class="widgets-container">
+    
+  </div>
+</aside>
+        </div>
+      </div>
+    </div>
+    <footer id="footer">
+  
+  <div class="container">
+    <div class="container-inner">
+      <a id="back-to-top" href="javascript:;"><i class="icon" id="icon-angle-up"></i></a>
+      <div class="credit">
+        <h1 class="logo-wrap">
+          <a href="/" class="logo"></a>
+        </h1>
+        <p>&copy; 2015 Cod</p>
+        <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+      </div>
+    </div>
+  </div>
+</footer>
+    
+
+
+  <script src="http://code.jquery.com/jquery-2.1.3.min.js"></script>
+
+
+
+
+
+
+<script src="/js/html-patch.js" type="text/javascript"></script>
+<script src="/js/script.js" type="text/javascript"></script>
+
+  </div>
+</body>
+</html>

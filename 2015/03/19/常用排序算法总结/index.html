@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>常用排序算法总结 | Cod&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="记得当年大一时学习了传说中的冒泡排序，可惜智商不够总是没彻底理解，现在到了找工作的时候都要考排序算法，所以是时候整理一下各种常用算法了，至少可以有个模板吧！
+简单排序算法选择排序原理选择排序应该就是最简单的排序方法了，它的思想就是找（选择）出一个序列中最小（大）的数，放到最开头，然后在剩下的里面接着找最小（大）的那个，再放到开头，最后整个数组即为有序。在实现时，可以简单地遍历整个数组，一般设置一个">
+<meta property="og:type" content="article">
+<meta property="og:title" content="常用排序算法总结">
+<meta property="og:url" content="http://yoursite.com/2015/03/19/常用排序算法总结/index.html">
+<meta property="og:site_name" content="Cod's Blog">
+<meta property="og:description" content="记得当年大一时学习了传说中的冒泡排序，可惜智商不够总是没彻底理解，现在到了找工作的时候都要考排序算法，所以是时候整理一下各种常用算法了，至少可以有个模板吧！
+简单排序算法选择排序原理选择排序应该就是最简单的排序方法了，它的思想就是找（选择）出一个序列中最小（大）的数，放到最开头，然后在剩下的里面接着找最小（大）的那个，再放到开头，最后整个数组即为有序。在实现时，可以简单地遍历整个数组，一般设置一个">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="常用排序算法总结">
+<meta name="twitter:description" content="记得当年大一时学习了传说中的冒泡排序，可惜智商不够总是没彻底理解，现在到了找工作的时候都要考排序算法，所以是时候整理一下各种常用算法了，至少可以有个模板吧！
+简单排序算法选择排序原理选择排序应该就是最简单的排序方法了，它的思想就是找（选择）出一个序列中最小（大）的数，放到最开头，然后在剩下的里面接着找最小（大）的那个，再放到开头，最后整个数组即为有序。在实现时，可以简单地遍历整个数组，一般设置一个">
+  
+  
+
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+  
+  
+
+
+  
+
+  
+    <link href='//fonts.useso.com/css?family=Titillium+Web:300,400,600' rel='stylesheet' type='text/css'>
+    <link href="//fonts.useso.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+
+</head>
+
+<body>
+  <div id="wrap">
+    <header id="header">
+  <div id="header-outer" class="outer">
+    <div class="container">
+      <div class="container-inner">
+        <div id="header-title">
+          <h1 class="logo-wrap">
+            <a href="/" class="logo"></a>
+          </h1>
+          
+            <h2 class="subtitle-wrap">
+              <p class="subtitle">Consider Yourself Denied</p>
+            </h2>
+          
+        </div>
+        <div id="header-inner" class="nav-container">
+          <a id="main-nav-toggle" class="nav-icon"></a>
+          <div class="nav-container-inner">
+            <ul id="main-nav">
+              
+            </ul>
+            <nav id="sub-nav">
+              <div id="search-form-wrap">
+                <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="搜索"><input type="hidden" name="q" value="site:http://yoursite.com"></form>
+              </div>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+    <div class="container">
+      <div class="main-body container-inner">
+        <div class="main-body-inner">
+          <section id="main">
+            <div class="main-body-header">
+
+              <h1 class="header"><a class="page-title-link" href="/categories/算法/">算法</a></h1>
+            </div>
+            <div class="main-body-content">
+              
+  <article id="post-常用排序算法总结" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+      <!--  -->
+      
+        <header class="article-header">
+          
+  
+    <h1 class="article-title" itemprop="name">
+      常用排序算法总结
+    </h1>
+  
+
+        </header>
+      
+      <p class="article-byline">
+        <a href="/2015/03/19/常用排序算法总结/" class="article-date">
+  <time datetime="2015-03-19T15:10:41.000Z" itemprop="datePublished">2015-03-19</time>
+</a>
+      </p>
+      <div class="article-entry" itemprop="articleBody">
+        <p>记得当年大一时学习了传说中的冒泡排序，可惜智商不够总是没彻底理解，现在到了找工作的时候都要考排序算法，所以是时候整理一下各种常用算法了，至少可以有个模板吧！</p>
+<h3 id="简单排序算法">简单排序算法</h3><h4 id="选择排序">选择排序</h4><h5 id="原理">原理</h5><p>选择排序应该就是最简单的排序方法了，它的思想就是<strong>找</strong>（选择）出一个序列中最小（大）的数，放到最开头，然后在剩下的里面接着找最小（大）的那个，再放到开头，最后整个数组即为有序。在实现时，可以简单地遍历整个数组，一般设置一个临时变量记录最大（小）值，并将其与每个元素进行对比，如果该元素更小，则交换至开头。</p>
+<p>该算法复杂度为O(n^2)，因为要遍历数组1+2+3+…+n次，所以整体复杂度为n平方。</p>
+<h5 id="代码">代码</h5><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">SelectionSort</span><span class="params">(<span class="keyword">int</span> arr[],<span class="keyword">int</span> n)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="comment">//分别用外层与内层循环</span></span><br><span class="line">    <span class="keyword">int</span> i,j;</span><br><span class="line">    <span class="comment">//开始循环选择最小的</span></span><br><span class="line">    <span class="keyword">for</span>(i = <span class="number">0</span>;i &lt; n - <span class="number">1</span>;i++)</span><br><span class="line">        <span class="keyword">for</span> (j = i + <span class="number">1</span>; j &lt; n; j++)</span><br><span class="line">            <span class="comment">//如果找到更小的就交换两者</span></span><br><span class="line">            <span class="keyword">if</span> (arr[j] &lt; arr[i])</span><br><span class="line">                Swap(arr[j], arr[i]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="分析">分析</h5><p>首先我们认为数组第一个元素自身是有序的，剩下的部分是无序的，则从第二个元素开始分别与第一个比较，如果更小（大）则交换两者。代码中外层循环用于控制检测数组一遍，每次检测当前元素值是否比待比较的小，内层为每次在剩余无序的部分找出最小（大）元素并交换。</p>
+<h4 id="插入排序">插入排序</h4><h5 id="原理-1">原理</h5><p>插入排序原理类似于打扑克时整理手中扑克的过程，顾名思义就是每次新拿到一张扑克，就在手中已存在的序列中一张一张比较，知道插入一个合适的位置中，由此也可以发现，手中的扑克一定都是有序的，每次插入一个新元素也可以保证已排好的序列是有序的。在初始时认为一个元素自身有序，从而执行排序过程。</p>
+<p>该算法最坏情况下每次插入都要进行i次比较，i表示拿到第i张扑克（元素），所以总共进行1+2+…+n次比较，整体复杂度为O(n^2)。</p>
+<h5 id="代码-1">代码</h5><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">InsertionSort</span><span class="params">(<span class="keyword">int</span> arr[],<span class="keyword">int</span> n)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="comment">//分别用于外层循环和内层循环</span></span><br><span class="line">    <span class="keyword">int</span> i,j;</span><br><span class="line">    <span class="comment">//用于记录下一个待比较的数</span></span><br><span class="line">    <span class="keyword">int</span> next = <span class="number">0</span>;</span><br><span class="line">    <span class="comment">//从第二个数开始比较（认为第一个数本身已经有序）</span></span><br><span class="line">    <span class="keyword">for</span>(i = <span class="number">1</span>;i &lt; n;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">//下一个待处理的数就是i指向的那个</span></span><br><span class="line">        next = arr[i];</span><br><span class="line">        <span class="comment">//开始插入过程，找到合适的插入位置并移动元素</span></span><br><span class="line">        <span class="comment">//j用于记录比较的每一个元素</span></span><br><span class="line">        <span class="keyword">for</span>(j = i - <span class="number">1</span>;j &gt;= <span class="number">0</span> &amp;&amp; arr[j] &gt; next;j--)</span><br><span class="line">            <span class="comment">//将元素后移</span></span><br><span class="line">            arr[j + <span class="number">1</span>] = arr[j];</span><br><span class="line">        <span class="comment">//找到合适的位置后插入</span></span><br><span class="line">        arr[j + <span class="number">1</span>] = next;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="分析-1">分析</h4><p>初始时认为原始数组中第一个数是有序的，故从第二个元素开始进行插入。使用一个临时变量next记录下一个待比较的数，每次在已排好序的部分拿出一个元素与next比较，知道找到合适插入的位置，先将后面的所有元素后移一个位置，再将待插入元素插入，最后即完成。</p>
+<h4 id="冒泡排序">冒泡排序</h4><h4 id="原理-2">原理</h4><p>冒泡排序形象地说就是水中有一堆大大小小的泡泡，那么里面空气多的（大的）泡泡就会上浮的比较快，所以最大的泡泡第一个浮出水面，第二的次之。这个思想也可以用来排序，即：每次将最大（小）的那个元素置换到数组开头，以此类推。我觉得这个方法跟选择排序差不多，只不过实现方式不太相同，冒泡排序是每次只交换相邻的两个元素，一趟交换过后，最大的即可被交换到开头。</p>
+<h4 id="代码-2">代码</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">BubbleSort</span><span class="params">(<span class="keyword">int</span> arr[],<span class="keyword">int</span> n)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i,j;</span><br><span class="line">    <span class="comment">//外层循环负责从最大值处向低处走，索引大于i的已被排好序</span></span><br><span class="line">    <span class="keyword">for</span>(i = n - <span class="number">1</span>;i &gt;= <span class="number">0</span>;i--)</span><br><span class="line">        <span class="comment">//将最大的冒到最上面</span></span><br><span class="line">        <span class="keyword">for</span>(j = <span class="number">1</span>;j &lt;= i;j++)</span><br><span class="line">            <span class="keyword">if</span>(arr[j-<span class="number">1</span>] &gt; arr[j])</span><br><span class="line">                Swap(arr[j],arr[j-<span class="number">1</span>]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="分析-2">分析</h4><p>外层循环从最大值处向地处走，逐渐缩小范围，内层循环每次负责将该范围内的最大的数冒到最上面，从而完成排序。</p>
+<h4 id="希尔排序">希尔排序</h4><h5 id="原理-3">原理</h5><h5 id="代码-3">代码</h5><h5 id="分析-3">分析</h5><hr>
+<h3 id="复杂点的排序算法">复杂点的排序算法</h3><h4 id="快速排序">快速排序</h4><h5 id="原理-4">原理</h5><p>终于说到重点了，上面那几种排序方法其实都很费时间，几乎都是O(n^2)的复杂度，后来有人发明了快速排序，将复杂度降低到了O(nlogn)。其实快排的精髓在于，它定义了一个轴变量（pivot），并且每次都保证在轴变量左边的所有元素都小于轴，右边的都大于轴，然后递归左部与右部。当某次递归发现左部或者右部只剩下一个元素时，就完成排序了。</p>
+<p>但是它如何保证左部都要小，右部都要大的呢？其实就是不断挪动<strong>轴元素位置</strong>，即：首先找一个元素作为轴元素，一般都是找第一个。然后设置两个索引i、j，分别从最左边和最右边向中间遍历，比如先从左边到中间遍历，如果当前遍历到的元素值比轴元素大，则交换轴和当前元素的值，然后在从右边遍历。这个过程本身也是一个循环，当左边的索引和右边的索引相遇后，则停止循环，这样轴元素就在它应该在的位置上了。然后对左右两个部分继续调用快速排序，最后当每一部分只剩下一个元素时左右的那个索引会立刻相遇，则说明所有的元素都有序了。</p>
+<h5 id="代码-4">代码</h5><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">QuickSort</span><span class="params">(<span class="keyword">int</span> arr[],<span class="keyword">int</span> low,<span class="keyword">int</span> high)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	<span class="comment">//如果索引相交则说明轴元素已经就位</span></span><br><span class="line">    <span class="keyword">if</span>(low &gt; high)</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    <span class="comment">//设置轴元素值</span></span><br><span class="line">    <span class="keyword">int</span> pivot = arr[low];</span><br><span class="line">    <span class="comment">//设置两方向计数</span></span><br><span class="line">    <span class="keyword">int</span> left = low;</span><br><span class="line">    <span class="keyword">int</span> right = high;</span><br><span class="line">    <span class="comment">//扫描一遍数组，将轴元素放至正确位置</span></span><br><span class="line">    <span class="keyword">while</span>(left &lt; right)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">//先将right向左移动，找到第一个比轴元素小的元素</span></span><br><span class="line">        <span class="keyword">while</span>(left &lt; right &amp;&amp; arr[right] &gt;= pivot)</span><br><span class="line">            --right;</span><br><span class="line">        <span class="comment">//如果找到则直接将该元素赋值给arr[low]因为arr[low]值被pivot存储</span></span><br><span class="line">        <span class="keyword">if</span>(left &lt; right)</span><br><span class="line">            arr[left] = arr[right];</span><br><span class="line">        <span class="comment">//再将low向右移动，找到第一个比轴元素大的元素</span></span><br><span class="line">        <span class="keyword">while</span>(left &lt; right &amp;&amp; arr[left] &lt;= pivot)</span><br><span class="line">            ++left;</span><br><span class="line">        <span class="comment">//赋值</span></span><br><span class="line">        <span class="keyword">if</span>(left &lt; right)</span><br><span class="line">            arr[right] = arr[left];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//给轴元素赋值</span></span><br><span class="line">    arr[left] = pivot;</span><br><span class="line">    <span class="comment">//此时left和right已经相等</span></span><br><span class="line">    <span class="comment">//递归左右两部分</span></span><br><span class="line">    QuickSort(arr,low,left - <span class="number">1</span>);</span><br><span class="line">    QuickSort(arr,right + <span class="number">1</span>,high);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="分析-4">分析</h5><p>可以看到最外层循环判断的的变量是左右两个索引，这两个索引用于找到第一个大于或者小于轴元素的位置，然后交换轴元素和那个位置的元素，这个外层循环经过一轮后，轴元素就处于正确位置了，然后在递归对左部和右部分别调用该函数，知道左部和右部都是一个元素为止，那么此时整个数组就是有序的了。</p>
+<p>可见外层循环完成需要比较n次元素，递归调用需要有logn次，所以整体复杂度就是O(nlogn)。</p>
+<h4 id="堆排序">堆排序</h4><h5 id="原理-5">原理</h5><p>堆排序也是一种性能比较好的排序方法，它的基础是一种叫堆的数据结构。所谓堆，就是一种特殊的<strong>完全二叉树</strong>，并且满足每个根节点的值要比其两个孩子节点都要大或者小，称其为大顶堆或者小顶堆。形象地理解一下就是一堆沙子，上面体积最小，下面体积最大（大顶堆就意会一下一样的）。那么根据这个性质，至少可以知道，一个堆的堆顶元素肯定是这堆中所有元素的最大的或者最小的。那么我们将一个数组构建成堆，每次从堆顶取走最大值，再对这个堆进行某种调整使之继续保持堆的性质，再从堆顶取走第二大的值，最后就可以将整个数组进行排序。</p>
+<p>但是当堆顶元素被取走如何进行“某种调整”来继续保证堆的性质呢？这里我们可以想象一下，因为一个堆本身是一个二叉树，那么当进行层序遍历后，可以使用一个数组进行存储，并且元素间是存在某种对应关系的，比如：左孩子的节点索引值必定为根节点索引值得二倍，右孩子是它的值加一。那么当堆顶元素被取走，我们可以将堆底元素放到堆顶（直接赋值即可），此时堆只有堆顶元素不满足堆的性质，那么我们只需要调节当前这个堆顶元素至合适的位置即可重新构建堆。</p>
+<p>这个调节的过程就是：在堆顶元素的两个孩子中找到比较大的那个孩子，如果那个孩子的值大于堆顶元素，则将两者交换，然后继续对其子树进行比较交换，这样最后堆顶元素就会被交换到合适的位置，那么堆也就调整完毕。</p>
+<p>有了这个堆的调节方法，我们就可以直接对一个数组进行堆的构建。将待排序的数组看成一棵层序遍历的二叉树，那么可以从<strong>最后一个叶节点的根节点</strong>开始，对于这个根节点对应的子树，进行堆的调整使其成为一个堆，然后依次向上遍历，最后整个数组调整为一个堆。调整完后即可从根节点读取数据然后交换堆底和堆顶元素再继续堆调整，直到整个堆都被读取完毕。</p>
+<h5 id="代码-5">代码</h5><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">HeapAdjust</span><span class="params">(<span class="keyword">int</span> arr[],<span class="keyword">int</span> root,<span class="keyword">int</span> length)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="comment">//堆顶节点值</span></span><br><span class="line">    <span class="keyword">int</span> rootVal = arr[root];</span><br><span class="line">    <span class="comment">//表示当前的左孩子节点</span></span><br><span class="line">    <span class="comment">//由于数组从0开始所以需要计算出的值加一</span></span><br><span class="line">    <span class="keyword">int</span> child = root*<span class="number">2</span> + <span class="number">1</span>;</span><br><span class="line">    <span class="comment">//开始比较过程</span></span><br><span class="line">    <span class="keyword">while</span>(child &lt;= length)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">//先找到更大的那个孩子节点</span></span><br><span class="line">        <span class="keyword">if</span>(child + <span class="number">1</span> &lt; length &amp;&amp; arr[child] &lt; arr[child+<span class="number">1</span>])</span><br><span class="line">            child++;</span><br><span class="line">        <span class="comment">//然后比较孩子节点与父节点值，如果父节点大则不用调整直接退出</span></span><br><span class="line">        <span class="keyword">if</span>(arr[child] &lt; rootVal)</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="comment">//否则直接把孩子节点赋值给父节点</span></span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            arr[root] = arr[child];</span><br><span class="line">            <span class="comment">//修改父节点索引以便继续循环</span></span><br><span class="line">            root = child;</span><br><span class="line">            child = <span class="number">2</span>*root + <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//交换后的父节点值</span></span><br><span class="line">        arr[root] = rootVal;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//开始堆排序</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">HeapSort</span><span class="params">(<span class="keyword">int</span> arr[],<span class="keyword">int</span> n)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="comment">//首先进行堆的初始化，从最后一个叶节点的根节点开始</span></span><br><span class="line">    <span class="comment">//依次循环至根节点</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = n/<span class="number">2</span> - <span class="number">1</span>;i &gt;= <span class="number">0</span>;--i)</span><br><span class="line">        HeapAdjust(arr,i,n);</span><br><span class="line">    <span class="comment">//然后每次读出堆顶元素值即可</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = n - <span class="number">1</span>;i &gt; <span class="number">0</span>;i--)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">//删除堆顶元素</span></span><br><span class="line">        <span class="comment">//cout &lt;&lt; arr[0] &lt;&lt; endl;</span></span><br><span class="line">        <span class="comment">//将最后一个元素放到堆顶</span></span><br><span class="line">        arr[<span class="number">0</span>] = arr[i];</span><br><span class="line">        <span class="comment">//调整堆</span></span><br><span class="line">        HeapAdjust(arr,<span class="number">0</span>,i);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="分析-5">分析</h5><p>HeapAdjust函数用于调整一个堆，这个函数的前提是待调整的堆仅仅是堆顶元素不满足条件，因此交换堆底和堆顶元素并向下比较，直到堆顶元素被放置到正确的位置。</p>
+<p>HeapSort函数用于执行排序，首先要调整堆，从最后一个子树开始，向上递归，最后整体调整为一个堆，再读取堆顶并调整，最后所有元素被读取，即排序完毕。</p>
+<h4 id="归并排序">归并排序</h4><h5 id="原理-6">原理</h5><p>归并排序的原理是基于合并的思想（Merge），如果我们有两个已经有序的序列，需要合并成一个序列时，我们可以设置两个索引分别表示两个序列的当前值，每次读取更大的那个放入结果队列，最后再将没放进去的那些全部放进去（因为本身都有序）。合并的过程其实很简单，那么我们如何构造两个已经有序的序列呢？这就需要递归的思想，不断递归知道两个待合并的序列只有一个元素时，那么它们就是有序的了，然后合并两者并继续递归，最后即可完成整体的排序。</p>
+<h6 id="代码-6">代码</h6><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Merge</span><span class="params">(<span class="keyword">int</span>* origin,<span class="keyword">int</span>* result,<span class="keyword">int</span> i,<span class="keyword">int</span> m,<span class="keyword">int</span> n)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="comment">//用于结果数组索引</span></span><br><span class="line">    <span class="keyword">int</span> k = i;</span><br><span class="line">    <span class="comment">//用于第二个数组索引</span></span><br><span class="line">    <span class="keyword">int</span> j = m + <span class="number">1</span>;</span><br><span class="line">    <span class="comment">//开始合并</span></span><br><span class="line">    <span class="keyword">while</span>(i &lt;= m &amp;&amp; j &lt;= n)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">//把小的那个数加入到结果数组中</span></span><br><span class="line">        <span class="keyword">if</span>(origin[i] &gt; origin[j])</span><br><span class="line">            result[k++] = origin[j++];</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            result[k++] = origin[i++];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//当其中一部分已经完成后继续将剩下的全部放入结果数组</span></span><br><span class="line">    <span class="keyword">while</span>(i &lt;= m)</span><br><span class="line">        result[k++] = origin[i++];</span><br><span class="line">    <span class="keyword">while</span>(j &lt;= n)</span><br><span class="line">        result[k++] = origin[j++];</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//排序用函数</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">MergeSort</span><span class="params">(<span class="keyword">int</span> origin[],<span class="keyword">int</span> result[],<span class="keyword">int</span> n)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="comment">//用来在后面交换两个数组指针</span></span><br><span class="line">    <span class="keyword">int</span>* tmp = <span class="keyword">nullptr</span>;</span><br><span class="line">    <span class="comment">//初始时是相邻两个合并，每个元素当作一个序列，所以len=1</span></span><br><span class="line">    <span class="keyword">int</span> len = <span class="number">1</span>;</span><br><span class="line">    <span class="comment">//合并数组长度从1到最后的n</span></span><br><span class="line">    <span class="keyword">while</span>(len &lt; n)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">int</span> i;</span><br><span class="line">        <span class="comment">//相邻两个序列合并至结果数组中</span></span><br><span class="line">        <span class="keyword">for</span>(i = <span class="number">0</span>;i &lt; n - <span class="number">2</span>*len;i += len*<span class="number">2</span>)</span><br><span class="line">            Merge(origin,result,i,i + len - <span class="number">1</span>,i + <span class="number">2</span>*len - <span class="number">1</span>);</span><br><span class="line">        <span class="comment">//判断是否最后多出来一个（原始数组长度为奇数时）</span></span><br><span class="line">        <span class="keyword">if</span>(i + len &lt; n)</span><br><span class="line">            Merge(origin,result,i,i + len - <span class="number">1</span>,n - <span class="number">1</span>);</span><br><span class="line">        <span class="comment">//将result的所有结果赋值给origin，以便下一次归并操作</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> t = <span class="number">0</span>;t &lt; n;t++)</span><br><span class="line">            origin[t] = result[t];</span><br><span class="line">        <span class="comment">//将len加倍</span></span><br><span class="line">        len *= <span class="number">2</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="分析-6">分析</h5><p>由于合并后需要将结果存至一个数组，所以传递参数需要多加一个结果数组指针。MergeSort函数中len表示当前待合并的数组长度为多少，初始时设置为1,然后逐渐加倍，直到为n。合并的过程就是将相邻两个待合并数组合并（二路归并），然后将结果值赋值给origin以便下一次的合并。</p>
+<h4 id="桶排序">桶排序</h4><hr>
+<h3 id="总结">总结</h3>
+      </div>
+      <footer class="article-footer">
+        <a data-url="http://yoursite.com/2015/03/19/常用排序算法总结/" data-id="ci7k42vvg000q34ijb5qh7ujv" class="article-share-link">分享到</a>
+        
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法/">算法</a></li></ul>
+
+      </footer>
+    </div>
+  </article>
+  
+
+            </div>
+          </section>
+          <aside id="sidebar">
+  <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+  <div class="sidebar-top">
+    <p>关注我 :</p>
+    <ul class="social-links">
+      
+    </ul>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2015/03/22/使用C-11实现简单的生产者消费者队列/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <p class="article-nav-title">
+        
+          (no title)
+        
+      </p>
+      <i class="icon" id="icon-chevron-right"></i>
+    </a>
+  
+  
+    <a href="/2015/03/09/学习C-11新标准多线程支持/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <p class="article-nav-title">学习C++11新标准多线程支持</p>
+      <i class="icon" id="icon-chevron-left"></i>
+    </a>
+  
+</nav>
+
+  
+  <div class="widgets-container">
+    
+  </div>
+</aside>
+        </div>
+      </div>
+    </div>
+    <footer id="footer">
+  
+  <div class="container">
+    <div class="container-inner">
+      <a id="back-to-top" href="javascript:;"><i class="icon" id="icon-angle-up"></i></a>
+      <div class="credit">
+        <h1 class="logo-wrap">
+          <a href="/" class="logo"></a>
+        </h1>
+        <p>&copy; 2015 Cod</p>
+        <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+      </div>
+    </div>
+  </div>
+</footer>
+    
+
+
+  <script src="http://code.jquery.com/jquery-2.1.3.min.js"></script>
+
+
+
+
+
+
+<script src="/js/html-patch.js" type="text/javascript"></script>
+<script src="/js/script.js" type="text/javascript"></script>
+
+  </div>
+</body>
+</html>

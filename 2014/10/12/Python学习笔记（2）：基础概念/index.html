@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Python学习笔记（2）：基础概念 | Cod&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="一些概念不同于C++这种强类型语言，Python属于弱类型，也即变量声明时不需要指明类型，例如可以直接使用12i = 5print i
+这种直接给变量赋值然后使用的方式，对于用惯了强类型语言的人来说，一开始可能会不适应，不过慢慢习惯了就会发现其实很好用。另外在Python中关于分号还有两个小概念要去理解：逻辑行与物理行。
+一个物理行就是程序中实际存在的一行。例如上面的代码段中就有两个物理行，而逻辑">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python学习笔记（2）：基础概念">
+<meta property="og:url" content="http://yoursite.com/2014/10/12/Python学习笔记（2）：基础概念/index.html">
+<meta property="og:site_name" content="Cod's Blog">
+<meta property="og:description" content="一些概念不同于C++这种强类型语言，Python属于弱类型，也即变量声明时不需要指明类型，例如可以直接使用12i = 5print i
+这种直接给变量赋值然后使用的方式，对于用惯了强类型语言的人来说，一开始可能会不适应，不过慢慢习惯了就会发现其实很好用。另外在Python中关于分号还有两个小概念要去理解：逻辑行与物理行。
+一个物理行就是程序中实际存在的一行。例如上面的代码段中就有两个物理行，而逻辑">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Python学习笔记（2）：基础概念">
+<meta name="twitter:description" content="一些概念不同于C++这种强类型语言，Python属于弱类型，也即变量声明时不需要指明类型，例如可以直接使用12i = 5print i
+这种直接给变量赋值然后使用的方式，对于用惯了强类型语言的人来说，一开始可能会不适应，不过慢慢习惯了就会发现其实很好用。另外在Python中关于分号还有两个小概念要去理解：逻辑行与物理行。
+一个物理行就是程序中实际存在的一行。例如上面的代码段中就有两个物理行，而逻辑">
+  
+  
+
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+  
+  
+
+
+  
+
+  
+    <link href='//fonts.useso.com/css?family=Titillium+Web:300,400,600' rel='stylesheet' type='text/css'>
+    <link href="//fonts.useso.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+
+</head>
+
+<body>
+  <div id="wrap">
+    <header id="header">
+  <div id="header-outer" class="outer">
+    <div class="container">
+      <div class="container-inner">
+        <div id="header-title">
+          <h1 class="logo-wrap">
+            <a href="/" class="logo"></a>
+          </h1>
+          
+            <h2 class="subtitle-wrap">
+              <p class="subtitle">Consider Yourself Denied</p>
+            </h2>
+          
+        </div>
+        <div id="header-inner" class="nav-container">
+          <a id="main-nav-toggle" class="nav-icon"></a>
+          <div class="nav-container-inner">
+            <ul id="main-nav">
+              
+            </ul>
+            <nav id="sub-nav">
+              <div id="search-form-wrap">
+                <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="搜索"><input type="hidden" name="q" value="site:http://yoursite.com"></form>
+              </div>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+    <div class="container">
+      <div class="main-body container-inner">
+        <div class="main-body-inner">
+          <section id="main">
+            <div class="main-body-header">
+
+              <h1 class="header"><a class="page-title-link" href="/categories/Python/">Python</a></h1>
+            </div>
+            <div class="main-body-content">
+              
+  <article id="post-Python学习笔记（2）：基础概念" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+      <!--  -->
+      
+        <header class="article-header">
+          
+  
+    <h1 class="article-title" itemprop="name">
+      Python学习笔记（2）：基础概念
+    </h1>
+  
+
+        </header>
+      
+      <p class="article-byline">
+        <a href="/2014/10/12/Python学习笔记（2）：基础概念/" class="article-date">
+  <time datetime="2014-10-12T12:13:10.000Z" itemprop="datePublished">2014-10-12</time>
+</a>
+      </p>
+      <div class="article-entry" itemprop="articleBody">
+        <h6 id="一些概念">一些概念</h6><p>不同于C++这种强类型语言，Python属于弱类型，也即变量声明时不需要指明类型，例如可以直接使用<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">i = <span class="number">5</span></span><br><span class="line"><span class="keyword">print</span> i</span><br></pre></td></tr></table></figure></p>
+<p>这种直接给变量赋值然后使用的方式，对于用惯了强类型语言的人来说，一开始可能会不适应，不过慢慢习惯了就会发现其实很好用。另外在Python中关于分号还有两个小概念要去理解：逻辑行与物理行。</p>
+<p>一个物理行就是程序中实际存在的一行。例如上面的代码段中就有两个物理行，而逻辑行是指Python“看见”的单个语句，例如“print ‘hello world’”这样的语句，Python假定每个物理行对应一个逻辑行。</p>
+<p>如果想要在一个物理行中使用多于一个逻辑行，则需要使用分号特别注明这种用法（默认Python一行结束不需要分号结尾）。分号表示一个逻辑行/语句的结束。例如：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">i = <span class="number">5</span>;<span class="keyword">print</span> i;</span><br></pre></td></tr></table></figure></p>
+<p>这个跟上面那段代码等价。不过一般来说一个物理行尽量只写一句逻辑行，仅当逻辑行太长时才在多于一个物理行中写。这些都是为了避免使用分号，也即Python一般不使用分号。</p>
+<p>缩进在Python中也是很重要的，同一个层次的语句必须有相同的缩进，每一组这样的语句称为一个块。不正确的缩进会直接导致程序解释错误。</p>
+<p>下面就要说到一个程序设计语言比较重要的地方：表达式与控制流。</p>
+<p>运算符以及表达式求值顺序在部分不同的程序设计语言中都差不多，Python也不例外，所以就不多说了，这里关键部分是Python的控制流语句。</p>
+<h6 id="if语句">if语句</h6><p>先看代码：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">num = <span class="number">10</span></span><br><span class="line">input = raw_input(<span class="string">'input a number'</span>)</span><br><span class="line"><span class="keyword">if</span> input == num :</span><br><span class="line">  <span class="comment"># other code..</span></span><br><span class="line"><span class="keyword">elif</span> input &lt; num:</span><br><span class="line">  <span class="comment"># other code...</span></span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">  <span class="comment"># other code...</span></span><br></pre></td></tr></table></figure></p>
+<p>if的结构从上面的代码一看大概就了解了，结构基本与其他编程语言差不多，主要区别是没有了表示块范围的大括号、else if 换成了elif以及每个if块后面都有一个冒号。这里也正好说明了缩进在Python中的重要性，可以看出每个语句块都是用缩进表示的，如果缩进格式错误将会导致解释时的错误。</p>
+<h5 id="while语句">while语句</h5><p>代码：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> condition:</span><br><span class="line">  <span class="comment"># code here...</span></span><br><span class="line"><span class="keyword">else</span> :</span><br><span class="line">  <span class="comment"># ...</span></span><br></pre></td></tr></table></figure></p>
+<p>可以看出while在Python中很简洁，while的语句块也是通过缩进表示的，也就是说在while中的所有语句开头的空格必须一致，当然最好就是一个tab的长度。另外一个不同之处就是这个while后面可以接一个else子句，当while条件为false后则执行else语句块，当然这个else是可选的。</p>
+<h5 id="for循环">for循环</h5><p>代码：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>,<span class="number">5</span>):</span><br><span class="line">  <span class="comment"># code here...</span></span><br><span class="line"><span class="keyword">else</span> :</span><br><span class="line">  <span class="comment"># code here...</span></span><br></pre></td></tr></table></figure></p>
+<p>可以注意到，python中的for循环有点像C++的范围for语句或者C#的foreach。但关键区别在于in后面的那个东西，它表示一个<strong>序列</strong>这个类似数组的概念，后面我会提到。这里range(1,5)即表示序列[1,2,3,4]。默认range的步长为1，但是也可以显示指定，例如range(1,5,2)则返回[1,3]。for中的那个序列可以是任意对象的序列，而不仅仅是数字。另外for也可以使用可选的else。</p>
+<h5 id="break和continue语句">break和continue语句</h5><p>代码：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> <span class="keyword">True</span>:</span><br><span class="line">  s = raw_input(<span class="string">'input:'</span>)</span><br><span class="line">	<span class="keyword">if</span> s == <span class="string">'quit'</span>:</span><br><span class="line">	  <span class="keyword">break</span></span><br><span class="line">	<span class="keyword">else</span>:</span><br><span class="line">	  <span class="keyword">continue</span></span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">  <span class="keyword">print</span> <span class="string">'out of loop'</span></span><br></pre></td></tr></table></figure></p>
+<p>break和continue的用法基本与其他语言没区别，continue表示立即开始新一轮循环，对于for循环同时还会递增循环控制变量值i；break表示立即终止循环，如果对应循环又一个else子句，则<strong>不</strong>执行。</p>
+
+      </div>
+      <footer class="article-footer">
+        <a data-url="http://yoursite.com/2014/10/12/Python学习笔记（2）：基础概念/" data-id="ci7k42vvx001b34ij1hpd9wem" class="article-share-link">分享到</a>
+        
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
+
+      </footer>
+    </div>
+  </article>
+  
+
+            </div>
+          </section>
+          <aside id="sidebar">
+  <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+  <div class="sidebar-top">
+    <p>关注我 :</p>
+    <ul class="social-links">
+      
+    </ul>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2014/10/21/设计模式学习（1）/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <p class="article-nav-title">
+        
+          设计模式学习（1）
+        
+      </p>
+      <i class="icon" id="icon-chevron-right"></i>
+    </a>
+  
+  
+    <a href="/2014/09/29/Python学习笔记（1）：Python简介/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <p class="article-nav-title">Python学习笔记（1）：Pyhon简介</p>
+      <i class="icon" id="icon-chevron-left"></i>
+    </a>
+  
+</nav>
+
+  
+  <div class="widgets-container">
+    
+  </div>
+</aside>
+        </div>
+      </div>
+    </div>
+    <footer id="footer">
+  
+  <div class="container">
+    <div class="container-inner">
+      <a id="back-to-top" href="javascript:;"><i class="icon" id="icon-angle-up"></i></a>
+      <div class="credit">
+        <h1 class="logo-wrap">
+          <a href="/" class="logo"></a>
+        </h1>
+        <p>&copy; 2015 Cod</p>
+        <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+      </div>
+    </div>
+  </div>
+</footer>
+    
+
+
+  <script src="http://code.jquery.com/jquery-2.1.3.min.js"></script>
+
+
+
+
+
+
+<script src="/js/html-patch.js" type="text/javascript"></script>
+<script src="/js/script.js" type="text/javascript"></script>
+
+  </div>
+</body>
+</html>

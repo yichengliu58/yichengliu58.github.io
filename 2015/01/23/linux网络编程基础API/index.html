@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>linux网络编程基础API | Cod&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="依稀记得大一时对网络编程强烈的好奇心，非常想知道如何将信息从本机传递到另一台机器。现在上了两年半大学，学了一学期计算机网络，可算是在网络方面有了一点理解。这个假期准备开始好好研究linux下的网络编程，顺便写写学习笔记。
+linux下网络编程的核心也是基础就是他提供的一堆系统调用，说白了就是一堆函数，学习这些基础API的用法对日后真正构建服务器有很大帮助。
+主机字节序与网络字节序的转换函数：123">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linux网络编程基础API">
+<meta property="og:url" content="http://yoursite.com/2015/01/23/linux网络编程基础API/index.html">
+<meta property="og:site_name" content="Cod's Blog">
+<meta property="og:description" content="依稀记得大一时对网络编程强烈的好奇心，非常想知道如何将信息从本机传递到另一台机器。现在上了两年半大学，学了一学期计算机网络，可算是在网络方面有了一点理解。这个假期准备开始好好研究linux下的网络编程，顺便写写学习笔记。
+linux下网络编程的核心也是基础就是他提供的一堆系统调用，说白了就是一堆函数，学习这些基础API的用法对日后真正构建服务器有很大帮助。
+主机字节序与网络字节序的转换函数：123">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="linux网络编程基础API">
+<meta name="twitter:description" content="依稀记得大一时对网络编程强烈的好奇心，非常想知道如何将信息从本机传递到另一台机器。现在上了两年半大学，学了一学期计算机网络，可算是在网络方面有了一点理解。这个假期准备开始好好研究linux下的网络编程，顺便写写学习笔记。
+linux下网络编程的核心也是基础就是他提供的一堆系统调用，说白了就是一堆函数，学习这些基础API的用法对日后真正构建服务器有很大帮助。
+主机字节序与网络字节序的转换函数：123">
+  
+  
+
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+  
+  
+
+
+  
+
+  
+    <link href='//fonts.useso.com/css?family=Titillium+Web:300,400,600' rel='stylesheet' type='text/css'>
+    <link href="//fonts.useso.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+
+</head>
+
+<body>
+  <div id="wrap">
+    <header id="header">
+  <div id="header-outer" class="outer">
+    <div class="container">
+      <div class="container-inner">
+        <div id="header-title">
+          <h1 class="logo-wrap">
+            <a href="/" class="logo"></a>
+          </h1>
+          
+            <h2 class="subtitle-wrap">
+              <p class="subtitle">Consider Yourself Denied</p>
+            </h2>
+          
+        </div>
+        <div id="header-inner" class="nav-container">
+          <a id="main-nav-toggle" class="nav-icon"></a>
+          <div class="nav-container-inner">
+            <ul id="main-nav">
+              
+            </ul>
+            <nav id="sub-nav">
+              <div id="search-form-wrap">
+                <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="搜索"><input type="hidden" name="q" value="site:http://yoursite.com"></form>
+              </div>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+    <div class="container">
+      <div class="main-body container-inner">
+        <div class="main-body-inner">
+          <section id="main">
+            <div class="main-body-header">
+
+              <h1 class="header"><a class="page-title-link" href="/categories/linux/">linux</a></h1>
+            </div>
+            <div class="main-body-content">
+              
+  <article id="post-linux网络编程基础API" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+      <!--  -->
+      
+        <header class="article-header">
+          
+  
+    <h1 class="article-title" itemprop="name">
+      linux网络编程基础API
+    </h1>
+  
+
+        </header>
+      
+      <p class="article-byline">
+        <a href="/2015/01/23/linux网络编程基础API/" class="article-date">
+  <time datetime="2015-01-23T02:26:07.000Z" itemprop="datePublished">2015-01-23</time>
+</a>
+      </p>
+      <div class="article-entry" itemprop="articleBody">
+        <p>依稀记得大一时对网络编程强烈的好奇心，非常想知道如何将信息从本机传递到另一台机器。现在上了两年半大学，学了一学期计算机网络，可算是在网络方面有了一点理解。这个假期准备开始好好研究linux下的网络编程，顺便写写学习笔记。</p>
+<p>linux下网络编程的核心也是基础就是他提供的一堆系统调用，说白了就是一堆函数，学习这些基础API的用法对日后真正构建服务器有很大帮助。</p>
+<h5 id="主机字节序与网络字节序的转换函数：">主机字节序与网络字节序的转换函数：</h5><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;netinet/in.h&gt;</span></span><br><span class="line"><span class="function"><span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="keyword">int</span> <span class="title">htonl</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="keyword">int</span> hostlong)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">unsigned</span> <span class="keyword">short</span> <span class="keyword">int</span> <span class="title">htons</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">short</span> <span class="keyword">int</span> hostshort)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="keyword">int</span> <span class="title">ntohl</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="keyword">int</span> netlong)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">unsigned</span> <span class="keyword">short</span> <span class="keyword">int</span> <span class="title">ntohs</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">short</span> <span class="keyword">int</span> netshort)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>含义可从名字看出来，比如htonl表示”host to net long“，即将长整形主机字节序转化为网络字节序。这四个函数中，长整形函数通常用来转换ip地址，而短整形用来转换端口号。当然不一定必须是这样。</p>
+<h5 id="Socket地址的表示结构体：">Socket地址的表示结构体：</h5><p>linux下提供了很多种表示地址（ip+port）的结构体，其中最通用的是sockaddr：<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;bits/socket.h&gt;</span></span><br><span class="line"><span class="keyword">struct</span> sockaddr</span><br><span class="line">&#123;</span><br><span class="line">	sa_family_t sa_family;<span class="comment">//地址族类型</span></span><br><span class="line">	<span class="keyword">char</span> sa_data[<span class="number">14</span>];<span class="comment">//存储socket地址</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>由于sa_data字段容量仅为14bytes，linux又定义了一个新的通用地址结构体：<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span>&lt;bits/socket.h&gt;</span></span><br><span class="line"><span class="keyword">struct</span> sockaddr_storage</span><br><span class="line">&#123;</span><br><span class="line">	sa_family_t sa_family;<span class="comment">//地址族类型</span></span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="keyword">int</span>  __sa_align;<span class="comment">//用于对其内存</span></span><br><span class="line">	<span class="keyword">char</span> __ss_padding[<span class="number">128</span> - <span class="keyword">sizeof</span>(__ss_align)];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>但是在真正编程时我们使用的是专用socket结构体。（上面那两个只是作为各种API参数，传递的实参是专用的socket结构体）首先是UNIX本地域协议族：<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span>&lt;sys/un.h&gt;</span></span><br><span class="line"><span class="keyword">struct</span> sockaddr_un</span><br><span class="line">&#123;</span><br><span class="line">	sa_family_t sin_family;<span class="comment">//地址族</span></span><br><span class="line">	<span class="keyword">char</span> sun_path[<span class="number">108</span>];<span class="comment">//文件路径名</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>对于TCP/IP协议族有：<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> sockaddr_in<span class="comment">//用于ipv4</span></span><br><span class="line">&#123;</span><br><span class="line">	sa_family_t sin_family;<span class="comment">//地址族</span></span><br><span class="line">	u_int16_t sin_port;<span class="comment">//使用网络字节序表示的端口号</span></span><br><span class="line">	<span class="keyword">struct</span> in_addr sin_addr;<span class="comment">//ipv4地址结构体</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">struct</span> in_addr</span><br><span class="line">&#123;</span><br><span class="line">	u_int32_t s_addr;<span class="comment">//ipv4地址，用网络字节序表示</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>ipv6暂时还不用，就不用写了。有一个问题要注意的就是：所有socket编程接口使用的地址参数均为sockaddr类型，所以在编程时，均使用强制类型转换即可。</p>
+<h5 id="ip地址转换函数">ip地址转换函数</h5><p>这种函数就是用来将ip地址在字符串表示和整数表示的形式之间转换。<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span>&lt;arpa/inet.h&gt;</span></span><br><span class="line"><span class="comment">//字符串（点分十进制） -&gt; 整数表示</span></span><br><span class="line"><span class="function">in_addr_t <span class="title">inet_addr</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span>* strptr)</span></span>;</span><br><span class="line"><span class="comment">//同上</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">inet_aton</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span>* cp,<span class="keyword">struct</span> in_addr8 inp)</span></span>;</span><br><span class="line"><span class="comment">//反向转换</span></span><br><span class="line"><span class="keyword">char</span>* inet_ntoa(<span class="keyword">struct</span> in_addr in);</span><br></pre></td></tr></table></figure></p>
+<p>有下列更新的函数完成上面的功能：<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;arpa/inet.h&gt;</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">inet_pton</span><span class="params">(<span class="keyword">int</span> af,<span class="keyword">const</span> <span class="keyword">char</span>* src,<span class="keyword">void</span>* dst)</span></span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">char</span>* inet_ntop(<span class="keyword">int</span> af,<span class="keyword">const</span> <span class="keyword">void</span>* src,<span class="keyword">char</span> dst,socklen_t cnt);</span><br></pre></td></tr></table></figure></p>
+<h5 id="socket操作函数">socket操作函数</h5><ul>
+<li><p>创建socket：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;sys/types.h&gt;</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;sys/socket.h&gt;</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">socket</span><span class="params">(<span class="keyword">int</span> domain,<span class="keyword">int</span> type,<span class="keyword">int</span> protocol)</span></span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>命名socket（绑定）</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;sys/types.h&gt;</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;sys/socket.h&gt;</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">bind</span><span class="params">(<span class="keyword">int</span> sockfd,<span class="keyword">const</span> <span class="keyword">struct</span> sockaddr* my_addr,socklen_t addrlen)</span></span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>监听socket</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;sys/socket.h&gt;</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">listen</span><span class="params">(<span class="keyword">int</span> sockfd,<span class="keyword">int</span> backlog)</span></span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>接受连接</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;sys/types.h&gt;</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;sys/socket.h&gt;</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">accept</span><span class="params">(<span class="keyword">int</span> sockfd,<span class="keyword">struct</span> sockaddr* addr,socklen_t* addrlen)</span></span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>发起连接</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;sys/types.h&gt;</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;sys/socket.h&gt;</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">connect</span><span class="params">(<span class="keyword">int</span> sockfd,<span class="keyword">const</span> <span class="keyword">struct</span> sockaddr* serveraddr,socklen_t addrlen)</span></span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>关闭连接</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;unistd.h&gt;</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">close</span><span class="params">(<span class="keyword">int</span> fd)</span></span>;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h5 id="TCP数据读写">TCP数据读写</h5><p>socket有自己的读写缓冲区函数<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;sys/types.h&gt;</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;sys/socket.h&gt;</span></span><br><span class="line"><span class="function">ssize_t <span class="title">recv</span><span class="params">(<span class="keyword">int</span> sockfd,<span class="keyword">void</span>* buf,size_t len,<span class="keyword">int</span> flags)</span></span>;</span><br><span class="line"><span class="function">ssize_t <span class="title">send</span><span class="params">(<span class="keyword">int</span> sockfd,<span class="keyword">const</span> <span class="keyword">void</span>* buf,size_t len,<span class="keyword">int</span> flags)</span></span>;</span><br></pre></td></tr></table></figure></p>
+<h5 id="网络信息API">网络信息API</h5><p>大概是通过DNS获取目标主机的完整信息<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;netdb.h&gt;</span></span><br><span class="line"><span class="keyword">struct</span> hostent* gethostbyname(<span class="keyword">const</span> <span class="keyword">char</span>* name);</span><br><span class="line"><span class="keyword">struct</span> hostent* gethostbyaddr(<span class="keyword">const</span> <span class="keyword">void</span>* addr,size_t len,<span class="keyword">int</span> type);</span><br></pre></td></tr></table></figure></p>
+<p>其中hostent结构体定义如下：<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> hostent</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">char</span>* h_name;</span><br><span class="line">	<span class="keyword">char</span>** h_aliases;</span><br><span class="line">	<span class="keyword">int</span> h_addrtype;</span><br><span class="line">	<span class="keyword">int</span> h_length;</span><br><span class="line">	<span class="keyword">char</span>** h_addr_list;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+      </div>
+      <footer class="article-footer">
+        <a data-url="http://yoursite.com/2015/01/23/linux网络编程基础API/" data-id="ci7k42vvs001234ijhjir1apn" class="article-share-link">分享到</a>
+        
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/">linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/网络编程/">网络编程</a></li></ul>
+
+      </footer>
+    </div>
+  </article>
+  
+
+            </div>
+          </section>
+          <aside id="sidebar">
+  <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+  <div class="sidebar-top">
+    <p>关注我 :</p>
+    <ul class="social-links">
+      
+    </ul>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2015/01/26/IO复用技术之select总结/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <p class="article-nav-title">
+        
+          IO复用技术之select总结
+        
+      </p>
+      <i class="icon" id="icon-chevron-right"></i>
+    </a>
+  
+  
+    <a href="/2014/12/14/设计模式学习之抽象工厂/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <p class="article-nav-title">设计模式学习之抽象工厂</p>
+      <i class="icon" id="icon-chevron-left"></i>
+    </a>
+  
+</nav>
+
+  
+  <div class="widgets-container">
+    
+  </div>
+</aside>
+        </div>
+      </div>
+    </div>
+    <footer id="footer">
+  
+  <div class="container">
+    <div class="container-inner">
+      <a id="back-to-top" href="javascript:;"><i class="icon" id="icon-angle-up"></i></a>
+      <div class="credit">
+        <h1 class="logo-wrap">
+          <a href="/" class="logo"></a>
+        </h1>
+        <p>&copy; 2015 Cod</p>
+        <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+      </div>
+    </div>
+  </div>
+</footer>
+    
+
+
+  <script src="http://code.jquery.com/jquery-2.1.3.min.js"></script>
+
+
+
+
+
+
+<script src="/js/html-patch.js" type="text/javascript"></script>
+<script src="/js/script.js" type="text/javascript"></script>
+
+  </div>
+</body>
+</html>

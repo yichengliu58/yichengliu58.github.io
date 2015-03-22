@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>IO复用技术之select总结 | Cod&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="最近玩命学习linux下网络编程，终于对这些奇怪的系统API们有了一点了解。今天研究了下IO复用的技术，发现其实服务器的确都是遵循某种框架（模式）编写而成，因此先将这些模式以及概念总结如下。
+同步和异步以及阻塞和非阻塞简单来说，同步(sync)指的是事情必须一件一件地做，调用者必须等待被调用过程返回。异步则是指调用后结果并不能立刻得到，而是由某种事件或信号触发告知调用者（因此并不是顺序执行的事件，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="IO复用技术之select总结">
+<meta property="og:url" content="http://yoursite.com/2015/01/26/IO复用技术之select总结/index.html">
+<meta property="og:site_name" content="Cod's Blog">
+<meta property="og:description" content="最近玩命学习linux下网络编程，终于对这些奇怪的系统API们有了一点了解。今天研究了下IO复用的技术，发现其实服务器的确都是遵循某种框架（模式）编写而成，因此先将这些模式以及概念总结如下。
+同步和异步以及阻塞和非阻塞简单来说，同步(sync)指的是事情必须一件一件地做，调用者必须等待被调用过程返回。异步则是指调用后结果并不能立刻得到，而是由某种事件或信号触发告知调用者（因此并不是顺序执行的事件，">
+<meta property="og:image" content="/img/1334216724_2405.jpg">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="IO复用技术之select总结">
+<meta name="twitter:description" content="最近玩命学习linux下网络编程，终于对这些奇怪的系统API们有了一点了解。今天研究了下IO复用的技术，发现其实服务器的确都是遵循某种框架（模式）编写而成，因此先将这些模式以及概念总结如下。
+同步和异步以及阻塞和非阻塞简单来说，同步(sync)指的是事情必须一件一件地做，调用者必须等待被调用过程返回。异步则是指调用后结果并不能立刻得到，而是由某种事件或信号触发告知调用者（因此并不是顺序执行的事件，">
+  
+  
+
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+  
+  
+
+
+  
+
+  
+    <link href='//fonts.useso.com/css?family=Titillium+Web:300,400,600' rel='stylesheet' type='text/css'>
+    <link href="//fonts.useso.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+
+</head>
+
+<body>
+  <div id="wrap">
+    <header id="header">
+  <div id="header-outer" class="outer">
+    <div class="container">
+      <div class="container-inner">
+        <div id="header-title">
+          <h1 class="logo-wrap">
+            <a href="/" class="logo"></a>
+          </h1>
+          
+            <h2 class="subtitle-wrap">
+              <p class="subtitle">Consider Yourself Denied</p>
+            </h2>
+          
+        </div>
+        <div id="header-inner" class="nav-container">
+          <a id="main-nav-toggle" class="nav-icon"></a>
+          <div class="nav-container-inner">
+            <ul id="main-nav">
+              
+            </ul>
+            <nav id="sub-nav">
+              <div id="search-form-wrap">
+                <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="搜索"><input type="hidden" name="q" value="site:http://yoursite.com"></form>
+              </div>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+    <div class="container">
+      <div class="main-body container-inner">
+        <div class="main-body-inner">
+          <section id="main">
+            <div class="main-body-header">
+
+              <h1 class="header"><a class="page-title-link" href="/categories/linux/">linux</a></h1>
+            </div>
+            <div class="main-body-content">
+              
+  <article id="post-IO复用技术之select总结" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+      <!--  -->
+      
+        <header class="article-header">
+          
+  
+    <h1 class="article-title" itemprop="name">
+      IO复用技术之select总结
+    </h1>
+  
+
+        </header>
+      
+      <p class="article-byline">
+        <a href="/2015/01/26/IO复用技术之select总结/" class="article-date">
+  <time datetime="2015-01-26T03:33:51.000Z" itemprop="datePublished">2015-01-26</time>
+</a>
+      </p>
+      <div class="article-entry" itemprop="articleBody">
+        <p>最近玩命学习linux下网络编程，终于对这些奇怪的系统API们有了一点了解。今天研究了下IO复用的技术，发现其实服务器的确都是遵循某种框架（模式）编写而成，因此先将这些模式以及概念总结如下。</p>
+<h4 id="同步和异步以及阻塞和非阻塞">同步和异步以及阻塞和非阻塞</h4><p>简单来说，同步(sync)指的是事情必须一件一件地做，调用者必须等待被调用过程返回。异步则是指调用后结果并不能立刻得到，而是由某种事件或信号触发告知调用者（因此并不是顺序执行的事件，也许内核在后台新开了线程在执行？）。</p>
+<p>阻塞（block）主要指的是进程状态，只在调用结果返回之前进程进入阻塞态，不会被CPU调度。而非阻塞则指某过程调用后立刻返回当时的数据可用性情况，如果数据尚不可用，自然而然可以使用轮询不断调用该过程来检测数据可用性，但这样比较浪费资源，但是进程不会因此而暂停，而是一直处于被激活的状态。</p>
+<h4 id="Linux下五种IO模型">Linux下五种IO模型</h4><p>linux内核提供了五种IO模型，分别如下：</p>
+<ul>
+<li>阻塞IO： 程序阻塞于读写的函数</li>
+<li>非阻塞IO： 读写函数立刻返回，但不一定会有可用数据，需要不断轮询（忙等待）</li>
+<li>IO复用： 程序阻塞于<strong>IO复用系统调用</strong>，但是可同时监听多个IO事件（读、写、异常）。</li>
+<li>SIGIO信号： 用信号触发读写就绪等事件，用户程序执行读写操作。在等待信号发射之前，进程<strong>不会</strong>阻塞。</li>
+<li>异步IO： 完全有内核执行数据读写，并触发读写完成事件，程序本身不阻塞。</li>
+</ul>
+<p>以上前四种模型都属于同步模型，因为在将数据从内核缓冲区拷贝到用户空间缓冲区时进程必将会停止响应（也可以说阻塞，另外拷贝时间很短但是也处于内核态下）。只有异步模式中，所有的操作（包括数据的拷贝）完全由内核管理，应用进程在内核发送信号前执行自己的流程，接收到信号后表明数据已经被赋值好了，即可使用。</p>
+<p>在此借一个大神博客<a href="http://blog.csdn.net/jay900323/article/details/18141217" target="_blank" rel="external">深秋哋黎明的专栏</a>中的图来表示这五个模型的对比：<br><img src="/img/1334216724_2405.jpg" alt=""></p>
+<h4 id="IO复用的概念">IO复用的概念</h4><p>IO复用顾名思义就是可以同时监听多个IO的状态，它同样会阻塞在IO复用函数处，但是由于可以监听多个IO流，它可以同时对多个读、写操作IO进行检测，当其中有数据可读或可写时，才可以调用真正的IO函数。IO复用在下列情况下很好用：</p>
+<ul>
+<li>客户端需要同时处理多个socket</li>
+<li>客户端需要同时处理用户输入（标准输入）和连接socket</li>
+<li>服务器需要同时处理监听socket和连接socket</li>
+<li>服务器需要同时处理TCP和UDP请求</li>
+<li>服务器需要同时处理多个端口的连接请求</li>
+</ul>
+<p>Linux下实现IO复用的系统调用主要有select、poll和epoll。先主要说说select的使用。</p>
+<h4 id="select函数的使用">select函数的使用</h4><p>首先，select系统调用的作用：在一段指定时间内（可以为零，可以为无穷大），<strong>监听</strong>用户感兴趣的文件描述符（socket）上的<strong>可读</strong>、<strong>可写</strong>以及<strong>异常</strong>事件。</p>
+<h5 id="select原型">select原型</h5><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;sys/select.h&gt;</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">select</span><span class="params">(<span class="keyword">int</span> nfds,fd_set* readfd,fd_set* writefd,fd_set* exceptfd,<span class="keyword">struct</span> timeval* timeout)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>参数描述如下：</p>
+<ol>
+<li>nfds参数指定被监听的文件描述符总数，通常情况下是<strong>所有</strong>监听描述符中最大值加一（文件描述符值总是从零开始递增）。</li>
+<li><p>三种fd_set结构，分别表示可读、可写以及异常事件对应的文件描述符<strong>集合</strong>。应用程序调用select时将通过这三个参数传递自己感兴趣的文件描述符，select返回时，内核将<strong>修改</strong>它们来通知应用程序哪些描述符已经就绪。fd_set结构体在typesizes.h中定义，但是我们只需要使用下面这一组宏即可操作它们：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;sys/select.h&gt;</span></span><br><span class="line">FD_ZERO(fd_set* fdset);<span class="comment">//用于清除fdset所有位</span></span><br><span class="line">FD_SET(<span class="keyword">int</span> fd,fd_set* fdset);<span class="comment">//设置fdset中的fd位（即将fd添加进fdset中）</span></span><br><span class="line">FD_CLR(<span class="keyword">int</span> fd,fd_set* fdset);<span class="comment">//清除fdset中的fd位（从fdset中删除fd）</span></span><br><span class="line">FD_ISSET(<span class="keyword">int</span> fd,fd_set* fdset);<span class="comment">//测试fdset中的fd是否就绪</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>timeout结构体用于设置select的超时时间。其定义如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> timeval</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">long</span> tv_sec;<span class="comment">//秒</span></span><br><span class="line">	<span class="keyword">long</span> tv_usec;<span class="comment">//微秒</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>如果传递0,则表示select立刻返回（非阻塞，需要轮询）；如果传递NULL,则表示select阻塞，知道有一个文件描述符就绪才返回。select成功时返回就绪的描述符<strong>个数</strong>，超时则返回0,失败返回-1。</p>
+<h5 id="文件描述符就绪条件">文件描述符就绪条件</h5><p>以下情况表示文件描述符可读：</p>
+<ul>
+<li>socket内核接受缓冲区中的字节数大于或等于其低水位标记SO_RCVLOWAT，此时可以无阻塞读取该socket且返回字节数大于0</li>
+<li>socket对方关闭连接，此时对该描述符的读操作将返回0</li>
+<li>监听socket又新的连接请求</li>
+<li>socket又未处理错误</li>
+</ul>
+<p>以下情况表示文件描述符可写：</p>
+<ul>
+<li>socket内核缓冲区中可用字节数大于等于其低水位标记，可以无阻塞写</li>
+<li>socekt写操作被关闭，对写操作被关闭的socket执行写操作将触发SIGPIPE信号</li>
+<li>socket使用<strong>非阻塞</strong>connect连接成功或失败（超时）之后</li>
+<li>有未处理错误</li>
+</ul>
+<p>至于异常可处理，只有一种情况，就是接收到带外数据（紧急数据）</p>
+<h5 id="使用select制作简易回显服务器">使用select制作简易回显服务器</h5><p>主要思路就是：首先将监听描述符添加进readfd（判断可读即可），在一个大的循环体内调用select，判断监听描述符是否就绪，如果就绪表明有新的连接可以接受，则接受，并将接受后的连接描述符添加进readfd，然后如果其他连接描述符也就绪，则表明可以接受客户端数据，则处理客户端数据（回显），最后重新循环。</p>
+<p>主要代码如下：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//用于使用select处理IO复用</span></span><br><span class="line"><span class="comment">//参数必定是一个已开始监听的listenfd</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">DoSelect</span><span class="params">(<span class="keyword">int</span> listenfd)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	<span class="comment">//客户端连接socket描述符，将存储在vector中</span></span><br><span class="line">	<span class="keyword">int</span> connfd;</span><br><span class="line">	<span class="comment">//记录最大描述符值</span></span><br><span class="line">	<span class="keyword">int</span> maxfd;</span><br><span class="line">	<span class="comment">//记录select返回的可用描述符个数</span></span><br><span class="line">	<span class="keyword">int</span> ready;</span><br><span class="line">	<span class="comment">//客户端地址结构体以及其长度</span></span><br><span class="line">	sockaddr_in caddr;</span><br><span class="line">	socklen_t caddrlen = <span class="keyword">sizeof</span>(caddr);</span><br><span class="line">	<span class="comment">//文件描述符fd_set结构（只用于判断可读性）</span></span><br><span class="line">	fd_set readfd;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//开始循环</span></span><br><span class="line">	<span class="keyword">while</span>(<span class="keyword">true</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="comment">//clear all</span></span><br><span class="line">		FD_ZERO(&amp;readfd);</span><br><span class="line">		<span class="comment">//首先将监听socket描述符添加进fd_set结构体</span></span><br><span class="line">		FD_SET(listenfd,&amp;readfd);</span><br><span class="line">		<span class="comment">//更新最大描述符值</span></span><br><span class="line">		maxfd = listenfd;</span><br><span class="line">		<span class="comment">//重新添加客户端连接描述符</span></span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; <span class="number">10</span>;i++)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">if</span>(ClientConnfd[i] &gt; <span class="number">0</span>)</span><br><span class="line">			&#123;</span><br><span class="line">				maxfd = maxfd &lt; ClientConnfd[i] ? ClientConnfd[i] : maxfd;</span><br><span class="line">				FD_SET(ClientConnfd[i],&amp;readfd);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">//调用select</span></span><br><span class="line">		ready = select(maxfd + <span class="number">1</span>,&amp;readfd,NULL,NULL,NULL);</span><br><span class="line">		<span class="comment">//select出错</span></span><br><span class="line">		<span class="keyword">if</span>(ready == -<span class="number">1</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="built_in">cout</span> &lt;&lt; <span class="string">"select出错"</span> &lt;&lt; endl;</span><br><span class="line">			<span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="function"><span class="keyword">else</span> <span class="title">if</span><span class="params">(ready == 0)</span></span><br><span class="line">			<span class="keyword">continue</span></span>;</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">		&#123;</span><br><span class="line">			<span class="comment">//检查监听描述符是否就绪</span></span><br><span class="line">			<span class="keyword">if</span>(FD_ISSET(listenfd,&amp;readfd))</span><br><span class="line">			&#123;</span><br><span class="line">				<span class="comment">//如果就绪说明有新的连接可以接受</span></span><br><span class="line">				<span class="keyword">if</span>((connfd = accept(listenfd,(<span class="keyword">struct</span> sockaddr*)&amp;caddr,&amp;caddrlen)) == -<span class="number">1</span>)</span><br><span class="line">				&#123;</span><br><span class="line">					<span class="keyword">if</span>(errno == EINTR)</span><br><span class="line">						<span class="keyword">continue</span>;</span><br><span class="line">					<span class="keyword">else</span></span><br><span class="line">					&#123;</span><br><span class="line">						<span class="built_in">cout</span> &lt;&lt; <span class="string">"accept出错"</span> &lt;&lt; endl;</span><br><span class="line">						<span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">					&#125;</span><br><span class="line">				&#125;</span><br><span class="line">				<span class="comment">//输出新连接信息到终端</span></span><br><span class="line">				<span class="built_in">cout</span> &lt;&lt; <span class="string">"客户端："</span> &lt;&lt; inet_ntoa(caddr.sin_addr) &lt;&lt; <span class="string">"已连接"</span> &lt;&lt; endl;</span><br><span class="line">				<span class="comment">//将新连接的客户端连接描述符添加进vector</span></span><br><span class="line">				<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; <span class="number">10</span>;i++)</span><br><span class="line">					<span class="keyword">if</span>(ClientConnfd[i] &lt; <span class="number">0</span>)</span><br><span class="line">					&#123;</span><br><span class="line">						ClientConnfd[i] = connfd;</span><br><span class="line">						<span class="keyword">break</span>;</span><br><span class="line">					&#125;</span><br><span class="line">				<span class="comment">//同时将该描述符添加进select集合中</span></span><br><span class="line">				FD_SET(connfd,&amp;readfd);</span><br><span class="line">				<span class="comment">//更新最大描述符值</span></span><br><span class="line">				maxfd = (maxfd &lt; connfd ? connfd : maxfd);</span><br><span class="line">				<span class="comment">//判断是否只有监听描述符就绪（即没有已连接的客户端发送消息，只有新连接请求）</span></span><br><span class="line">				<span class="keyword">if</span>(ready == <span class="number">1</span>)</span><br><span class="line">					<span class="keyword">continue</span>;</span><br><span class="line">			&#125;</span><br><span class="line">			DoEcho(&amp;readfd);</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>完整代码在我的github上：<a href="https://github.com/MorningCoder/NetworkPrograming" target="_blank" rel="external">MorningCoder</a>。欢迎访问！</p>
+
+      </div>
+      <footer class="article-footer">
+        <a data-url="http://yoursite.com/2015/01/26/IO复用技术之select总结/" data-id="ci7k42vua000034ijgslyn77t" class="article-share-link">分享到</a>
+        
+        
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/">linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/网络编程/">网络编程</a></li></ul>
+
+      </footer>
+    </div>
+  </article>
+  
+
+            </div>
+          </section>
+          <aside id="sidebar">
+  <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+  <div class="sidebar-top">
+    <p>关注我 :</p>
+    <ul class="social-links">
+      
+    </ul>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2015/02/03/Linux下互斥锁以及条件变量的使用/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <p class="article-nav-title">
+        
+          Linux下互斥锁以及条件变量的使用
+        
+      </p>
+      <i class="icon" id="icon-chevron-right"></i>
+    </a>
+  
+  
+    <a href="/2015/01/23/linux网络编程基础API/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <p class="article-nav-title">linux网络编程基础API</p>
+      <i class="icon" id="icon-chevron-left"></i>
+    </a>
+  
+</nav>
+
+  
+  <div class="widgets-container">
+    
+  </div>
+</aside>
+        </div>
+      </div>
+    </div>
+    <footer id="footer">
+  
+  <div class="container">
+    <div class="container-inner">
+      <a id="back-to-top" href="javascript:;"><i class="icon" id="icon-angle-up"></i></a>
+      <div class="credit">
+        <h1 class="logo-wrap">
+          <a href="/" class="logo"></a>
+        </h1>
+        <p>&copy; 2015 Cod</p>
+        <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+      </div>
+    </div>
+  </div>
+</footer>
+    
+
+
+  <script src="http://code.jquery.com/jquery-2.1.3.min.js"></script>
+
+
+
+
+
+
+<script src="/js/html-patch.js" type="text/javascript"></script>
+<script src="/js/script.js" type="text/javascript"></script>
+
+  </div>
+</body>
+</html>
