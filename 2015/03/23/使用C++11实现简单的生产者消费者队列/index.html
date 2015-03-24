@@ -11,17 +11,17 @@
     
 
     
-    <meta name="description" content="c++11的新标准对多线程提供了非常好的支持，我使用互斥量以及条件变量简单实现了一个单生产者单消费者对列，两个线程可以进行并发读写并保持同步。类的定义如下：123456789101112131415161718192021222324template&amp;lt;typename T&amp;gt;class Buffer&amp;#123;public:	Buffer(std::size_t size)	:size(">
+    <meta name="description" content="c++11的新标准对多线程提供了非常好的支持，我使用互斥量以及条件变量简单实现了一个单生产者单消费者对列，两个线程可以进行并发读写并保持同步。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="使用C++11实现简单的生产者消费者队列">
 <meta property="og:url" content="http://yoursite.com/2015/03/23/使用C++11实现简单的生产者消费者队列/index.html">
 <meta property="og:site_name" content="Cod's Blog">
-<meta property="og:description" content="c++11的新标准对多线程提供了非常好的支持，我使用互斥量以及条件变量简单实现了一个单生产者单消费者对列，两个线程可以进行并发读写并保持同步。类的定义如下：123456789101112131415161718192021222324template&amp;lt;typename T&amp;gt;class Buffer&amp;#123;public:	Buffer(std::size_t size)	:size(">
+<meta property="og:description" content="c++11的新标准对多线程提供了非常好的支持，我使用互斥量以及条件变量简单实现了一个单生产者单消费者对列，两个线程可以进行并发读写并保持同步。">
 <meta property="og:image" content="/img/result1.png">
 <meta property="og:image" content="/img/result2.png">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用C++11实现简单的生产者消费者队列">
-<meta name="twitter:description" content="c++11的新标准对多线程提供了非常好的支持，我使用互斥量以及条件变量简单实现了一个单生产者单消费者对列，两个线程可以进行并发读写并保持同步。类的定义如下：123456789101112131415161718192021222324template&amp;lt;typename T&amp;gt;class Buffer&amp;#123;public:	Buffer(std::size_t size)	:size(">
+<meta name="twitter:description" content="c++11的新标准对多线程提供了非常好的支持，我使用互斥量以及条件变量简单实现了一个单生产者单消费者对列，两个线程可以进行并发读写并保持同步。">
 
     
     <link rel="alternative" href="/atom.xml" title="Cod&#39;s Blog" type="application/atom+xml">
@@ -54,11 +54,11 @@
 				<ul>
 					<ul>
 					 
-						<li><a href="/">Home</a></li>
+						<li><a href="/">主页</a></li>
 					
-						<li><a href="/archives">Archives</a></li>
+						<li><a href="/archives">归档</a></li>
 					
-						<li><a href="/about">About</a></li>
+						<li><a href="/about">关于</a></li>
 					
 					<li>
  					
@@ -160,6 +160,10 @@
 </nav>
 
 	
+<section id="comments" class="comment">
+	<div class="ds-thread" data-thread-key="2015/03/23/使用C++11实现简单的生产者消费者队列/" data-title="使用C++11实现简单的生产者消费者队列" data-url="http://yoursite.com/2015/03/23/使用C++11实现简单的生产者消费者队列/"></div>
+</section>
+
 
 </div>  
       <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
@@ -273,6 +277,7 @@
 	<div class="social-font" class="clearfix">
 		
 		
+		<a href="https://github.com/morningcoder" target="_blank" class="icon-github" title="github"></a>
 		
 		
 		
@@ -280,6 +285,9 @@
 		
 		
 		
+		
+		
+		<a href="mailto:lycmail58@163.com" target="_blank" class="icon-email" title="Email Me"></a>
 		
 	</div>
 		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2015 
@@ -398,6 +406,18 @@ $(document).ready(function(){
 </script>
 
 
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"Cod_42068"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
 
 
 

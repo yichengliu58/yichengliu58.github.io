@@ -11,19 +11,16 @@
     
 
     
-    <meta name="description" content="最近玩命学习linux下网络编程，终于对这些奇怪的系统API们有了一点了解。今天研究了下IO复用的技术，发现其实服务器的确都是遵循某种框架（模式）编写而成，因此先将这些模式以及概念总结如下。
-同步和异步以及阻塞和非阻塞简单来说，同步(sync)指的是事情必须一件一件地做，调用者必须等待被调用过程返回。异步则是指调用后结果并不能立刻得到，而是由某种事件或信号触发告知调用者（因此并不是顺序执行的事件，">
+    <meta name="description" content="最近玩命学习linux下网络编程，终于对这些奇怪的系统API们有了一点了解。今天研究了下IO复用的技术，发现其实服务器的确都是遵循某种框架（模式）编写而成，因此先将这些模式以及概念总结如下。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="IO复用技术之select总结">
 <meta property="og:url" content="http://yoursite.com/2015/01/26/IO复用技术之select总结/index.html">
 <meta property="og:site_name" content="Cod's Blog">
-<meta property="og:description" content="最近玩命学习linux下网络编程，终于对这些奇怪的系统API们有了一点了解。今天研究了下IO复用的技术，发现其实服务器的确都是遵循某种框架（模式）编写而成，因此先将这些模式以及概念总结如下。
-同步和异步以及阻塞和非阻塞简单来说，同步(sync)指的是事情必须一件一件地做，调用者必须等待被调用过程返回。异步则是指调用后结果并不能立刻得到，而是由某种事件或信号触发告知调用者（因此并不是顺序执行的事件，">
+<meta property="og:description" content="最近玩命学习linux下网络编程，终于对这些奇怪的系统API们有了一点了解。今天研究了下IO复用的技术，发现其实服务器的确都是遵循某种框架（模式）编写而成，因此先将这些模式以及概念总结如下。">
 <meta property="og:image" content="/img/1334216724_2405.jpg">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="IO复用技术之select总结">
-<meta name="twitter:description" content="最近玩命学习linux下网络编程，终于对这些奇怪的系统API们有了一点了解。今天研究了下IO复用的技术，发现其实服务器的确都是遵循某种框架（模式）编写而成，因此先将这些模式以及概念总结如下。
-同步和异步以及阻塞和非阻塞简单来说，同步(sync)指的是事情必须一件一件地做，调用者必须等待被调用过程返回。异步则是指调用后结果并不能立刻得到，而是由某种事件或信号触发告知调用者（因此并不是顺序执行的事件，">
+<meta name="twitter:description" content="最近玩命学习linux下网络编程，终于对这些奇怪的系统API们有了一点了解。今天研究了下IO复用的技术，发现其实服务器的确都是遵循某种框架（模式）编写而成，因此先将这些模式以及概念总结如下。">
 
     
     <link rel="alternative" href="/atom.xml" title="Cod&#39;s Blog" type="application/atom+xml">
@@ -56,11 +53,11 @@
 				<ul>
 					<ul>
 					 
-						<li><a href="/">Home</a></li>
+						<li><a href="/">主页</a></li>
 					
-						<li><a href="/archives">Archives</a></li>
+						<li><a href="/archives">归档</a></li>
 					
-						<li><a href="/about">About</a></li>
+						<li><a href="/about">关于</a></li>
 					
 					<li>
  					
@@ -98,14 +95,14 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#同步和异步以及阻塞和非阻塞"><span class="toc-number">1.</span> <span class="toc-text">同步和异步以及阻塞和非阻塞</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Linux下五种IO模型"><span class="toc-number">2.</span> <span class="toc-text">Linux下五种IO模型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#IO复用的概念"><span class="toc-number">3.</span> <span class="toc-text">IO复用的概念</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#select函数的使用"><span class="toc-number">4.</span> <span class="toc-text">select函数的使用</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#select原型"><span class="toc-number">4.1.</span> <span class="toc-text">select原型</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#文件描述符就绪条件"><span class="toc-number">4.2.</span> <span class="toc-text">文件描述符就绪条件</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#使用select制作简易回显服务器"><span class="toc-number">4.3.</span> <span class="toc-text">使用select制作简易回显服务器</span></a></li></ol></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#同步和异步以及阻塞和非阻塞"><span class="toc-number">1.</span> <span class="toc-text">同步和异步以及阻塞和非阻塞</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Linux下五种IO模型"><span class="toc-number">2.</span> <span class="toc-text">Linux下五种IO模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#IO复用的概念"><span class="toc-number">3.</span> <span class="toc-text">IO复用的概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#select函数的使用"><span class="toc-number">4.</span> <span class="toc-text">select函数的使用</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#select原型"><span class="toc-number">4.0.0.1.</span> <span class="toc-text">select原型</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#文件描述符就绪条件"><span class="toc-number">4.0.0.2.</span> <span class="toc-text">文件描述符就绪条件</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#使用select制作简易回显服务器"><span class="toc-number">4.0.0.3.</span> <span class="toc-text">使用select制作简易回显服务器</span></a></li></ol></li></ol></li></ol></li></ol>
 		
 		</div>
 		
 		<p>最近玩命学习linux下网络编程，终于对这些奇怪的系统API们有了一点了解。今天研究了下IO复用的技术，发现其实服务器的确都是遵循某种框架（模式）编写而成，因此先将这些模式以及概念总结如下。</p>
-<h4 id="同步和异步以及阻塞和非阻塞">同步和异步以及阻塞和非阻塞</h4><p>简单来说，同步(sync)指的是事情必须一件一件地做，调用者必须等待被调用过程返回。异步则是指调用后结果并不能立刻得到，而是由某种事件或信号触发告知调用者（因此并不是顺序执行的事件，也许内核在后台新开了线程在执行？）。</p>
+<h2 id="同步和异步以及阻塞和非阻塞">同步和异步以及阻塞和非阻塞</h2><p>简单来说，同步(sync)指的是事情必须一件一件地做，调用者必须等待被调用过程返回。异步则是指调用后结果并不能立刻得到，而是由某种事件或信号触发告知调用者（因此并不是顺序执行的事件，也许内核在后台新开了线程在执行？）。</p>
 <p>阻塞（block）主要指的是进程状态，只在调用结果返回之前进程进入阻塞态，不会被CPU调度。而非阻塞则指某过程调用后立刻返回当时的数据可用性情况，如果数据尚不可用，自然而然可以使用轮询不断调用该过程来检测数据可用性，但这样比较浪费资源，但是进程不会因此而暂停，而是一直处于被激活的状态。</p>
-<h4 id="Linux下五种IO模型">Linux下五种IO模型</h4><p>linux内核提供了五种IO模型，分别如下：</p>
+<h2 id="Linux下五种IO模型">Linux下五种IO模型</h2><p>linux内核提供了五种IO模型，分别如下：</p>
 <ul>
 <li>阻塞IO： 程序阻塞于读写的函数</li>
 <li>非阻塞IO： 读写函数立刻返回，但不一定会有可用数据，需要不断轮询（忙等待）</li>
@@ -115,7 +112,7 @@
 </ul>
 <p>以上前四种模型都属于同步模型，因为在将数据从内核缓冲区拷贝到用户空间缓冲区时进程必将会停止响应（也可以说阻塞，另外拷贝时间很短但是也处于内核态下）。只有异步模式中，所有的操作（包括数据的拷贝）完全由内核管理，应用进程在内核发送信号前执行自己的流程，接收到信号后表明数据已经被赋值好了，即可使用。</p>
 <p>在此借一个大神博客<a href="http://blog.csdn.net/jay900323/article/details/18141217" target="_blank" rel="external">深秋哋黎明的专栏</a>中的图来表示这五个模型的对比：<br><img src="/img/1334216724_2405.jpg" alt=""></p>
-<h4 id="IO复用的概念">IO复用的概念</h4><p>IO复用顾名思义就是可以同时监听多个IO的状态，它同样会阻塞在IO复用函数处，但是由于可以监听多个IO流，它可以同时对多个读、写操作IO进行检测，当其中有数据可读或可写时，才可以调用真正的IO函数。IO复用在下列情况下很好用：</p>
+<h2 id="IO复用的概念">IO复用的概念</h2><p>IO复用顾名思义就是可以同时监听多个IO的状态，它同样会阻塞在IO复用函数处，但是由于可以监听多个IO流，它可以同时对多个读、写操作IO进行检测，当其中有数据可读或可写时，才可以调用真正的IO函数。IO复用在下列情况下很好用：</p>
 <ul>
 <li>客户端需要同时处理多个socket</li>
 <li>客户端需要同时处理用户输入（标准输入）和连接socket</li>
@@ -124,7 +121,7 @@
 <li>服务器需要同时处理多个端口的连接请求</li>
 </ul>
 <p>Linux下实现IO复用的系统调用主要有select、poll和epoll。先主要说说select的使用。</p>
-<h4 id="select函数的使用">select函数的使用</h4><p>首先，select系统调用的作用：在一段指定时间内（可以为零，可以为无穷大），<strong>监听</strong>用户感兴趣的文件描述符（socket）上的<strong>可读</strong>、<strong>可写</strong>以及<strong>异常</strong>事件。</p>
+<h2 id="select函数的使用">select函数的使用</h2><p>首先，select系统调用的作用：在一段指定时间内（可以为零，可以为无穷大），<strong>监听</strong>用户感兴趣的文件描述符（socket）上的<strong>可读</strong>、<strong>可写</strong>以及<strong>异常</strong>事件。</p>
 <h5 id="select原型">select原型</h5><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;sys/select.h&gt;</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">select</span><span class="params">(<span class="keyword">int</span> nfds,fd_set* readfd,fd_set* writefd,fd_set* exceptfd,<span class="keyword">struct</span> timeval* timeout)</span></span>;</span><br></pre></td></tr></table></figure>
 <p>参数描述如下：</p>
 <ol>
@@ -210,6 +207,10 @@
 </nav>
 
 	
+<section id="comments" class="comment">
+	<div class="ds-thread" data-thread-key="2015/01/26/IO复用技术之select总结/" data-title="IO复用技术之select总结" data-url="http://yoursite.com/2015/01/26/IO复用技术之select总结/"></div>
+</section>
+
 
 </div>  
       <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
@@ -217,7 +218,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#同步和异步以及阻塞和非阻塞"><span class="toc-number">1.</span> <span class="toc-text">同步和异步以及阻塞和非阻塞</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Linux下五种IO模型"><span class="toc-number">2.</span> <span class="toc-text">Linux下五种IO模型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#IO复用的概念"><span class="toc-number">3.</span> <span class="toc-text">IO复用的概念</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#select函数的使用"><span class="toc-number">4.</span> <span class="toc-text">select函数的使用</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#select原型"><span class="toc-number">4.1.</span> <span class="toc-text">select原型</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#文件描述符就绪条件"><span class="toc-number">4.2.</span> <span class="toc-text">文件描述符就绪条件</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#使用select制作简易回显服务器"><span class="toc-number">4.3.</span> <span class="toc-text">使用select制作简易回显服务器</span></a></li></ol></li></ol>
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#同步和异步以及阻塞和非阻塞"><span class="toc-number">1.</span> <span class="toc-text">同步和异步以及阻塞和非阻塞</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Linux下五种IO模型"><span class="toc-number">2.</span> <span class="toc-text">Linux下五种IO模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#IO复用的概念"><span class="toc-number">3.</span> <span class="toc-text">IO复用的概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#select函数的使用"><span class="toc-number">4.</span> <span class="toc-text">select函数的使用</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#select原型"><span class="toc-number">4.0.0.1.</span> <span class="toc-text">select原型</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#文件描述符就绪条件"><span class="toc-number">4.0.0.2.</span> <span class="toc-text">文件描述符就绪条件</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#使用select制作简易回显服务器"><span class="toc-number">4.0.0.3.</span> <span class="toc-text">使用select制作简易回显服务器</span></a></li></ol></li></ol></li></ol></li></ol>
  
   </div>
 
@@ -323,6 +324,7 @@
 	<div class="social-font" class="clearfix">
 		
 		
+		<a href="https://github.com/morningcoder" target="_blank" class="icon-github" title="github"></a>
 		
 		
 		
@@ -330,6 +332,9 @@
 		
 		
 		
+		
+		
+		<a href="mailto:lycmail58@163.com" target="_blank" class="icon-email" title="Email Me"></a>
 		
 	</div>
 		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2015 
@@ -448,6 +453,18 @@ $(document).ready(function(){
 </script>
 
 
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"Cod_42068"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
 
 
 
