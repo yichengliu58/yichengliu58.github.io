@@ -74,358 +74,90 @@
     <div id="container">
       <div id="main">
 
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2014/10/30/Python学习笔记（3）：函数与模块定义/" title="Python学习笔记（3）：函数与模块定义" itemprop="url">Python学习笔记（3）：函数与模块定义</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://yoursite.com/about" title="Cod" target="_blank" itemprop="author">Cod</a>
-		
-  <p class="article-time">
-    <time datetime="2014-10-30T12:28:50.000Z" itemprop="datePublished"> 发表于 2014-10-30</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h3 id="函数">函数</h3><p>函数这个概念在大多数编程语言中都广泛存在。它既可以作为过程式语言的基本单位，同时也可以扩展到类中，作为类方法，成为面向对象体系中的一个重要部分。python是一个完全面向对象的语言，但是也支持定义普通函数。这种使用方法同C\C++中大抵相同，都是作为一段可重用的代码段出现的。它的相关语法也很简单，只要熟悉一门编程语言，看一下即可掌握。</p>
-<h5 id="基本定义">基本定义</h5><p>下面定义了一个简单的函数，传入两个参数，将更大的返回：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">GetMax</span><span class="params">(a,b)</span>:</span></span><br><span class="line">	<span class="keyword">if</span> a &gt; b:</span><br><span class="line">    	<span class="keyword">return</span> a</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">    	<span class="keyword">return</span> b</span><br><span class="line"><span class="comment">#直接声明两个变量</span></span><br><span class="line">x = <span class="number">1</span></span><br><span class="line">y = <span class="number">2</span></span><br><span class="line"><span class="comment">#直接赋值调用</span></span><br><span class="line">res = GetMax(<span class="number">1</span>,<span class="number">2</span>)</span><br><span class="line"><span class="keyword">print</span> res</span><br><span class="line"><span class="comment">#传入参数</span></span><br><span class="line">res = GetMax(x,y)</span><br><span class="line"><span class="keyword">print</span> res</span><br></pre></td></tr></table></figure></p>
-<p>可以看出，不同与C的地方就是：定义以def开头，并且多了一个冒号。同时缩进在这里又一次被使用，事实上python中很多东西的定义都是使用缩进来表示他的代码域的。其他地方与C或者其他编程语言基本相同。</p>
-<h5 id="一些高级用法">一些高级用法</h5><p>python中变量的作用域和C中是一样的，在函数中定义的同名变量会覆盖外部变量，对其的修改不会影响外部变量。但是也可以直接在函数内修改一个外部变量的值，但这样会影响代码的可读性，其他人可能会分不清变量到底是函数内的还是全局的。因此python提供了一个关键字是：global。它的作用是显示指明某一个变量是在外部定义的，也就是指明它是全局的（global）。<br>不同于C++这种现代面向对象语言，python使用默认参数和关键参数来实现函数重载，来看下面的代码：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">fun</span><span class="params">(a,b = <span class="number">5</span>,c = <span class="number">3</span>)</span>:</span></span><br><span class="line">    <span class="keyword">print</span> <span class="string">'a is '</span>,a,<span class="string">'b is '</span>,b,<span class="string">'c is '</span>,c</span><br><span class="line"><span class="comment"># 不同的调用</span></span><br><span class="line">fun(<span class="number">1</span>)</span><br><span class="line">fun(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>)</span><br><span class="line">fun(<span class="number">14</span>,c = <span class="number">10</span>)</span><br><span class="line">fun(c = <span class="number">10</span>,a = <span class="number">11</span>)</span><br></pre></td></tr></table></figure></p>
-<p>结果显示如下：<br><img src="/img/python3_1.png" alt="python3_1"><br>由上看出，其实所谓“关键参数”，就是使用关键字指定的参数，这样使用者就可以不再必须把默认参数放在最后了。</p>
-<h3 id="模块">模块</h3><p>所谓python的模块，我觉得就类似于C++的命名空间，是一个函数、变量以及类定义的集合。在python模板中，它也定义了一些内置的模块，提供了很丰富的功能供我们使用。至于标准库我们后面再说。模块的文件当然要一.py结束，其实就是一个python代码文件。我们看下如何使用标准库定义的sys（system）模块：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line"><span class="keyword">print</span> <span class="string">'The command line arguments are:'</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> sys.argv:</span><br><span class="line">    <span class="keyword">print</span> i</span><br><span class="line"></span><br><span class="line"><span class="keyword">print</span> <span class="string">'\n\nThe PYTHONPATH is'</span>, sys.path, <span class="string">'\n'</span></span><br></pre></td></tr></table></figure></p>
-<p>类似java，引入模块使用import语句。当引入模块sys时，解释器会自动在sys.path制定的目录中自动寻找sys.py模块，找到后初始化即可使用。也可以看到python同样使用句点（.）来引用模块内变量。至于这个sys模块后面我们会说到，现在只用知道它可以用来获取传递给本程序的命令行参数，就是类似于C++的main函数的参数。还有一个语句是“from…import”，这个用处类似于C++的using语句，例如：from sys import argv，意思跟using一样。<br>模块的用法在后面也会经常用到，所以这里先说这么多好了……</p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/Python/">Python</a>
-</div>
-
-
-  <div class="article-tags">
   
-  <span></span> <a href="/tags/Python/">Python</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2014/10/30/Python学习笔记（3）：函数与模块定义/#comments" class="ds-thread-count comments-count-link" data-thread-key="2014/10/30/Python学习笔记（3）：函数与模块定义/" data-count-type="comments">&nbsp;</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2014/10/21/设计模式学习（1）/" title="设计模式学习（1）" itemprop="url">设计模式学习（1）</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://yoursite.com/about" title="Cod" target="_blank" itemprop="author">Cod</a>
-		
-  <p class="article-time">
-    <time datetime="2014-10-21T09:15:32.000Z" itemprop="datePublished"> 发表于 2014-10-21</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p>去年软考时开始接触到了设计模式，但当时没有很踏实的学习，直到最近才发现设计模式的重要性，于是开始认认真真地研究了一下，发现的确很重要。尤其是在面向对象软件设计中，设计模式这个东西的应用很广泛，熟练使用可以让我们的开发过程更加快捷，同时产品也能有更高的质量。所以也是在这里整理了一些学到的东西。</p>
-<h4 id="基本概念">基本概念</h4><p>设计模式，顾名思义就是设计的一种模式，很多经验老道的设计师（不论是什么领域）总能够快速做出良好的设计，而新手却面对众多选择而无从下手。其中的原因就是，很多问题的解决方案往往都是基于以往使用过的方法，老设计师们会熟练复用那些好的解决方案，从而能够良性循环。这些过去使用过的好的设计方法，或者说积累的好的经验，就是设计模式。一旦懂得了设计的模式，对于相同类型的问题，就可以复用过去的方法，从而迅速找到解决方法。</p>
-<p>在软件设计领域中，尤其在面向对象系统设计中，设计模式的重要性被放在了显著地位。一个好的面向对象软件系统或多或少使用了一些前人总结的设计模式，而我们要学习的就是这些前人的总结，从而加快我们的开发过程，也可以保证开发出来的产品可以很方便的修改或添加新功能。</p>
-<h4 id="分类">分类</h4><p>那么具体有哪些设计模式呢？根据 gang of four所著《Design Pattern》一书所说，总共有23种已定义的设计模式，当然你也可以再创造新的模式。同时《Design Pattern》一书把设计模式分成三种：创建型，行为型以及结构型模式。顾名思义，创建型模式与对象的创建有关；结构型模式用于定制对象之间的结构（继承或者组合关系）；行为型用于定制对象的行为，例如针对不同参数对象该如何运行等。这23种模式列举如下：</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">创建型</th>
-<th style="text-align:center">结构型</th>
-<th style="text-align:center">行为型</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">Factory Method</td>
-<td style="text-align:center">Adapter</td>
-<td style="text-align:center">Interpreter</td>
-</tr>
-<tr>
-<td style="text-align:center">Abstract Factory</td>
-<td style="text-align:center">Bridge</td>
-<td style="text-align:center">Template Method</td>
-</tr>
-<tr>
-<td style="text-align:center">Builder</td>
-<td style="text-align:center">Composite</td>
-<td style="text-align:center">Chain of Responsibility</td>
-</tr>
-<tr>
-<td style="text-align:center">Prototype</td>
-<td style="text-align:center">Decorator</td>
-<td style="text-align:center">Command</td>
-</tr>
-<tr>
-<td style="text-align:center">Singleton</td>
-<td style="text-align:center">Facade</td>
-<td style="text-align:center">Iterator</td>
-</tr>
-<tr>
-<td style="text-align:center"></td>
-<td style="text-align:center">Flyweight</td>
-<td style="text-align:center">Mediator</td>
-</tr>
-<tr>
-<td style="text-align:center"></td>
-<td style="text-align:center">Proxy</td>
-<td style="text-align:center">Memento</td>
-</tr>
-<tr>
-<td style="text-align:center"></td>
-<td style="text-align:center"></td>
-<td style="text-align:center">Oberver</td>
-</tr>
-<tr>
-<td style="text-align:center"></td>
-<td style="text-align:center"></td>
-<td style="text-align:center">State</td>
-</tr>
-<tr>
-<td style="text-align:center"></td>
-<td style="text-align:center"></td>
-<td style="text-align:center">Strategy</td>
-</tr>
-<tr>
-<td style="text-align:center"></td>
-<td style="text-align:center"></td>
-<td style="text-align:center">Visitor</td>
-</tr>
-</tbody>
-</table>
-<p>在模式分类中，还把这些模式分为主要是用于类还是用于对象，创建型<strong>类</strong>模式将对象的部分创建工作推迟到子类，而创建型<strong>对象</strong>模式则将他延迟到另一个对象中。结构型<strong>类</strong>模式使用继承机制来组合类，而结构型<strong>对象</strong>模式则描述了对象的组合方式。行为型<strong>类</strong>模式使用继承描述算法和控制流，行为型<strong>对象</strong>模式则描述一组对象怎样协作完成单个对象无法完成的任务。</p>
-<h4 id="描述方式">描述方式</h4><p>为了描述一个设计模式，首先我们需要一些元素（或者说术语）：模式名、意图、动机、参与者、协作以及结构等等。这些术语用于描述一个设计模式的各个方面，例如参与者表示设计模式中的类或者对象以及他们各自的职责，协作表示参与者如何相互协作以实现该模式的目的等。这些术语看到名称就能明白其含义，就不必多说了。描述一种面向对象系统最常用的方法就是UML图，UML比较简单，也就不用多说了。</p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/设计模式/">设计模式</a>
-</div>
-
-
-  <div class="article-tags">
+<section class="post" itemscope itemprop="blogitem">
   
-  <span></span> <a href="/tags/设计模式/">设计模式</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2014/10/21/设计模式学习（1）/#comments" class="ds-thread-count comments-count-link" data-thread-key="2014/10/21/设计模式学习（1）/" data-count-type="comments">&nbsp;</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2014/10/12/Python学习笔记（2）：基础概念/" title="Python学习笔记（2）：基础概念" itemprop="url">Python学习笔记（2）：基础概念</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://yoursite.com/about" title="Cod" target="_blank" itemprop="author">Cod</a>
-		
-  <p class="article-time">
-    <time datetime="2014-10-12T12:13:10.000Z" itemprop="datePublished"> 发表于 2014-10-12</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h6 id="一些概念">一些概念</h6><p>不同于C++这种强类型语言，Python属于弱类型，也即变量声明时不需要指明类型，例如可以直接使用<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">i = <span class="number">5</span></span><br><span class="line"><span class="keyword">print</span> i</span><br></pre></td></tr></table></figure></p>
-<p>这种直接给变量赋值然后使用的方式，对于用惯了强类型语言的人来说，一开始可能会不适应，不过慢慢习惯了就会发现其实很好用。另外在Python中关于分号还有两个小概念要去理解：逻辑行与物理行。</p>
-<p>一个物理行就是程序中实际存在的一行。例如上面的代码段中就有两个物理行，而逻辑行是指Python“看见”的单个语句，例如“print ‘hello world’”这样的语句，Python假定每个物理行对应一个逻辑行。</p>
-<p>如果想要在一个物理行中使用多于一个逻辑行，则需要使用分号特别注明这种用法（默认Python一行结束不需要分号结尾）。分号表示一个逻辑行/语句的结束。例如：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">i = <span class="number">5</span>;<span class="keyword">print</span> i;</span><br></pre></td></tr></table></figure></p>
-<p>这个跟上面那段代码等价。不过一般来说一个物理行尽量只写一句逻辑行，仅当逻辑行太长时才在多于一个物理行中写。这些都是为了避免使用分号，也即Python一般不使用分号。</p>
-<p>缩进在Python中也是很重要的，同一个层次的语句必须有相同的缩进，每一组这样的语句称为一个块。不正确的缩进会直接导致程序解释错误。</p>
-<p>下面就要说到一个程序设计语言比较重要的地方：表达式与控制流。</p>
-<p>运算符以及表达式求值顺序在部分不同的程序设计语言中都差不多，Python也不例外，所以就不多说了，这里关键部分是Python的控制流语句。</p>
-<h6 id="if语句">if语句</h6><p>先看代码：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">num = <span class="number">10</span></span><br><span class="line">input = raw_input(<span class="string">'input a number'</span>)</span><br><span class="line"><span class="keyword">if</span> input == num :</span><br><span class="line">  <span class="comment"># other code..</span></span><br><span class="line"><span class="keyword">elif</span> input &lt; num:</span><br><span class="line">  <span class="comment"># other code...</span></span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">  <span class="comment"># other code...</span></span><br></pre></td></tr></table></figure></p>
-<p>if的结构从上面的代码一看大概就了解了，结构基本与其他编程语言差不多，主要区别是没有了表示块范围的大括号、else if 换成了elif以及每个if块后面都有一个冒号。这里也正好说明了缩进在Python中的重要性，可以看出每个语句块都是用缩进表示的，如果缩进格式错误将会导致解释时的错误。</p>
-<h5 id="while语句">while语句</h5><p>代码：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> condition:</span><br><span class="line">  <span class="comment"># code here...</span></span><br><span class="line"><span class="keyword">else</span> :</span><br><span class="line">  <span class="comment"># ...</span></span><br></pre></td></tr></table></figure></p>
-<p>可以看出while在Python中很简洁，while的语句块也是通过缩进表示的，也就是说在while中的所有语句开头的空格必须一致，当然最好就是一个tab的长度。另外一个不同之处就是这个while后面可以接一个else子句，当while条件为false后则执行else语句块，当然这个else是可选的。</p>
-<h5 id="for循环">for循环</h5><p>代码：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>,<span class="number">5</span>):</span><br><span class="line">  <span class="comment"># code here...</span></span><br><span class="line"><span class="keyword">else</span> :</span><br><span class="line">  <span class="comment"># code here...</span></span><br></pre></td></tr></table></figure></p>
-<p>可以注意到，python中的for循环有点像C++的范围for语句或者C#的foreach。但关键区别在于in后面的那个东西，它表示一个<strong>序列</strong>这个类似数组的概念，后面我会提到。这里range(1,5)即表示序列[1,2,3,4]。默认range的步长为1，但是也可以显示指定，例如range(1,5,2)则返回[1,3]。for中的那个序列可以是任意对象的序列，而不仅仅是数字。另外for也可以使用可选的else。</p>
-<h5 id="break和continue语句">break和continue语句</h5><p>代码：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> <span class="keyword">True</span>:</span><br><span class="line">  s = raw_input(<span class="string">'input:'</span>)</span><br><span class="line">	<span class="keyword">if</span> s == <span class="string">'quit'</span>:</span><br><span class="line">	  <span class="keyword">break</span></span><br><span class="line">	<span class="keyword">else</span>:</span><br><span class="line">	  <span class="keyword">continue</span></span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">  <span class="keyword">print</span> <span class="string">'out of loop'</span></span><br></pre></td></tr></table></figure></p>
-<p>break和continue的用法基本与其他语言没区别，continue表示立即开始新一轮循环，对于for循环同时还会递增循环控制变量值i；break表示立即终止循环，如果对应循环又一个else子句，则<strong>不</strong>执行。</p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/Python/">Python</a>
-</div>
-
-
-  <div class="article-tags">
+    <a href="/2014/10/30/Python学习笔记（3）：函数与模块定义/" title="Python学习笔记（3）：函数与模块定义" itemprop="url">
   
-  <span></span> <a href="/tags/Python/">Python</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2014/10/12/Python学习笔记（2）：基础概念/#comments" class="ds-thread-count comments-count-link" data-thread-key="2014/10/12/Python学习笔记（2）：基础概念/" data-count-type="comments">&nbsp;</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
+    <h1 itemprop="name">Python学习笔记（3）：函数与模块定义</h1>
     
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
+     
+           <p itemprop="description" >函数函数这个概念在大多数编程语言中都广泛存在。它既可以作为过程式语言的基本单位，同时也可以扩展到类中，作为类方法，成为面向对象体系中的一个重要部分。python是一个完全面向对象的语言，但是也支持定义普通函数。这种使用方法同C\C++中大抵相同，都是作为一段可重用的代码段出现的。</p>
+        
     
-      <a href="/2014/09/29/Python学习笔记（1）：Python简介/" title="Python学习笔记（1）：Pyhon简介" itemprop="url">Python学习笔记（1）：Pyhon简介</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://yoursite.com/about" title="Cod" target="_blank" itemprop="author">Cod</a>
-		
-  <p class="article-time">
-    <time datetime="2014-09-29T11:30:04.000Z" itemprop="datePublished"> 发表于 2014-09-29</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p>很早之前就听说过Python这个脚本语言很强大，作为一个程序猿还是必须要学习的，最近就开始研究一下，看的一些东西整理在这里了。</p>
-<p>Python是一个简单易学但是功能强大的脚本语言，属于解释性语言，并且是开源的，它的最大目的就是让使用者能够专注于使用语言去解决问题，而不是搞明白语言本身。python也是一个高层语言，也就是不必考虑底层内存分配的细节，这对C++的使用者来说的确方便不少。由于python的开源性质，使得跨平台使用它很简洁，Python现在已经被移植在很多平台上，包括Windows、Linux、FreeBSD、Mac等等。</p>
-<p>python同时支持面向过程以及面向对象编程方式，在面向对象方面python与C++和Java相比更加简单和强大。同时Python具有丰富的类库，包括Web、GUI、数据库、多线程操作等等，这给使用者带来了很多便利。</p>
-<p>python还有一个重要特性就是可嵌入性和扩展性，可以把Python嵌入C/C++程序中并且可以运行良好，所以python也被成为”胶水语言”。</p>
-<p>至于python开发环境的安装，其实也很简便。一般Linux系统中已经自带了python，如果你在使用Linux，可以进入终端，输入*python -V：<br><img src="/img/pythonversion.png" alt="pythonversion"><br>如果像上面一样显示了版本信息，那就说明你已经装好python了。如果提示找不到命令，也可以直接使用linux的包管理器安装，具体的操作视你的linux版本而定。</p>
-<p>如果是windows，则可以访问python官网下载最新版本<a href="https://www.python.org/。" target="_blank" rel="external">https://www.python.org/。</a></p>
-<p>还有一种简便的办法，那就是使用CodeSkulptor。这是几个美国大学教授开发的一个在线python开发环境，最初是方便他们的教学，不过我们也可以免费使用，很方便。访问<a href="http://www.codeskulptor.org/" target="_blank" rel="external">http://www.codeskulptor.org/</a> 即可直接在页面上编写并运行代码。<br><img src="/img/codeskulptor.png" alt="codeskulptor"></p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/Python/">Python</a>
-</div>
+    <time datetime="2014-10-30T12:28:50.000Z" itemprop="datePublished">2014-10-30</time>
+  </a>
+</section>
 
 
-  <div class="article-tags">
+
+
+
+
   
-  <span></span> <a href="/tags/Python/">Python</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2014/09/29/Python学习笔记（1）：Python简介/#comments" class="ds-thread-count comments-count-link" data-thread-key="2014/09/29/Python学习笔记（1）：Python简介/" data-count-type="comments">&nbsp;</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
+<section class="post" itemscope itemprop="blogitem">
+  
+    <a href="/2014/10/21/设计模式学习（1）/" title="设计模式学习（1）" itemprop="url">
+  
+    <h1 itemprop="name">设计模式学习（1）</h1>
+    
+     
+           <p itemprop="description" >去年软考时开始接触到了设计模式，但当时没有很踏实的学习，直到最近才发现设计模式的重要性，于是开始认认真真地研究了一下，发现的确很重要。尤其是在面向对象软件设计中，设计模式这个东西的应用很广泛，熟练使用可以让我们的开发过程更加快捷，同时产品也能有更高的质量。所以也是在这里整理了一些</p>
+        
+    
+    <time datetime="2014-10-21T09:15:32.000Z" itemprop="datePublished">2014-10-21</time>
+  </a>
+</section>
 
 
 
 
 
 
+  
+<section class="post" itemscope itemprop="blogitem">
+  
+    <a href="/2014/10/12/Python学习笔记（2）：基础概念/" title="Python学习笔记（2）：基础概念" itemprop="url">
+  
+    <h1 itemprop="name">Python学习笔记（2）：基础概念</h1>
+    
+     
+           <p itemprop="description" >一些概念不同于C++这种强类型语言，Python属于弱类型，也即变量声明时不需要指明类型，例如可以直接使用12i = 5print i
+这种直接给变量赋值然后使用的方式，对于用惯了强类型语言的人来说，一开始可能会不适应，不过慢慢习惯了就会发现其实很好用。另外在Python中关于分</p>
+        
+    
+    <time datetime="2014-10-12T12:13:10.000Z" itemprop="datePublished">2014-10-12</time>
+  </a>
+</section>
 
-  <nav id="page-nav" class="clearfix">
+
+
+
+
+
+  
+<section class="post" itemscope itemprop="blogitem">
+  
+    <a href="/2014/09/29/Python学习笔记（1）：Python简介/" title="Python学习笔记（1）：Pyhon简介" itemprop="url">
+  
+    <h1 itemprop="name">Python学习笔记（1）：Pyhon简介</h1>
+    
+     
+           <p itemprop="description" >很早之前就听说过Python这个脚本语言很强大，作为一个程序猿还是必须要学习的，最近就开始研究一下，看的一些东西整理在这里了。
+Python是一个简单易学但是功能强大的脚本语言，属于解释性语言，并且是开源的，它的最大目的就是让使用者能够专注于使用语言去解决问题，而不是搞明白语言本</p>
+        
+    
+    <time datetime="2014-09-29T11:30:04.000Z" itemprop="datePublished">2014-09-29</time>
+  </a>
+</section>
+
+
+
+
+
+
+
+  <nav id="page-nav" class="clearfix unexpand">
     <a class="extend prev" rel="prev" href="/"><span></span>Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
   </nav>
 
