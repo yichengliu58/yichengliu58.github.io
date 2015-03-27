@@ -4,25 +4,25 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>生活小记 | Cod&#39;s Blog</title>
+    <title>判断字节序的最简单实现方法 | Cod&#39;s Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="Cod">
     
 
     
-    <meta name="description" content="还记得高中时喜欢写随笔，写出的一些文字也受到过老师的嘉奖，现在过去了不过两年，却已经快忘却了文字的感觉。当时总觉得迷惘的感觉很酷，却没有真正体会过何为迷惘；当时总觉得心怀梦想，却未曾好好想过何为自己真正的梦。人毕竟也是成长的，这在大学生活的两年，的确想明白了一些事情，可是同时却发现一个更大的未知世界在我前方。我只能先写下这些文字，记下生活的痕迹，与未来的我共勉。
-总会先想起初恋。想起过去将近两年美">
+    <meta name="description" content="记得总有面试题会问到：“请写一个程序，判断本机的字节序（大端小端）”，之前觉得这个东西涉及到底层的二进制数据，肯定需要什么位运算等等乱七八糟的东西，太难了，不会。今天在一本书上看到了一个简单的不行的办法，才发现自己还是思维不够开阔，面对一个问题不仔细想想就放弃了，以后遇见奇怪的问题一定要静心思考，其实都是有简洁的解法的。
+判断字节序的思路很简单，就是看一个数字高位和低位的存储顺序即可。关键就是如何">
 <meta property="og:type" content="article">
-<meta property="og:title" content="生活小记">
-<meta property="og:url" content="http://yoursite.com/2014/11/11/生活小记/index.html">
+<meta property="og:title" content="判断字节序的最简单实现方法">
+<meta property="og:url" content="http://yoursite.com/2015/03/27/判断字节序的最简单实现方法/index.html">
 <meta property="og:site_name" content="Cod's Blog">
-<meta property="og:description" content="还记得高中时喜欢写随笔，写出的一些文字也受到过老师的嘉奖，现在过去了不过两年，却已经快忘却了文字的感觉。当时总觉得迷惘的感觉很酷，却没有真正体会过何为迷惘；当时总觉得心怀梦想，却未曾好好想过何为自己真正的梦。人毕竟也是成长的，这在大学生活的两年，的确想明白了一些事情，可是同时却发现一个更大的未知世界在我前方。我只能先写下这些文字，记下生活的痕迹，与未来的我共勉。
-总会先想起初恋。想起过去将近两年美">
+<meta property="og:description" content="记得总有面试题会问到：“请写一个程序，判断本机的字节序（大端小端）”，之前觉得这个东西涉及到底层的二进制数据，肯定需要什么位运算等等乱七八糟的东西，太难了，不会。今天在一本书上看到了一个简单的不行的办法，才发现自己还是思维不够开阔，面对一个问题不仔细想想就放弃了，以后遇见奇怪的问题一定要静心思考，其实都是有简洁的解法的。
+判断字节序的思路很简单，就是看一个数字高位和低位的存储顺序即可。关键就是如何">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="生活小记">
-<meta name="twitter:description" content="还记得高中时喜欢写随笔，写出的一些文字也受到过老师的嘉奖，现在过去了不过两年，却已经快忘却了文字的感觉。当时总觉得迷惘的感觉很酷，却没有真正体会过何为迷惘；当时总觉得心怀梦想，却未曾好好想过何为自己真正的梦。人毕竟也是成长的，这在大学生活的两年，的确想明白了一些事情，可是同时却发现一个更大的未知世界在我前方。我只能先写下这些文字，记下生活的痕迹，与未来的我共勉。
-总会先想起初恋。想起过去将近两年美">
+<meta name="twitter:title" content="判断字节序的最简单实现方法">
+<meta name="twitter:description" content="记得总有面试题会问到：“请写一个程序，判断本机的字节序（大端小端）”，之前觉得这个东西涉及到底层的二进制数据，肯定需要什么位运算等等乱七八糟的东西，太难了，不会。今天在一本书上看到了一个简单的不行的办法，才发现自己还是思维不够开阔，面对一个问题不仔细想想就放弃了，以后遇见奇怪的问题一定要静心思考，其实都是有简洁的解法的。
+判断字节序的思路很简单，就是看一个数字高位和低位的存储顺序即可。关键就是如何">
 
     
     <link rel="alternative" href="/atom.xml" title="Cod&#39;s Blog" type="application/atom+xml">
@@ -81,14 +81,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2014/11/11/生活小记/" title="生活小记" itemprop="url">生活小记</a>
+      <a href="/2015/03/27/判断字节序的最简单实现方法/" title="判断字节序的最简单实现方法" itemprop="url">判断字节序的最简单实现方法</a>
   </h1>
   <p class="article-author">By
        
 		<a href="http://yoursite.com/about" title="Cod" target="_blank" itemprop="author">Cod</a>
 		
   <p class="article-time">
-    <time datetime="2014-11-11T13:51:38.000Z" itemprop="datePublished"> 发表于 2014-11-11</time>
+    <time datetime="2015-03-27T12:36:28.000Z" itemprop="datePublished"> 发表于 2015-03-27</time>
     
   </p>
 </header>
@@ -101,12 +101,12 @@
 		
 		</div>
 		
-		<p>还记得高中时喜欢写随笔，写出的一些文字也受到过老师的嘉奖，现在过去了不过两年，却已经快忘却了文字的感觉。当时总觉得迷惘的感觉很酷，却没有真正体会过何为迷惘；当时总觉得心怀梦想，却未曾好好想过何为自己真正的梦。人毕竟也是成长的，这在大学生活的两年，的确想明白了一些事情，可是同时却发现一个更大的未知世界在我前方。我只能先写下这些文字，记下生活的痕迹，与未来的我共勉。</p>
-<p>总会先想起初恋。想起过去将近两年美好时光，无论怎样，留到最后的只有歉意和感谢，只是感谢那个女孩带给我的美好瞬间，只是抱歉我带给她的委屈和失落。我心中有天使也有魔鬼，时而会有分裂的情感在一瞬间爆发，在无眠的午夜和朦胧的清晨。只是希望那天使能够带着幸运陪伴在她周围，带给她应得美好。</p>
-<p>也总会想起过去的人和事。想起高中的那个成人礼、那个乐队、那个满怀期待的岁月。也不知道是人的成长还是时间的力量，我的确是被动地看到了世界的真实，的确是被迫改变了当初的期待。当卡夫卡单独面对世界时，最终也是看到了险恶和温存的混合体，也是体会到了肉体的欢愉和精神的痛苦。当我从初识人生、初识世界到体会她的险恶再到感受温存，我想会需要一生的时间，此时我应该在体会世界最深的险恶吧。希望我能够穷尽一生体会大千世界，希望能够逃脱那些束缚，去想去的地方，看想看的风景以及陪伴想陪伴的人。</p>
-<p>憧憬未来总是美好的，但是在最深得梦境中，看到的总是最深的恐惧。也许是我心中的软弱和畏惧，也许是我从小缺乏的自信，每次看到美好的事物总会想到它被毁灭后的悲惨样子。小时在一个一个小环境中的安稳生活带给我的只是被磨去的冒险精神和那种向往，现在却发现真正在向往一个事时却总因为外界的束缚或者是没有足有的力量去实现，最后只能转而成为更深的梦。希望我能够有更强的力量支撑着我不再憧憬一个梦。</p>
-<p>我是一个幻想家，喜欢忧郁的幻想家，喜欢孤独的幻想家。总会留恋在自己创造的世界中，总会尝试离开一个又一个牢笼，最后又会陷在无限的循环中。作为一个浪漫主义者，却生活在一个如此追求现实的世界中，我知道有很多人与我一样向往梦，却又要醒来与生活斗争。我能够在这个国度中看到希望，但却无法满足我对更多美好的更大的向往。我想我会保存住内心的幻想，我想我也会学会现实斗争的法则，我想我会足够强大，最终会有一天我会带给我心中的幻想真正的幻想。</p>
-<p>看了太多教科书，很多人双眼被蒙蔽，可是更多人因此而让双眼更加明亮。可谁能知道呢，是那险恶占据上风还是那温存感化世界？我想我会一直让心开放，让眼明亮，让身体穿越那险恶和温存，找到梦中的国度。</p>
+		<p>记得总有面试题会问到：“请写一个程序，判断本机的字节序（大端小端）”，之前觉得这个东西涉及到底层的二进制数据，肯定需要什么位运算等等乱七八糟的东西，太难了，不会。今天在一本书上看到了一个简单的不行的办法，才发现自己还是思维不够开阔，面对一个问题不仔细想想就放弃了，以后遇见奇怪的问题一定要静心思考，其实都是有简洁的解法的。</p>
+<p>判断字节序的思路很简单，就是看一个数字高位和低位的存储顺序即可。关键就是如何分别读取到一个整数（比如short）的高位和低位呢？其实很简单，使用union即可实现。联合这个东西现在很少有人用，当初学得时候也觉得没啥作用，却没想到能在这里派上用场。</p>
+<p>一个联合在任意时刻只能存储它的<strong>一个</strong>数据成员，因此我们可以利用这个属性，在一个联合中定义一个short整数，和一个char数组。我的机子（64位）上short占用两个字节，char占用一个字节，正好两个char可以存储一个short。那么我们先给short赋一个值，再使用两个char分别读出，即可知道该整数的高八位和低八位分别是什么数，在比较一下即可知道字节序。</p>
+<p>代码如下（C++）：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;iostream&gt;</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	<span class="keyword">union</span> Test</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">short</span> num;</span><br><span class="line">		<span class="keyword">char</span> part[<span class="number">2</span>];</span><br><span class="line">	&#125;;</span><br><span class="line">	Test t;</span><br><span class="line">	t.num = <span class="number">0x0102</span>;</span><br><span class="line">	<span class="keyword">if</span>(t.part[<span class="number">0</span>] == <span class="number">2</span> &amp;&amp; t.part[<span class="number">1</span>] == <span class="number">1</span>)</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"little"</span> &lt;&lt; endl;</span><br><span class="line">	<span class="function"><span class="keyword">else</span> <span class="title">if</span><span class="params">(t.part[0] == 1 &amp;&amp; t.part[1] == 0)</span></span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; "big" &lt;&lt; endl</span>;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"unkown"</span> &lt;&lt; endl;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这里只是简单地将一个short值赋为十六进制的102，那么两部分分别为1和2，所以使用char进行判断即可得出结论。</p>
+<p>注意这里并没有判断short的大小是否是16位，可能在真正实现时再加入一些判断的代码即可。</p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -114,13 +114,13 @@
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/随笔/">随笔</a>
+  <a class="article-category-link" href="/categories/算法/">算法</a>
 </div>
 
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/生活/">生活</a>
+  <span></span> <a href="/tags/C/">C++</a><a href="/tags/算法/">算法</a>
   </div>
 
 </div>
@@ -129,7 +129,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://yoursite.com/2014/11/11/生活小记/" data-title="生活小记 | Cod&#39;s Blog" data-tsina="null" class="share clearfix">
+	  <div data-url="http://yoursite.com/2015/03/27/判断字节序的最简单实现方法/" data-title="判断字节序的最简单实现方法 | Cod&#39;s Blog" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -142,19 +142,11 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2014/12/01/最简单的设计模式——单例模式/" title="最简单的设计模式——单例模式">
-  <strong>上一篇：</strong><br/>
-  <span>
-  最简单的设计模式——单例模式</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2014/11/03/设计模式学习（2）之观察者模式/"  title="设计模式学习（2）之观察者模式">
+<a href="/2015/03/23/使用C++11实现简单的生产者消费者队列/"  title="使用C++11实现简单的生产者消费者队列">
  <strong>下一篇：</strong><br/> 
- <span>设计模式学习（2）之观察者模式
+ <span>使用C++11实现简单的生产者消费者队列
 </span>
 </a>
 </div>
@@ -163,7 +155,7 @@
 
 	
 <section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2014/11/11/生活小记/" data-title="生活小记" data-url="http://yoursite.com/2014/11/11/生活小记/"></div>
+	<div class="ds-thread" data-thread-key="2015/03/27/判断字节序的最简单实现方法/" data-title="判断字节序的最简单实现方法" data-url="http://yoursite.com/2015/03/27/判断字节序的最简单实现方法/"></div>
 </section>
 
 
